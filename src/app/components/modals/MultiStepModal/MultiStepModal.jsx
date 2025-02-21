@@ -5,11 +5,12 @@ import { useState } from "react";
 import FirstStep from "./FirstStep/FirstStep";
 import useProductStore from "@/zustand/store/productStore";
 import {
-  PRICE_PER_UNIT,
   PRICE_PER_5,
-  PRICE_PER_20,
+  PRICE_PER_30,
   PRICE_PER_50,
+  DRY_ICE_PRICING,
 } from "@/app/constants/constants";
+import { calculateTotalPrice } from "@/utils/pricing";
 
 export default function MultiStepModal({
   isOpen,
@@ -23,10 +24,10 @@ export default function MultiStepModal({
     size: "",
     quantity: variant === "dryIce" ? 5 : 1,
     pricePerUnit: {
-      dryIce: PRICE_PER_UNIT,
+      dryIce: DRY_ICE_PRICING,
       iceBox: {
         5: PRICE_PER_5,
-        20: PRICE_PER_20,
+        30: PRICE_PER_30,
         50: PRICE_PER_50,
       },
     },
@@ -44,23 +45,6 @@ export default function MultiStepModal({
     return variantMap[ukrainianVariant] || "unknown";
   };
 
-  const calculateTotalPrice = (quantity, size, variant) => {
-    switch (variant) {
-      case "dryIce":
-        return (quantity * formData.pricePerUnit.dryIce).toFixed(0);
-      case "iceBox": {
-        const numericSize = parseInt(size, 10);
-        if (!formData.pricePerUnit?.iceBox?.[numericSize]) {
-          return "0";
-        }
-        const pricePerUnit = formData.pricePerUnit.iceBox[numericSize];
-        return (quantity * pricePerUnit).toFixed(0);
-      }
-      default:
-        return "0";
-    }
-  };
-
   const handleFormDataChange = (field, value) => {
     setFormData((prevData) => {
       const updatedData = { ...prevData, [field]: value };
@@ -69,7 +53,12 @@ export default function MultiStepModal({
         const quantity = parseInt(updatedData.quantity, 10) || 0; // Приведення до числа
         const size = parseInt(updatedData.size, 10) || 0;
 
-        updatedData.totalPrice = calculateTotalPrice(quantity, size, variant);
+        updatedData.totalPrice = calculateTotalPrice(
+          quantity,
+          size,
+          variant,
+          updatedData.pricePerUnit
+        );
       }
 
       return updatedData;
@@ -83,10 +72,10 @@ export default function MultiStepModal({
       size: "",
       quantity: variant === "dryIce" ? 5 : 1,
       pricePerUnit: {
-        dryIce: PRICE_PER_UNIT,
+        dryIce: DRY_ICE_PRICING,
         iceBox: {
           5: PRICE_PER_5,
-          20: PRICE_PER_20,
+          30: PRICE_PER_30,
           50: PRICE_PER_50,
         },
       },

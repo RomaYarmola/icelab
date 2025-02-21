@@ -15,11 +15,11 @@ export default function BasketCard({
   const prodImg = (variantEnglish) => {
     switch (variantEnglish) {
       case "dryIce":
-        return "/images/products/dry-ice.png";
+        return "/images/products/ice2.png";
       case "iceBox":
-        return "/images/products/ice-box.png";
+        return "/images/products/box.png";
       default:
-        return "/images/products/dry-ice.png";
+        return "/images/products/ice2.png";
     }
   };
 

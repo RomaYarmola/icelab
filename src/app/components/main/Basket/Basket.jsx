@@ -15,7 +15,6 @@ function Basket() {
   const totalValue = products.reduce((accumulator, product) => {
     return accumulator + parseFloat(product.totalPrice);
   }, 0);
-  console.log("🚀 ~ Basket ~ products:", products);
 
   return (
     <Container>
