@@ -6,7 +6,7 @@ import OrderBtn from "./OrderBtn";
 export default function ProductCard({ img, title, sizes, variant }) {
   return (
     <li className="rounded-md bg-gradient-card min-w-[328px] lg:w-[550px] px-4 l:px-[34px] py-8 shadow-card relative flex flex-col gap-7">
-      <div className="absolute right-0 top-[-68px] l:top-[-117px] w-[160px] l:w-[50%]">
+      <div className="absolute right-[-3%] md:right-0 l:right-[-4%] lg:right-[-1%] top-[-68px] l:top-[-117px] w-[160px] l:w-[50%]">
         <Image
           src={img}
           alt={title}
