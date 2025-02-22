@@ -4,6 +4,7 @@ import GradientButton from "@/app/components/common/GradientButton";
 import FirstStepHeader from "./FirsStepHeader";
 import TextPart from "./TextPart";
 import BtnsBlock from "./BtnsBlock";
+import { useEffect } from "react";
 
 export default function FirstStep({
   onSubmit,
@@ -14,6 +15,12 @@ export default function FirstStep({
   handleFormDataChange,
   variant,
 }) {
+  useEffect(() => {
+    if (variant === "iceBox" && !selectedOption) {
+      handleFormDataChange("size", sizes[1]);
+      handleFormDataChange("iceVariant", "Бокс для льоду");
+    }
+  }, [variant, selectedOption, sizes, handleFormDataChange]);
   return (
     <>
       <FirstStepHeader variant={variant} />
