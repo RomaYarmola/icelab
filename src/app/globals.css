@@ -210,10 +210,16 @@ textarea::placeholder {
 
 .radial-dark-gradient-thin {
   width: 1981px;
-  height: 336px;
+  height: 886px;
   background: radial-gradient(circle, #001731 67.02%, #1b3048 125.24%);
   background: -webkit-radial-gradient(circle, #001731 67.02%, #1b3048 125.24%);
   filter: blur(55px);
+  @media (min-width: 989px) {
+    height: 1086px;
+  }
+  @media (min-width: 1150px) {
+    height: 1136px;
+  }
 }
 
 .radial-vertical-gradient {

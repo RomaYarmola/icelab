@@ -3,6 +3,8 @@ import Container from "@/utils/Container";
 import AboutGradient from "./AboutGradients";
 import AboutClouds from "./AboutClouds";
 import { useIsSafari } from "@/hooks/useIsSafari";
+import TextList from "@/app/components/common/TextList/TextList";
+import { materials, production, decisions, expirience } from "./data";
 
 export default function About() {
   const isSafari = useIsSafari();
@@ -26,24 +28,34 @@ export default function About() {
           <h4 className="text-white text-lg-responsive text-center mb-7 l:mb-[58px]">
             Ваш надійний постачальник сухого льоду
           </h4>
-          <p className="text-xs-responsive text-white text-center font-montserrat mb-[12px] l:mb-6 not-italic max-w-[98%] md:max-w-[62%] mx-auto">
-            ICELAB створений, щоб забезпечити клієнтів якісним сухим льодом для
-            різноманітних потреб: охолодження, транспортування, створення
-            спецефектів та вирішення нестандартних завдань.
-          </p>
-          <p className="text-xs-responsive text-white text-center font-montserrat not-italic max-w-[98%] md:max-w-[62%] mx-auto mb-[12px]">
-            Ми робимо акцент на оперативній доставці, стабільній якості та
-            зручному сервісі. Розуміємо, що кожен клієнт має свої унікальні
-            запити, тому підлаштовуємося до ваших потреб.
-          </p>
-          <p className="text-xs-responsive text-white text-center font-montserrat not-italic max-w-[98%] md:max-w-[62%] mx-auto mb-[12px]">
-            Обираючи ICELAB, ви отримуєте не просто продукт, а надійного
-            партнера, на якого можна покластися у важливих моментах.
-          </p>
-          <p className="text-xs-responsive text-white text-center font-montserrat not-italic max-w-[98%] md:max-w-[62%] mx-auto font-bold">
-            Сухий лід від ICELAB — практичне рішення для бізнесу та особистих
-            потреб.
-          </p>
+          <div className="flex flex-col gap-10 lg:gap-20">
+            <div>
+              <h5 className="text-white text-sm-responsive mb-5 l:mb-7">
+                Сировина і потужності:
+              </h5>
+              <TextList data={materials} variant="about-us" />
+            </div>
+
+            <div>
+              {" "}
+              <h5 className="text-white text-sm-responsive mb-5 l:mb-7">
+                Сучасне виробництво:
+              </h5>
+              <TextList data={production} variant="about-us" />
+            </div>
+            <div>
+              <h5 className="text-white text-sm-responsive mb-5 l:mb-7">
+                Гнучкі рішення для клієнтів:
+              </h5>
+              <TextList data={decisions} variant="about-us" />
+            </div>
+            <div>
+              <h5 className="text-white text-sm-responsive mb-5 l:mb-7">
+                Досвід та надійність:
+              </h5>
+              <TextList data={expirience} variant="about-us" />
+            </div>
+          </div>
         </div>
       </Container>
     </div>
