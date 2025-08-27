@@ -17,12 +17,20 @@ export const footerLinks = [
 // Соц.сети
 
 export const socialLinks = [
-  { name: "Instagram", url: "https://instagram.com", icon: FaInstagram },
+  {
+    name: "Instagram",
+    url: "https://instagram.com/icelabua",
+    icon: FaInstagram,
+  },
   // { name: "Facebook", url: "https://facebook.com", icon: FaFacebook },
 ];
 
 export const socialContactsLinks = [
-  { name: "Instagram", url: "https://instagram.com", icon: FaInstagram },
+  {
+    name: "Instagram",
+    url: "https://instagram.com/icelabua",
+    icon: FaInstagram,
+  },
   // { name: "Twitter", url: "https://twitter.com", icon: FaXTwitter },
   // { name: "Facebook", url: "https://facebook.com", icon: FaFacebook },
 ];
