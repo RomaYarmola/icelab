@@ -5,9 +5,8 @@ import { useState } from "react";
 import FirstStep from "./FirstStep/FirstStep";
 import useProductStore from "@/zustand/store/productStore";
 import {
-  PRICE_PER_5,
+  PRICE_PER_15,
   PRICE_PER_30,
-  PRICE_PER_50,
   DRY_ICE_PRICING,
 } from "@/app/constants/constants";
 import { calculateTotalPrice } from "@/utils/pricing";
@@ -26,9 +25,8 @@ export default function MultiStepModal({
     pricePerUnit: {
       dryIce: DRY_ICE_PRICING,
       iceBox: {
-        5: PRICE_PER_5,
+        15: PRICE_PER_15,
         30: PRICE_PER_30,
-        50: PRICE_PER_50,
       },
     },
     totalPrice: "0",
@@ -74,9 +72,8 @@ export default function MultiStepModal({
       pricePerUnit: {
         dryIce: DRY_ICE_PRICING,
         iceBox: {
-          5: PRICE_PER_5,
+          15: PRICE_PER_15,
           30: PRICE_PER_30,
-          50: PRICE_PER_50,
         },
       },
       totalPrice: "0",

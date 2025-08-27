@@ -5,8 +5,10 @@ export const DRY_ICE_PRICING = [
   { min: 300, max: 500, price: 60 },
 ];
 
-export const PRICE_PER_5 = 250;
+// export const PRICE_PER_5 = 250;
 
-export const PRICE_PER_30 = 300;
+export const PRICE_PER_15 = 400;
 
-export const PRICE_PER_50 = 350;
+export const PRICE_PER_30 = 450;
+
+// export const PRICE_PER_50 = 350;

@@ -7,7 +7,7 @@ export default function BtnsBlock({
   variant,
 }) {
   const handleSelect = (option, index) => {
-    if (variant === "iceBox" && index !== 1) return;
+    // if (variant === "iceBox" && index !== 1) return;
     handleFormDataChange("size", option);
     handleFormDataChange(
       "iceVariant",
@@ -26,7 +26,7 @@ export default function BtnsBlock({
               : "border-gradient-blue-bg-modal"
           }`}
           onClick={() => handleSelect(option, index)}
-          isDisabled={variant === "iceBox" && index !== 1}
+          // isDisabled={variant === "iceBox" && index !== 1}
         >
           <p className="main-title-gradient text-base font-medium">{option}</p>
         </Button>
