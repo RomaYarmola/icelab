@@ -31,7 +31,7 @@ export default function ProductCard({ img, title, sizes, variant }) {
       <div className="flex flex-col gap-3 md:flex-row-reverse md:justify-end md:gap-[22px]">
         <div className="w-full md:w-[243px] h-10 flex justify-center items-center border-white-gradient-rounded cursor-auto">
           <p className="main-title-gradient text-xs-responsive font-medium font-michelin">
-            {variant === "iceBox" ? "300 грн/шт" : "Від 60 грн/кг"}
+            {variant === "iceBox" ? "300 грн/шт" : "Від 50 грн/кг"}
           </p>
         </div>
         <OrderBtn variant={variant} sizes={sizes} />

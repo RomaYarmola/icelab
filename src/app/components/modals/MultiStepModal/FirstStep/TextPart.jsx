@@ -31,12 +31,12 @@ export default function TextPart({ quantity, variant }) {
       {variant === "dryIce" && (
         <div className="flex flex-col xs:flex-row xs:gap-8 main-title-gradient font-bold font-montserrat mb-4">
           <div>
-            <p>5 - 30 кг - 80 грн/кг</p>
-            <p>31 - 100 кг - 70 грн/кг</p>
+            <p>5 - 30 кг - 70 грн/кг</p>
+            <p>31 - 100 кг - 60 грн/кг</p>
           </div>
           <div>
-            <p>101 - 300 кг - 65 грн/кг</p>
-            <p>301 - 500 кг - 60 грн/кг</p>
+            <p>101 - 300 кг - 55 грн/кг</p>
+            <p>301 - 500 кг - 50 грн/кг</p>
           </div>
         </div>
       )}
