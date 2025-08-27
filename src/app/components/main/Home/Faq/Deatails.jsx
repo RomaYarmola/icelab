@@ -7,7 +7,7 @@ export default function Details() {
       {data.map(({ question, answer }, index) => (
         <details
           key={index}
-          className=" text-white text-xs-responsive font-montserrat not-italic  rounded-[18px] bg-commonBlue cursor-pointer px-4 md:px-8 py-7"
+          className=" text-white text-xs-responsive font-montserrat not-italic rounded-[18px] bg-commonBlue cursor-pointer px-4 md:px-8 py-7"
         >
           <summary className="  questionBlock flex justify-between font-michelin">
             <p className="text-md-responsive text-white font-medium font-michelin">
