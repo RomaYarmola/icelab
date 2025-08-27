@@ -35,9 +35,6 @@ export default function ContactsBlock() {
         <p className="font-montserrat text-md-responsive font-normal mb-4">
           Пн - Пт : 09.00 - 17.00
         </p>
-        <p className="font-montserrat text-md-responsive font-normal ">
-          Сб : 10.00 - 17.00
-        </p>
       </div>
       <SocLinks />
     </div>
