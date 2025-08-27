@@ -2,8 +2,10 @@ import { DRY_ICE_PRICING } from "@/app/constants/constants";
 
 export const getDryIcePrice = (quantity) => {
   const pricing = DRY_ICE_PRICING.find(
-    (range) => quantity > range.min && quantity <= range.max
+    (range) => quantity >= range.min && quantity <= range.max
   );
+
+  console.log(pricing);
   return pricing ? pricing.price : 60;
 };
 

@@ -8,7 +8,7 @@ export const data = [
   {
     img: "/images/products/box.png",
     title: "Бокс для<br />льоду",
-    sizes: ["5 кг", "30 кг", "50 кг"],
+    sizes: ["15кг", "30 кг"],
     variant: "iceBox",
   },
 ];
