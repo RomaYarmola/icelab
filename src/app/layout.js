@@ -1,8 +1,8 @@
 import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
+import Script from "next/script";
 import Footer from "./components/modules/Footer/Footer";
 import Header from "./components/modules/Header/Header";
-import Head from "next/head";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -37,8 +37,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${montserrat.className} ${michelin.className}`}>
-      <Head>
+    <html lang="uk" className={`${montserrat.className} ${michelin.className}`}>
+      <head>
         <meta name="description" content={metadata.description} />
         <link
           rel="icon"
@@ -55,8 +55,21 @@ export default function RootLayout({ children }) {
         />
         <meta name="apple-mobile-web-app-title" content="ICELAB" />
         <link rel="manifest" href="/site.webmanifest" />
-      </Head>
+      </head>
       <body className="leading-[1.2] italic bg-white">
+        {/* Google tag (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17838270814"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17838270814');
+          `}
+        </Script>
         <Header />
         <main>{children}</main>
         <Footer />
