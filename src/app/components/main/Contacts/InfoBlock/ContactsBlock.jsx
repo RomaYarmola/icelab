@@ -22,10 +22,10 @@ export default function ContactsBlock() {
       <div>
         <h3 className="text-[20px] l:text-[32px] font-medium mb-5">Контакти</h3>
         <Link
-          href={"tel:+380970707207"}
+          href={"tel:+380951606881"}
           className="font-montserrat text-md-responsive font-normal"
         >
-          +38 (097) 07 07 207
+          +38 (095) 16 06 881
         </Link>
       </div>
       <div>
@@ -33,10 +33,7 @@ export default function ContactsBlock() {
           Графік роботи
         </h3>
         <p className="font-montserrat text-md-responsive font-normal mb-4">
-          Пн - Пт : 09.00 - 18.00
-        </p>
-        <p className="font-montserrat text-md-responsive font-normal ">
-          Сб : 10.00 - 17.00
+          Пн - Пт : 09.00 - 17.00
         </p>
       </div>
       <SocLinks />

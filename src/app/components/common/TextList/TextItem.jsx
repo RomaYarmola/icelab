@@ -14,12 +14,11 @@ export default function TextItem({ text, variant }) {
         height={28}
       />
       <p
+        dangerouslySetInnerHTML={{ __html: text }}
         className={`${
           variant === "delivery" ? "text-commonBlue" : "text-white"
         } font-montserrat text-base md:text-[20px]`}
-      >
-        {text}
-      </p>
+      ></p>
     </li>
   );
 }

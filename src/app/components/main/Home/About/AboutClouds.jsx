@@ -31,7 +31,7 @@ export default function AboutClouds() {
         viewport={{ once: true }}
         custom="left"
         variants={cloudVariants}
-        className="hidden md:block absolute h-[264px] z-[3] top-[58px] md:top-[149px] right-[41px] md:right-[52%] l:h-[396px] 2xl:h-[56%]"
+        className="hidden md:block absolute h-[264px] z-[3] top-[58px] md:top-[149px] right-[41px] md:right-[52%] l:h-[396px] 2xl:h-[32.5%]"
       >
         <Image
           src="/images/hero/cloud-left.png"
@@ -67,7 +67,7 @@ export default function AboutClouds() {
         viewport={{ once: true }}
         custom="left"
         variants={cloudVariants}
-        className={`absolute h-[346px] l:h-[396px] 2xl:h-[56%] z-[4] top-[737px] md:top-[159px] ${
+        className={`absolute h-[346px] l:h-[396px] 2xl:h-[32.5%] z-[4] top-[1557px] xs:top-[1337px] sm:top-[1137px] md:top-[159px] ${
           isSafari ? "right-0" : "right-[64px] md:right-[-35%]"
         }  `}
       >

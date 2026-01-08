@@ -41,7 +41,7 @@ export default function NoCompromisesBg() {
           viewport={{ once: true }}
           custom="right"
           variants={cloudVariants}
-          className="absolute h-[259px] md:h-[396px] z-[6] top-[-206px] md:top-[-282px] left-0 md:left-[52.3%]"
+          className="absolute h-[259px] md:h-[396px] z-[6] top-[-206px] md:top-[-282px] left-0 md:left-[52.3%] pointer-events-none"
         >
           <Image
             src="/images/hero/cloud-right.png"
@@ -58,7 +58,7 @@ export default function NoCompromisesBg() {
           viewport={{ once: true }}
           custom="left"
           variants={cloudVariants}
-          className="hidden md:block absolute h-[396px] z-[6] top-[-302px] right-[56.6%]"
+          className="hidden md:block absolute h-[396px] z-[6] top-[-302px] right-[56.6%] pointer-events-none"
         >
           <Image
             src="/images/hero/cloud-left.png"

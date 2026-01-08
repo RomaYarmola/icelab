@@ -6,11 +6,12 @@ export default function BtnsBlock({
   handleFormDataChange,
   variant,
 }) {
-  const handleSelect = (option) => {
+  const handleSelect = (option, index) => {
+    // if (variant === "iceBox" && index !== 1) return;
     handleFormDataChange("size", option);
     handleFormDataChange(
       "iceVariant",
-      `${variant === "dryIce" ? "Сухий лід" : "Бокс для льоду"}`
+      variant === "dryIce" ? "Сухий лід" : "Бокс для льоду"
     );
   };
 
@@ -24,7 +25,8 @@ export default function BtnsBlock({
               ? "border-gradient-modal"
               : "border-gradient-blue-bg-modal"
           }`}
-          onClick={() => handleSelect(option)}
+          onClick={() => handleSelect(option, index)}
+          // isDisabled={variant === "iceBox" && index !== 1}
         >
           <p className="main-title-gradient text-base font-medium">{option}</p>
         </Button>
