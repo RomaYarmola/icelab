@@ -21,6 +21,24 @@ export default function FirstStep({
       handleFormDataChange("iceVariant", "Бокс для льоду");
     }
   }, [variant, selectedOption, sizes, handleFormDataChange]);
+
+  const handleOrderClick = () => {
+    // Відправка події в Google Tag Manager
+    if (typeof window !== "undefined" && window.dataLayer) {
+      window.dataLayer.push({
+        event: "order_button_click",
+        eventCategory: "engagement",
+        eventAction: "click",
+        eventLabel: "Замовити",
+        variant: variant,
+        quantity: quantity,
+        totalPrice: totalPrice,
+        selectedOption: selectedOption,
+      });
+    }
+    // Виклик оригінальної функції onSubmit
+    onSubmit();
+  };
   return (
     <>
       <FirstStepHeader variant={variant} />
@@ -50,7 +68,7 @@ export default function FirstStep({
           <div className="w-[240px] md:w-[128px]">
             <GradientButton
               variant="small"
-              onPress={onSubmit}
+              onPress={handleOrderClick}
               isDisabled={!selectedOption}
               text="Замовити"
             />
