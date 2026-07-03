@@ -43,7 +43,7 @@ export default function Header() {
         <NavbarContent>
           <NavbarBrand>
             <Link href="/">
-              <Image src="/icons/logo.svg" alt="logo" width={61} height={53} />
+              <Image src="/icons/logo.svg" alt="ICELAB" width={62} height={55} />
             </Link>
           </NavbarBrand>
         </NavbarContent>
