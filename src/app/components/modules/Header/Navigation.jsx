@@ -8,7 +8,7 @@ export default function Navigation() {
       {routes.map((route) => (
         <NavbarItem key={route.path}>
           <Link
-            className="font-montserrat text-lg text-commonBlue not-italic"
+            className="font-e-ukraine font-extralight text-lg text-commonBlue not-italic"
             href={route.path}
           >
             {route.name}

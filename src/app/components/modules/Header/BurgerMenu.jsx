@@ -9,7 +9,7 @@ export default function BurgerMenu({ onClick }) {
         <NavbarMenuItem key={route.path}>
           <Link
             onClick={onClick}
-            className="w-full text-[20px] leading-[1.2] font-montserrat not-italic text-commonBlue800"
+            className="w-full text-[20px] leading-[1.2] font-e-ukraine font-extralight not-italic text-commonBlue800"
             href={route.path}
             size="lg"
           >

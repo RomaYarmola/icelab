@@ -15,9 +15,9 @@ export default function Hero() {
             Сухий лід
           </h1>
           <h3 className="text-lg-extended text-blue-gradient text-center mb-8 md:mb-12 max-w-[98%] sm:max-w-[66%] mx-auto relative z-10">
-            Сухий лід для будь-яких потреб - завжди в наявності
+            Виробництво сухого льоду у Києві та Львові
           </h3>
-          <p className="font-montserrat text-sm-responsive text-center mb-8 md:mb-12 max-w-[86%] sm:max-w-[41.7%] mx-auto relative z-10">
+          <p className="font-e-ukraine font-thin not-italic text-sm-responsive text-center mb-8 md:mb-12 max-w-[86%] sm:max-w-[41.7%] mx-auto relative z-10">
             Охолоджуйте, створюйте ефекти й зберігайте свіжість з нашим якісним
             сухим льодом
           </p>

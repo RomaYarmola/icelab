@@ -19,7 +19,7 @@ export default function ThirdStep({ handleClose }) {
         <h3 className="font-medium text-[24px] leading-[1.3] md:leading-[0.9] text-center text-white-title-gradient mt-[14px]">
           Дякуємо за замовлення!
         </h3>
-        <p className="font-montserrat text-[16px] md:text-[20px] mt-[18px] text-white-title-gradient text-center  ">
+        <p className="font-e-ukraine text-[16px] md:text-[20px] mt-[18px] text-white-title-gradient text-center  ">
           Очікуйте на повідомлення від менеджера!
         </p>
       </ModalBody>

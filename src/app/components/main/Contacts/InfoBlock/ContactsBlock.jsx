@@ -15,7 +15,7 @@ export default function ContactsBlock() {
             referrerPolicy="no-referrer-when-downgrade"
           ></iframe>
         </div>
-        <p className="font-montserrat text-md-responsive font-normal mt-5">
+        <p className="font-e-ukraine font-extralight not-italic text-md-responsive mt-5">
           Львівська&nbsp;обл., с.&nbsp;Годовиця
         </p>
       </div>
@@ -23,7 +23,7 @@ export default function ContactsBlock() {
         <h3 className="text-[20px] l:text-[32px] font-medium mb-5">Контакти</h3>
         <Link
           href={"tel:+380951606881"}
-          className="font-montserrat text-md-responsive font-normal"
+          className="font-e-ukraine font-extralight not-italic text-md-responsive"
         >
           +38 (095) 16 06 881
         </Link>
@@ -32,7 +32,7 @@ export default function ContactsBlock() {
         <h3 className="text-[20px] l:text-[32px] font-medium mb-5">
           Графік роботи
         </h3>
-        <p className="font-montserrat text-md-responsive font-normal mb-4">
+        <p className="font-e-ukraine font-extralight not-italic text-md-responsive mb-4">
           Пн - Пт : 09.00 - 17.00
         </p>
       </div>

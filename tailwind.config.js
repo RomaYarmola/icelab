@@ -46,7 +46,7 @@ module.exports = {
         modal: "0px 10px 56px 2px rgba(121, 121, 121, 0.12)",
       },
       fontFamily: {
-        montserrat: ["Montserrat", "sans-serif"],
+        "e-ukraine": ["var(--font-e-ukraine)", "e-Ukraine", "sans-serif"],
         michelin: ["Michelin", "sans-serif"],
       },
       fontSize: {
@@ -101,7 +101,7 @@ module.exports = {
     plugin(function ({ addUtilities }) {
       addUtilities({
         ".base-text": {
-          fontFamily: "Montserrat, sans-serif",
+          fontFamily: "var(--font-e-ukraine), e-Ukraine, sans-serif",
           fontSize: "16px",
           fontStyle: "normal",
         },

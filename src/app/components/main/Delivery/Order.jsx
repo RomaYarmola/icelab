@@ -42,7 +42,7 @@ export default function Order({ handleSubmit, products, totalValue, variant }) {
             ))}
           </ul>
           <div className="flex gap-4 justify-between items-center mt-[14px] mb-5">
-            <p className="text-[16px] font-semibold font-montserrat not-italic">
+            <p className="text-[16px] font-semibold font-e-ukraine not-italic">
               Сума замовлення:
             </p>
             <p className="text-[20px] font-medium text-[#F31260]">

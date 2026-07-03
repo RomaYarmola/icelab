@@ -45,7 +45,7 @@ export default function FormBlock({
           e.preventDefault();
           handleSubmit();
         }}
-        className="flex flex-col gap-5 w-full mx-auto xs:w-[90%]  sm:max-w-[448px] sm:w-full font-montserrat not-italic"
+        className="flex flex-col gap-5 w-full mx-auto xs:w-[90%]  sm:max-w-[448px] sm:w-full font-e-ukraine not-italic"
       >
         <div className="relative">
           <Input

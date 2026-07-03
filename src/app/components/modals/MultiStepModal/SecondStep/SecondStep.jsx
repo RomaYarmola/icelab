@@ -22,7 +22,7 @@ export default function SecondStep({
   return (
     <ModalContent>
       <SecondStepHeader handleClose={handleClose} />
-      <ModalBody className="font-montserrat not-italic text-xs-responsive">
+      <ModalBody className="font-e-ukraine not-italic text-xs-responsive">
         <form
           onSubmit={(e) => {
             e.preventDefault();

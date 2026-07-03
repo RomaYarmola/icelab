@@ -20,7 +20,7 @@ export default function OrderBtn({ variant, sizes }) {
         onPress={onOpen}
         className="w-full md:w-[197px] h-10 flex justify-center items-center border-gradient-rounded bg-transparent"
       >
-        <p className="text-xs text-thin-gradient font-montserrat not-italic">
+        <p className="text-xs text-thin-gradient font-e-ukraine font-normal not-italic">
           Замовити
         </p>
       </Button>

@@ -5,7 +5,7 @@ export default function TextPart({ quantity, variant }) {
         <h3 className="main-title-gradient text-[24px] leading-[1.08] font-medium">
           {variant === "dryIce" ? "Сухий лід" : "Бокс для льоду"}
         </h3>
-        <p className="text-[20px] font-montserrat not-italic font-medium leadong-[1.3] text-commonBlue">
+        <p className="text-[20px] font-e-ukraine not-italic font-medium leadong-[1.3] text-commonBlue">
           {variant === "dryIce" ? (
             <>
               {quantity} <span>кг</span>
@@ -15,7 +15,7 @@ export default function TextPart({ quantity, variant }) {
           )}
         </p>
       </div>
-      <p className="mb-4 font-montserrat font-medium text-[#686466] leading-normal not-italic text-[12px]">
+      <p className="mb-4 font-e-ukraine font-medium text-[#686466] leading-normal not-italic text-[12px]">
         {variant === "dryIce" ? (
           <>
             Сухий лід виготовлений з високоякісної вуглекислоти (CO₂).
@@ -29,7 +29,7 @@ export default function TextPart({ quantity, variant }) {
         )}
       </p>
       {variant === "dryIce" && (
-        <div className="flex flex-col xs:flex-row xs:gap-8 main-title-gradient font-bold font-montserrat mb-4">
+        <div className="flex flex-col xs:flex-row xs:gap-8 main-title-gradient font-bold font-e-ukraine mb-4">
           <div>
             <p>5 - 30 кг - 70 грн/кг</p>
             <p>31 - 100 кг - 60 грн/кг</p>

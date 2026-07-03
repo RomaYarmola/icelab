@@ -1,13 +1,44 @@
-import { Montserrat } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import Footer from "./components/modules/Footer/Footer";
 import Header from "./components/modules/Header/Header";
 import "./globals.css";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const eUkraine = localFont({
+  src: [
+    {
+      path: "../../public/fonts/e-ukraine/e-Ukraine-Thin.otf",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/e-ukraine/e-Ukraine-UltraLight.otf",
+      weight: "200",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/e-ukraine/e-Ukraine-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/e-ukraine/e-Ukraine-Medium.otf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/e-ukraine/e-Ukraine-Medium.otf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/e-ukraine/e-Ukraine-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-e-ukraine",
+  display: "swap",
 });
 
 const michelin = localFont({
@@ -32,12 +63,12 @@ const michelin = localFont({
 
 export const metadata = {
   title: "IceLab",
-  description: "Сухий лід для будь-яких потреб - завжди в наявності",
+  description: "Виробництво сухого льоду у Києві та Львові",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="uk" className={`${montserrat.className} ${michelin.className}`}>
+    <html lang="uk" className={`${eUkraine.variable} ${michelin.className}`}>
       <head>
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">

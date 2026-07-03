@@ -8,7 +8,7 @@ export default function FooterNav() {
         <li key={route.path}>
           <Link
             href={route.path}
-            className="text-lg font-montserrat not-italic"
+            className="text-lg font-e-ukraine not-italic"
           >
             {route.name}
           </Link>
