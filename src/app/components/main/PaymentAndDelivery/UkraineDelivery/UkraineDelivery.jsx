@@ -12,7 +12,7 @@ export default function UkraineDelivery() {
           <h3 className="main-title-gradient font-medium text-center text-xl-heading mb-10 l:mb-[57px]">
             ДОСТАВКА ПО УКРАЇНІ&nbsp;:
           </h3>
-          <TextList data={data} variant="delivery" />
+          <TextList data={data} variant="delivery" bulletVariant="white" />
         </div>
       </Container>
     </div>

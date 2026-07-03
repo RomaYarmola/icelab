@@ -327,6 +327,34 @@ textarea::placeholder {
   width: 100%;
 }
 
+.about-card {
+  position: relative;
+  border-radius: 14px;
+  background: rgba(60, 166, 255, 0.2);
+}
+
+.about-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(60, 166, 255, 0.2) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
 .about-safari {
   background: -webkit-linear-gradient(
     270deg,
