@@ -17,7 +17,7 @@ export default function TextItem({ text, variant }) {
         dangerouslySetInnerHTML={{ __html: text }}
         className={`${
           variant === "delivery" ? "text-commonBlue" : "text-white"
-        } font-montserrat text-base md:text-[20px]`}
+        } font-e-ukraine text-base md:text-[20px]`}
       ></p>
     </li>
   );

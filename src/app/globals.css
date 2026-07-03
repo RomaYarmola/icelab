@@ -173,9 +173,20 @@ details[open] > .questionBlock > .svg {
     height: 100%;
     padding: 0 20px;
     background-color: transparent;
+    font-weight: 100;
+    font-size: 14px;
   }
   input::placeholder {
     color: #686466;
+    font-weight: 100;
+    font-size: 14px;
+  }
+
+  @media (min-width: 768px) {
+    input,
+    input::placeholder {
+      font-size: 16px;
+    }
   }
 }
 
@@ -193,7 +204,26 @@ details[open] > .questionBlock > .svg {
   position: absolute;
   top: 8px;
   left: 10px;
-  font-size: clamp(14px, 1.4vw, 16px);
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .required-field::after {
+    font-size: 16px;
+  }
+}
+
+.contactTextarea,
+.contactTextarea::placeholder {
+  font-weight: 100;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .contactTextarea,
+  .contactTextarea::placeholder {
+    font-size: 16px;
+  }
 }
 
 textarea::placeholder {

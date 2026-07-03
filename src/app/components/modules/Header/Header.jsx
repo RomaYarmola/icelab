@@ -68,7 +68,7 @@ export default function Header() {
             />
             {productsQuantity > 0 && (
               <div className="rounded-full w-5 h-5 bg-commonBlue800 absolute  right-[60%] top-[-50%] translate-y-1/2 flex justify-center items-center z-[1]">
-                <p className="text-white font-montserrat not-italic text-[12px]">
+                <p className="text-white font-e-ukraine not-italic text-[12px]">
                   {productsQuantity}
                 </p>
               </div>

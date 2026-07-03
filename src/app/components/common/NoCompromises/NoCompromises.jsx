@@ -24,9 +24,9 @@ export default function NoCompromises({ variant = "common" }) {
           <h3 className="text-md-responsive text-white text-center mb-6 md:mb-9">
             Зробіть замовлення вже сьогодні
           </h3>
-          <p className="max-w-[432px] mx-auto text-xs-responsive text-white text-center mb-[46px] md:mb-[58px] font-montserrat not-italic">
+          <p className="max-w-[432px] mx-auto text-xs-responsive text-white text-center mb-[46px] md:mb-[58px] font-e-ukraine font-thin not-italic">
             Замовляйте сухий лід у{" "}
-            <span className="font-michelin"> ICELAB</span> та переконайтеся, як
+            <span className="font-e-ukraine font-thin not-italic">ICELAB</span> та переконайтеся, як
             легко досягти ваших цілей з нашою допомогою!
           </p>
           <Link

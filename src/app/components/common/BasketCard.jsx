@@ -52,7 +52,7 @@ export default function BasketCard({
             {iceVariant}
           </p>
 
-          <p className="font-montserrat not-italic text-[16px]">{size}</p>
+          <p className="font-e-ukraine not-italic text-[16px]">{size}</p>
 
           <div className={`${!basket && "flex gap-[27px] items-end"}`}>
             <div

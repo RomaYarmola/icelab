@@ -18,7 +18,7 @@ export default function Thanks() {
               className="w-full h-auto"
             />
           </div>
-          <p className="font-montserrat text-[16px] md:text-[20px] mt-[18px] text-white-title-gradient text-center  ">
+          <p className="font-e-ukraine text-[16px] md:text-[20px] mt-[18px] text-white-title-gradient text-center  ">
             Очікуйте на повідомлення від менеджера!
           </p>
         </div>

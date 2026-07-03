@@ -27,7 +27,7 @@ export default function AccordionComponent() {
             </h4>
           }
         >
-          <p className="text-white text-xs-responsive font-montserrat not-italic pt-[8px]">
+          <p className="text-white text-xs-responsive font-e-ukraine not-italic pt-[8px]">
             {answer}
           </p>
         </AccordionItem>

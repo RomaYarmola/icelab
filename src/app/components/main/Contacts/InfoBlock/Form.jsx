@@ -93,10 +93,11 @@ export default function Form() {
           e.preventDefault();
           handleSubmit();
         }}
-        className="flex flex-col gap-5 w-full mx-auto xs:w-[90%]  sm:max-w-[448px] sm:w-full font-montserrat not-italic"
+        className="flex flex-col gap-5 w-full mx-auto xs:w-[90%]  sm:max-w-[448px] sm:w-full font-e-ukraine font-thin not-italic"
       >
         <Input
           classNames={{
+            input: "font-thin",
             inputWrapper:
               "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0",
           }}
@@ -109,6 +110,7 @@ export default function Form() {
         <div className="relative">
           <Input
             classNames={{
+              input: "font-thin",
               inputWrapper:
                 "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0",
             }}
@@ -129,7 +131,7 @@ export default function Form() {
           )}
         </div>
         <textarea
-          className="block w-full bg-transparent border border-commonBlue rounded-md px-5 py-[17px] mb-4 resize-none h-[145px] outline-none"
+          className="contactTextarea block w-full bg-transparent border border-commonBlue rounded-md px-5 py-[17px] mb-4 resize-none h-[145px] outline-none font-e-ukraine font-thin not-italic"
           placeholder="Ваше повідомлення"
           name="comment"
           value={comment}

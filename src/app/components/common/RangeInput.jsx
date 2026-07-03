@@ -18,14 +18,14 @@ export default function RangeInput({
           track: "bg-hr-gradient h-[1.5px] border-x-[0px]",
           filler: "bg-transparent h-[1.5px]",
           label:
-            "font-montserrat not-italic text-[10px] font-medium leading-[2]",
+            "font-e-ukraine not-italic text-[10px] font-medium leading-[2]",
         }}
         label="Кількість"
         size="sm"
         renderValue={({ children, ...props }) => (
           <output
             {...props}
-            className="font-montserrat not-italic text-[10px] font-medium leading-[2]"
+            className="font-e-ukraine not-italic text-[10px] font-medium leading-[2]"
           >
             {value}
             {variant === "dryIce" ? "\u00A0кг" : "\u00A0шт"}
