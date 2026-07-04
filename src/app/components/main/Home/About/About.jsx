@@ -20,7 +20,7 @@ export default function About() {
 
       <AboutClouds />
       <Container>
-        <div className="pt-[142px] l:pt-[194px] pb-[442px] md:pb-[69px] relative z-10">
+        <div className="flex flex-col gap-5 pt-[142px] l:pt-[194px] pb-[342px] md:pb-[69px] relative z-10">
           <div className="flex flex-col gap-5">
             <div className="about-card px-4 py-7 backdrop-blur-md">
               <h3 className="text-secondary-white-gradient text-[24px] uppercase font-e-ukraine font-extralight not-italic">
@@ -62,6 +62,15 @@ export default function About() {
               <TextList data={production} variant="white" />
             </div>
 
+            <div className="relative w-full h-[250px] rounded-[14px] overflow-hidden">
+              <Image
+                src="/images/about/about-two.webp"
+                alt="about-two"
+                fill
+                className="object-cover"
+              />
+            </div>
+
             <div className="about-card px-4 py-7 backdrop-blur-md">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 Гнучкі рішення для клієнтів:
@@ -71,7 +80,15 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-5">
-            {" "}
+            <div className="relative w-full h-[216px] rounded-[14px] overflow-hidden">
+              <Image
+                src="/images/about/about-three.webp"
+                alt="about-three"
+                fill
+                className="object-cover"
+              />
+            </div>
+
             <div className="about-card px-4 py-7 backdrop-blur-md">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 Досвід та надійність:

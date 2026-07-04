@@ -48,7 +48,7 @@ export default function AboutClouds() {
         viewport={{ once: true }}
         custom="left"
         variants={cloudVariants}
-        className={`absolute h-[264px] z-[3] top-[71px] ${
+        className={`absolute h-[264px] z-[3] top-[41px] ${
           isSafari ? "right-0" : "right-[-608px]"
         }  md:hidden`}
       >
@@ -67,7 +67,7 @@ export default function AboutClouds() {
         viewport={{ once: true }}
         custom="left"
         variants={cloudVariants}
-        className={`absolute h-[346px] l:h-[396px] 2xl:h-[32.5%] z-[4] top-[1557px] xs:top-[1337px] sm:top-[1137px] md:top-[159px] ${
+        className={`absolute h-[346px] l:h-[396px] 2xl:h-[32.5%] z-[4] top-[2307px] xs:top-[1337px] sm:top-[1137px] md:top-[159px] ${
           isSafari ? "right-0" : "right-[64px] md:right-[-35%]"
         }  `}
       >
