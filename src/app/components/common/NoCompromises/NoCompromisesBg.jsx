@@ -25,9 +25,9 @@ export default function NoCompromisesBg() {
     <>
       {!isSafari && (
         <>
-          <div className="radial-vertical-gradient w-[212%] md:w-[60%] absolute right-[6%] top-[-365px] md:right-[42%] z-[3]" />
-          <div className="radial-vertical-gradient w-[212%] md:w-[60%] absolute left-[12%] md:left-[42.4%] top-[-365px] z-[3]" />
-          <div className="radial-dark-gradient w-[154.7%] h-[717px] absolute left-1/2 transform -translate-x-1/2  top-[-367px] md:top-[-311px]" />
+          <div className="radial-vertical-gradient w-[212%] md:w-[70%] absolute right-[6%] top-[-365px] md:top-[-165px] md:right-[42%] z-[3]" />
+          <div className="radial-vertical-gradient w-[212%] md:w-[70%] absolute left-[12%] md:left-[42.4%] top-[-365px] md:top-[-165px] z-[3]" />
+          <div className="radial-dark-gradient w-[154.7%] h-[717px] absolute left-1/2 transform -translate-x-1/2  top-[-667px] md:top-[-311px]" />
           <div className="radial-dark-gradient w-[154.7%] h-[717px] absolute left-1/2 transform -translate-x-1/2  top-[56px] md:top-[-30px]" />
           <div className="radial-small-gradient absolute hidden md:block left-[-5.3%] top-[-150px] z-[4]" />
           <div className="radial-small-gradient absolute hidden md:block right-[-4.9%] top-[-150px] z-[4]" />

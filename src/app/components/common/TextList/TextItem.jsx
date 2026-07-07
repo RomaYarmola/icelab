@@ -1,4 +1,10 @@
-export default function TextItem({ text, variant, bulletVariant = "blue" }) {
+export default function TextItem({
+  text,
+  variant,
+  bulletVariant = "blue",
+  textSize = "14px",
+  textClassName = "",
+}) {
   return (
     <li className="flex gap-3 items-center">
       <div
@@ -8,9 +14,10 @@ export default function TextItem({ text, variant, bulletVariant = "blue" }) {
       />
       <p
         dangerouslySetInnerHTML={{ __html: text }}
+        style={{ fontSize: textSize }}
         className={`${
           variant === "delivery" ? "text-commonBlue" : "text-white"
-        } font-e-ukraine text-[14px] not-italic font-thin`}
+        } font-e-ukraine not-italic font-thin ${textClassName}`}
       ></p>
     </li>
   );

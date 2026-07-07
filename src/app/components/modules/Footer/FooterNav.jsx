@@ -5,7 +5,7 @@ export default function FooterNav({ variant = "row" }) {
   if (variant === "column") {
     return (
       <div>
-        <p className="text-[12px] font-e-ukraine not-italic font-[200] text-white leading-[180%] uppercase mb-5">
+        <p className="hidden md:block text-[12px] font-e-ukraine not-italic font-[200] text-white leading-[180%] mb-5">
           Меню
         </p>
         <ul className="text-white flex flex-col gap-4">
