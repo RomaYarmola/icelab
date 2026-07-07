@@ -83,7 +83,7 @@ export default function Form() {
   const { name, phone, comment } = formData;
 
   return (
-    <div className="md:w-[48%]">
+    <div className="">
       <h3 className="mb-[52px] text-xl-heading font-medium main-title-gradient text-center ">
         Напишіть
         <br /> повідомлення
