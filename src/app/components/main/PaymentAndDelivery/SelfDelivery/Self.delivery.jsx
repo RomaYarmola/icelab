@@ -13,7 +13,7 @@ export default function SelfDelivery() {
             САМОВИВІЗ З <br />
             ВИРОБНИЦТВА&nbsp;:
           </h3>
-          <TextList data={data} variant="self-delivery" />
+          <TextList data={data} variant="self-delivery" bulletVariant="white" />
         </div>
       </Container>
     </div>

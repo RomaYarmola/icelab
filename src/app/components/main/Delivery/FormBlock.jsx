@@ -45,11 +45,12 @@ export default function FormBlock({
           e.preventDefault();
           handleSubmit();
         }}
-        className="flex flex-col gap-5 w-full mx-auto xs:w-[90%]  sm:max-w-[448px] sm:w-full font-e-ukraine not-italic"
+        className="flex flex-col gap-5 w-full mx-auto xs:w-[90%]  sm:max-w-[448px] sm:w-full font-e-ukraine font-thin not-italic"
       >
         <div className="relative">
           <Input
             isRequired
+            classNames={{ input: "font-thin" }}
             className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field`}
             placeholder="Імʼя"
             name="name"
@@ -67,6 +68,7 @@ export default function FormBlock({
         <div className="relative">
           <Input
             isRequired
+            classNames={{ input: "font-thin" }}
             className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field`}
             placeholder="Номер телефону"
             name="phone"
@@ -82,6 +84,7 @@ export default function FormBlock({
         </div>
 
         <Input
+          classNames={{ input: "font-thin" }}
           className={`block w-full mb-1 rounded-md custom-input overflow-hidden`}
           placeholder="Email"
           name="email"
@@ -94,6 +97,7 @@ export default function FormBlock({
             <div className="relative">
               <Input
                 isRequired
+                classNames={{ input: "font-thin" }}
                 className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field
             `}
                 placeholder="Місто"
@@ -112,6 +116,7 @@ export default function FormBlock({
             <div className="relative">
               <Input
                 isRequired
+                classNames={{ input: "font-thin" }}
                 className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field
             `}
                 placeholder="Відділення Нової пошти"

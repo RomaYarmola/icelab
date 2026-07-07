@@ -15,7 +15,7 @@ export default function TextPart({ quantity, variant }) {
           )}
         </p>
       </div>
-      <p className="mb-4 font-e-ukraine font-medium text-[#686466] leading-normal not-italic text-[12px]">
+      <p className="mb-4 font-e-ukraine font-thin text-[#686466] leading-normal not-italic text-[12px]">
         {variant === "dryIce" ? (
           <>
             Сухий лід виготовлений з високоякісної вуглекислоти (CO₂).
