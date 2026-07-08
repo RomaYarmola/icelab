@@ -99,9 +99,9 @@ export default function Form() {
           classNames={{
             input: "font-thin",
             inputWrapper:
-              "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0",
+              "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0 xl:h-full xl:min-h-full",
           }}
-          className="block w-full mb-1 rounded-md contactInput overflow-hidden"
+          className="block w-full mb-1 rounded-md contactInput overflow-hidden xl:!h-[54px]"
           placeholder="Імʼя або назва компанії"
           name="name"
           value={name}
@@ -112,10 +112,10 @@ export default function Form() {
             classNames={{
               input: "font-thin",
               inputWrapper:
-                "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0",
+                "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0 xl:h-full xl:min-h-full",
             }}
             isRequired
-            className={`block w-full mb-1 rounded-md contactInput overflow-hidden ${
+            className={`block w-full mb-1 rounded-md contactInput overflow-hidden xl:!h-[54px] ${
               phone === "" && "required-field"
             }`}
             placeholder="Номер телефону"
