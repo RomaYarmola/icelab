@@ -7,8 +7,8 @@ const cities = {
   lviv: {
     label: "Львів",
     mapSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2563.680289870587!2d23.93320777620378!3d49.75718587148944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473b0c8b8e7a0c61%3A0xf5b84a1c13048c57!2zNDnCsDQ1JzI1LjkiTiAyM8KwNTYnMDMuNSJF!5e0!3m2!1sen!2sua!4v1699969402823!5m2!1sen!2sua",
-    address: "Львівська\u00A0обл., с.\u00A0Годовиця",
+      "https://maps.google.com/maps?q=Icelab%2C%20%D0%B2%D1%83%D0%BB.%20%D0%A3%D1%81%D0%BF%D1%96%D1%88%D0%BD%D0%B0%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&output=embed",
+    address: "вул.\u00A0Успішна, Львів",
     phones: [
       { phone: "+38 (050) 279 50 31", phoneHref: "tel:+380502795031" },
       { phone: "+38 (095) 160 68 81", phoneHref: "tel:+380951606881" },
