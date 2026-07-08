@@ -16,11 +16,11 @@ const cities = {
   kyiv: {
     label: "Київ",
     mapSrc:
-      "https://maps.google.com/maps?q=%D0%B2%D1%83%D0%BB.%20%D0%9A%D0%BE%D0%BD%D1%8E%D1%88%D0%B8%D0%BD%D0%BD%D0%B0%2010%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&output=embed",
-    address: "вул.\u00A0Конюшинна, 10 Львів",
-    phone: "+38 (097) 07 07 207",
-    phoneHref: "tel:+380970707207",
-    schedule: ["Пн - Пт : 09.00 - 18.00", "Сб : 10.00 - 17.00"],
+      "https://maps.google.com/maps?q=IceLab%20Kyiv%2C%20%D0%B2%D1%83%D0%BB.%20%D0%AF%D0%B3%D1%96%D0%B4%D0%BD%D0%B0%2C%2022%D0%B0%2C%20%D0%92%D0%B8%D1%88%D0%B3%D0%BE%D1%80%D0%BE%D0%B4&output=embed",
+    address: "вул.\u00A0Ягідна, 22а, Вишгород, Київська\u00A0обл.",
+    phone: "+38 (050) 381 19 30",
+    phoneHref: "tel:+380503811930",
+    schedule: ["Пн - Пт : 09.00 - 17.00"],
   },
 };
 
