@@ -9,8 +9,10 @@ const cities = {
     mapSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2563.680289870587!2d23.93320777620378!3d49.75718587148944!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x473b0c8b8e7a0c61%3A0xf5b84a1c13048c57!2zNDnCsDQ1JzI1LjkiTiAyM8KwNTYnMDMuNSJF!5e0!3m2!1sen!2sua!4v1699969402823!5m2!1sen!2sua",
     address: "Львівська\u00A0обл., с.\u00A0Годовиця",
-    phone: "+38 (050) 279 50 31",
-    phoneHref: "tel:+380502795031",
+    phones: [
+      { phone: "+38 (050) 279 50 31", phoneHref: "tel:+380502795031" },
+      { phone: "+38 (095) 160 68 81", phoneHref: "tel:+380951606881" },
+    ],
     schedule: [
       "Пн–Пт: 9:00–17:00",
       "Сб: працюємо за домовленістю — телефонуйте заздалегідь",
@@ -22,8 +24,10 @@ const cities = {
     mapSrc:
       "https://maps.google.com/maps?q=IceLab%20Kyiv%2C%20%D0%B2%D1%83%D0%BB.%20%D0%AF%D0%B3%D1%96%D0%B4%D0%BD%D0%B0%2C%2022%D0%B0%2C%20%D0%92%D0%B8%D1%88%D0%B3%D0%BE%D1%80%D0%BE%D0%B4&output=embed",
     address: "вул.\u00A0Ягідна, 22а, Вишгород, Київська\u00A0обл.",
-    phone: "+38 (095) 16 06 881",
-    phoneHref: "tel:+380951606881",
+    phones: [
+      { phone: "+38 (095) 160 68 81", phoneHref: "tel:+380951606881" },
+      { phone: "+38 (050) 381 19 30", phoneHref: "tel:+380503811930" },
+    ],
     schedule: [
       "Пн–Пт: 9:00–17:00",
       "Сб: працюємо за домовленістю — телефонуйте заздалегідь",
@@ -87,12 +91,17 @@ export default function ContactsBlock() {
       </div>
       <div>
         <h3 className="text-[20px] l:text-[32px] font-medium mb-5">Контакти</h3>
-        <Link
-          href={city.phoneHref}
-          className="font-e-ukraine font-extralight not-italic text-md-responsive"
-        >
-          {city.phone}
-        </Link>
+        <div className="flex flex-col gap-2">
+          {city.phones.map(({ phone, phoneHref }) => (
+            <Link
+              key={phoneHref}
+              href={phoneHref}
+              className="font-e-ukraine font-extralight not-italic text-md-responsive"
+            >
+              {phone}
+            </Link>
+          ))}
+        </div>
       </div>
       <div>
         <h3 className="text-[20px] l:text-[32px] font-medium mb-5">
