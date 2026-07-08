@@ -5,11 +5,14 @@ export default function TextItem({
   textSize = "14px",
   textClassName = "",
 }) {
+  const isWhiteBullet =
+    bulletVariant === "white" || variant === "white";
+
   return (
     <li className="flex gap-3 items-center">
       <div
         className={`size-3 rounded-full shrink-0 ${
-          bulletVariant === "white" ? "bg-white" : "bg-[#A0D3FE]"
+          isWhiteBullet ? "bg-white" : "bg-[#A0D3FE]"
         }`}
       />
       <p

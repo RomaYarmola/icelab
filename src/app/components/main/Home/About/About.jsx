@@ -19,7 +19,15 @@ export default function About() {
       {!isSafari && <AboutGradient />}
 
       <AboutClouds />
-      <Container>
+      <Container className="relative">
+        <div className="hidden md:block absolute z-10 bottom-[-73px] right-[-201px] w-[483px] h-[482px]">
+          <Image
+            src="/images/about/about-decor.webp"
+            alt="about-decor"
+            fill
+            className="object-cover"
+          />
+        </div>
         <div className="flex flex-col gap-5 pt-[142px] l:pt-[194px] pb-[342px] md:pb-[69px] relative z-10 mx-auto max-w-[328px] md:max-w-none">
           <div className="flex flex-col gap-5 md:flex-row">
             <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[478px]">
