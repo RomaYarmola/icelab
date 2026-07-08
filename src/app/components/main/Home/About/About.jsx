@@ -19,10 +19,18 @@ export default function About() {
       {!isSafari && <AboutGradient />}
 
       <AboutClouds />
-      <Container>
+      <Container className="relative">
+        <div className="hidden md:block absolute z-10 bottom-[-73px] right-[-201px] w-[483px] h-[482px]">
+          <Image
+            src="/images/about/about-decor.webp"
+            alt="about-decor"
+            fill
+            className="object-cover"
+          />
+        </div>
         <div className="flex flex-col gap-5 pt-[142px] l:pt-[194px] pb-[342px] md:pb-[69px] relative z-10 mx-auto max-w-[328px] md:max-w-none">
           <div className="flex flex-col gap-5 md:flex-row">
-            <div className="about-card px-4 py-7 backdrop-blur-md xl:w-[478px]">
+            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[478px]">
               <h3 className="text-secondary-white-gradient text-[24px] uppercase font-e-ukraine font-extralight not-italic">
                 Про нас
               </h3>
@@ -46,7 +54,7 @@ export default function About() {
               />
             </div>
 
-            <div className="about-card px-4 py-7 backdrop-blur-md xl:w-[393px]">
+            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[393px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 Сировина і потужності:
               </h5>
@@ -55,11 +63,11 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-5 md:flex-row">
-            <div className="bg-[#1E73D7] px-4 py-7 backdrop-blur-md rounded-[14px] md:w-[30%] xl:w-[373px]">
-              <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
-                Сучасне виробництво:
+            <div className="bg-[#1E73D7] px-4 py-7 xl:p-7 backdrop-blur-md rounded-[14px] md:w-[30%] xl:w-[373px]">
+              <h5 className="xl:max-w-[180px] text-white text-[18px] font-medium uppercase italic mb-6">
+                Сучасне виробництво
               </h5>
-              <TextList data={production} variant="white" />
+              <TextList data={production} bulletVariant="white" />
             </div>
 
             <div className="relative w-full h-[250px] md:h-auto rounded-[14px] overflow-hidden md:order-3 md:w-[25%] xl:w-[254px]">
@@ -71,29 +79,29 @@ export default function About() {
               />
             </div>
 
-            <div className="about-card px-4 py-7 backdrop-blur-md md:order-2 md:w-[45%] xl:w-[455px]">
+            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md md:order-2 md:w-[45%] xl:w-[455px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
-                Гнучкі рішення для клієнтів:
+                Гнучкі рішення для клієнтів
               </h5>
               <TextList data={decisions} />
             </div>
           </div>
 
           <div className="flex flex-col gap-5 md:flex-row">
-            <div className="relative w-full h-[216px] rounded-[14px] overflow-hidden xl:w-[570px]">
+            <div className="relative w-full h-[216px] xl:h-auto rounded-[14px] overflow-hidden xl:w-[570px]">
               <Image
                 src="/images/about/about-three.webp"
                 alt="about-three"
                 fill
-                className="object-cover"
+                className="object-cover xl:object-[center_68%]"
               />
             </div>
 
-            <div className="about-card px-4 py-7 backdrop-blur-md xl:w-[530px]">
+            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[530px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
-                Досвід та надійність:
+                Досвід та надійність
               </h5>
-              <TextList data={expirience} variant="white" />
+              <TextList data={expirience} bulletVariant="white" />
             </div>
           </div>
         </div>

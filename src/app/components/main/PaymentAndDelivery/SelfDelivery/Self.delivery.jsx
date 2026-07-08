@@ -5,7 +5,7 @@ import { data } from "./data";
 export default function SelfDelivery() {
   return (
     <div className="overflow-x-clip relative">
-      <div className="about-card py-7 px-4 relative z-[4]">
+      <div className="about-card py-7 px-4 xl:p-7 relative z-[4]">
         <h3 className="text-white font-medium text-[20px] mb-5 md:text-commonBlue">
           САМОВИВІЗ З <br />
           ВИРОБНИЦТВА:
