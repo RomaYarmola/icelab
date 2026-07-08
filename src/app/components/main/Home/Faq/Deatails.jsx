@@ -21,7 +21,10 @@ export default function Details() {
               className="svg rotate-180"
             />
           </summary>
-          <p className="mt-4" dangerouslySetInnerHTML={{ __html: answer }} />
+          <p
+            className="mt-4 font-e-ukraine font-[100]"
+            dangerouslySetInnerHTML={{ __html: answer }}
+          />
         </details>
       ))}
     </div>
