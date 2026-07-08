@@ -51,7 +51,8 @@ nav {
 }
 
 .heroBg {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       180deg,
       rgba(245, 247, 255, 0.12) 35.19%,
       rgba(242, 246, 255, 0.86) 88.93%
@@ -336,14 +337,11 @@ textarea::placeholder {
 .about-card::before {
   content: "";
   position: absolute;
+  opacity: 20%;
   inset: 0;
   border-radius: 14px;
   padding: 1px;
-  background: linear-gradient(
-    180deg,
-    #ffffff 0%,
-    rgba(60, 166, 255, 0.2) 100%
-  );
+  background: linear-gradient(180deg, #ffffff 0%, rgba(60, 166, 255, 0.2) 100%);
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
