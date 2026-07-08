@@ -7,7 +7,7 @@ export default function UkraineDelivery() {
     <div className="overflow-x-clip relative bg-white">
       {/* <DeliveryBg /> */}
 
-      <div className="relative z-[4] bg-[rgb(110_178_255_/_0.19)] py-7 px-4 rounded-[14px] overflow-hidden">
+      <div className="relative z-[4] bg-[rgb(110_178_255_/_0.19)] py-7 px-4 xl:p-7 rounded-[14px] overflow-hidden">
         <h3 className="text-commonBlue font-medium text-[20px] mb-5">
           ДОСТАВКА ПО УКРАЇНІ:
         </h3>
