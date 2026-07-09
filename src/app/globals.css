@@ -389,3 +389,483 @@ textarea::placeholder {
 
   width: 100%;
 }
+
+/* ImageCarousel — моб: 8+7px, десктоп: 16+14px, картка = ширина батька − сума відступів */
+.carousel-card-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-card-item {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: calc(100% - 15px);
+  transform-origin: right center;
+  transition:
+    transform 2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    height 2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    opacity 1s ease-in-out,
+    z-index 0s linear 1s;
+}
+
+@media (min-width: 1024px) {
+  .carousel-card-item {
+    width: calc(100% - 30px);
+  }
+}
+
+.carousel-right-card {
+  height: 193px;
+  transform: translate(-15px, -50%);
+  z-index: 30;
+  opacity: 1;
+  animation: carouselMoveToLeft 15s cubic-bezier(0.645, 0.045, 0.355, 1)
+    infinite;
+}
+
+.carousel-center-card {
+  height: 172px;
+  transform: translate(-7px, -50%);
+  z-index: 20;
+  opacity: 1;
+  animation: carouselMoveToRight 15s cubic-bezier(0.645, 0.045, 0.355, 1)
+    infinite;
+}
+
+.carousel-left-card {
+  height: 139px;
+  transform: translate(0, -50%);
+  z-index: 10;
+  opacity: 1;
+  animation: carouselMoveToMiddle 15s cubic-bezier(0.645, 0.045, 0.355, 1)
+    infinite;
+}
+
+/* Extended layout (N > 3): static, no animation; backstack = same size as center, under it */
+.carousel-extended .carousel-right-card,
+.carousel-extended .carousel-center-card,
+.carousel-extended .carousel-left-card {
+  animation: none;
+}
+
+.carousel-backstack-card {
+  height: 172px;
+  transform: translate(-7px, -50%);
+  z-index: 5;
+  opacity: 0;
+}
+
+@media (min-width: 1024px) {
+  .carousel-right-card {
+    height: 252px;
+    transform: translate(-30px, -50%);
+    animation: carouselMoveToLeftDesktop 10s
+      cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  .carousel-center-card {
+    height: 224px;
+    transform: translate(-14px, -50%);
+    animation: carouselMoveToRightDesktop 10s
+      cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  .carousel-left-card {
+    height: 181px;
+    animation: carouselMoveToMiddleDesktop 10s
+      cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  .carousel-backstack-card {
+    height: 224px;
+    transform: translate(-14px, -50%);
+    opacity: 0;
+  }
+}
+
+@keyframes carouselMoveToLeft {
+  0%,
+  28% {
+    transform: translate(-15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+  33%,
+  61% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+  66%,
+  94% {
+    transform: translate(-7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+  99%,
+  100% {
+    transform: translate(-15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+}
+
+@keyframes carouselMoveToRight {
+  0%,
+  28% {
+    transform: translate(-7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+  33%,
+  61% {
+    transform: translate(-15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+  66%,
+  94% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+  99%,
+  100% {
+    transform: translate(-7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+}
+
+@keyframes carouselMoveToMiddle {
+  0%,
+  28% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+  33%,
+  61% {
+    transform: translate(-7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+  66%,
+  94% {
+    transform: translate(-15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+  99%,
+  100% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+}
+
+@keyframes carouselMoveToLeftDesktop {
+  0%,
+  28% {
+    transform: translate(-30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+  33%,
+  61% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+  66%,
+  94% {
+    transform: translate(-14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+  99%,
+  100% {
+    transform: translate(-30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+}
+
+@keyframes carouselMoveToRightDesktop {
+  0%,
+  28% {
+    transform: translate(-14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+  33%,
+  61% {
+    transform: translate(-30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+  66%,
+  94% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+  99%,
+  100% {
+    transform: translate(-14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+}
+
+@keyframes carouselMoveToMiddleDesktop {
+  0%,
+  28% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+  33%,
+  61% {
+    transform: translate(-14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+  66%,
+  94% {
+    transform: translate(-30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+  99%,
+  100% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+}
+
+/* ImageCarousel variant: left (нижні картки виступають зліва) */
+.carousel-variant-left .carousel-card-item {
+  left: 0;
+  right: auto;
+  transform-origin: left center;
+}
+
+.carousel-variant-left .carousel-right-card {
+  transform: translate(15px, -50%);
+  animation: carouselMoveToLeftFromLeft 15s cubic-bezier(0.645, 0.045, 0.355, 1)
+    infinite;
+}
+
+.carousel-variant-left .carousel-center-card {
+  transform: translate(7px, -50%);
+  animation: carouselMoveToRightFromLeft 15s cubic-bezier(0.645, 0.045, 0.355, 1)
+    infinite;
+}
+
+.carousel-variant-left .carousel-left-card {
+  transform: translate(0, -50%);
+  animation: carouselMoveToMiddleFromLeft 15s
+    cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+}
+
+.carousel-variant-left .carousel-backstack-card {
+  transform: translate(7px, -50%);
+  opacity: 0;
+}
+
+.carousel-variant-left.carousel-extended .carousel-right-card,
+.carousel-variant-left.carousel-extended .carousel-center-card,
+.carousel-variant-left.carousel-extended .carousel-left-card {
+  animation: none;
+}
+
+@media (min-width: 1024px) {
+  .carousel-variant-left .carousel-right-card {
+    transform: translate(30px, -50%);
+    animation: carouselMoveToLeftFromLeftDesktop 10s
+      cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  .carousel-variant-left .carousel-center-card {
+    transform: translate(14px, -50%);
+    animation: carouselMoveToRightFromLeftDesktop 10s
+      cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  .carousel-variant-left .carousel-left-card {
+    transform: translate(0, -50%);
+    animation: carouselMoveToMiddleFromLeftDesktop 10s
+      cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
+  }
+
+  .carousel-variant-left .carousel-backstack-card {
+    transform: translate(14px, -50%);
+    opacity: 0;
+  }
+}
+
+@keyframes carouselMoveToLeftFromLeft {
+  0%,
+  28% {
+    transform: translate(15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+  33%,
+  61% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+  66%,
+  94% {
+    transform: translate(7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+  99%,
+  100% {
+    transform: translate(15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+}
+
+@keyframes carouselMoveToRightFromLeft {
+  0%,
+  28% {
+    transform: translate(7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+  33%,
+  61% {
+    transform: translate(15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+  66%,
+  94% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+  99%,
+  100% {
+    transform: translate(7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+}
+
+@keyframes carouselMoveToMiddleFromLeft {
+  0%,
+  28% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+  33%,
+  61% {
+    transform: translate(7px, -50%);
+    height: 172px;
+    z-index: 20;
+  }
+  66%,
+  94% {
+    transform: translate(15px, -50%);
+    height: 193px;
+    z-index: 30;
+  }
+  99%,
+  100% {
+    transform: translate(0, -50%);
+    height: 139px;
+    z-index: 10;
+  }
+}
+
+@keyframes carouselMoveToLeftFromLeftDesktop {
+  0%,
+  28% {
+    transform: translate(30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+  33%,
+  61% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+  66%,
+  94% {
+    transform: translate(14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+  99%,
+  100% {
+    transform: translate(30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+}
+
+@keyframes carouselMoveToRightFromLeftDesktop {
+  0%,
+  28% {
+    transform: translate(14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+  33%,
+  61% {
+    transform: translate(30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+  66%,
+  94% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+  99%,
+  100% {
+    transform: translate(14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+}
+
+@keyframes carouselMoveToMiddleFromLeftDesktop {
+  0%,
+  28% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+  33%,
+  61% {
+    transform: translate(14px, -50%);
+    height: 224px;
+    z-index: 20;
+  }
+  66%,
+  94% {
+    transform: translate(30px, -50%);
+    height: 252px;
+    z-index: 30;
+  }
+  99%,
+  100% {
+    transform: translate(0, -50%);
+    height: 181px;
+    z-index: 10;
+  }
+}
