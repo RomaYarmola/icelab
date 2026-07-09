@@ -417,7 +417,7 @@ textarea::placeholder {
 }
 
 .carousel-right-card {
-  height: 193px;
+  height: 216px;
   transform: translate(-15px, -50%);
   z-index: 30;
   opacity: 1;
@@ -459,27 +459,27 @@ textarea::placeholder {
 
 @media (min-width: 1024px) {
   .carousel-right-card {
-    height: 252px;
+    height: 216px;
     transform: translate(-30px, -50%);
     animation: carouselMoveToLeftDesktop 10s
       cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
   }
 
   .carousel-center-card {
-    height: 224px;
+    height: 172px;
     transform: translate(-14px, -50%);
     animation: carouselMoveToRightDesktop 10s
       cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
   }
 
   .carousel-left-card {
-    height: 181px;
+    height: 139px;
     animation: carouselMoveToMiddleDesktop 10s
       cubic-bezier(0.645, 0.045, 0.355, 1) infinite;
   }
 
   .carousel-backstack-card {
-    height: 224px;
+    height: 172px;
     transform: translate(-14px, -50%);
     opacity: 0;
   }
@@ -489,7 +489,7 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(-15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
   33%,
@@ -507,7 +507,7 @@ textarea::placeholder {
   99%,
   100% {
     transform: translate(-15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
 }
@@ -522,7 +522,7 @@ textarea::placeholder {
   33%,
   61% {
     transform: translate(-15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
   66%,
@@ -555,7 +555,7 @@ textarea::placeholder {
   66%,
   94% {
     transform: translate(-15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
   99%,
@@ -570,25 +570,25 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(-30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
   33%,
   61% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
   66%,
   94% {
     transform: translate(-14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
   99%,
   100% {
     transform: translate(-30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
 }
@@ -597,25 +597,25 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(-14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
   33%,
   61% {
     transform: translate(-30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
   66%,
   94% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
   99%,
   100% {
     transform: translate(-14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
 }
@@ -624,25 +624,25 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
   33%,
   61% {
     transform: translate(-14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
   66%,
   94% {
     transform: translate(-30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
   99%,
   100% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
 }
@@ -712,7 +712,7 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
   33%,
@@ -730,7 +730,7 @@ textarea::placeholder {
   99%,
   100% {
     transform: translate(15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
 }
@@ -745,7 +745,7 @@ textarea::placeholder {
   33%,
   61% {
     transform: translate(15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
   66%,
@@ -778,7 +778,7 @@ textarea::placeholder {
   66%,
   94% {
     transform: translate(15px, -50%);
-    height: 193px;
+    height: 216px;
     z-index: 30;
   }
   99%,
@@ -793,25 +793,25 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
   33%,
   61% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
   66%,
   94% {
     transform: translate(14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
   99%,
   100% {
     transform: translate(30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
 }
@@ -820,25 +820,25 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
   33%,
   61% {
     transform: translate(30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
   66%,
   94% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
   99%,
   100% {
     transform: translate(14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
 }
@@ -847,25 +847,25 @@ textarea::placeholder {
   0%,
   28% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
   33%,
   61% {
     transform: translate(14px, -50%);
-    height: 224px;
+    height: 172px;
     z-index: 20;
   }
   66%,
   94% {
     transform: translate(30px, -50%);
-    height: 252px;
+    height: 216px;
     z-index: 30;
   }
   99%,
   100% {
     transform: translate(0, -50%);
-    height: 181px;
+    height: 139px;
     z-index: 10;
   }
 }
