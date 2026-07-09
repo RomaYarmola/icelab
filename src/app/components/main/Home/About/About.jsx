@@ -4,6 +4,7 @@ import AboutGradient from "./AboutGradients";
 import AboutClouds from "./AboutClouds";
 import { useIsSafari } from "@/hooks/useIsSafari";
 import TextList from "@/app/components/common/TextList/TextList";
+import ImageCarousel from "@/app/components/common/ImageCarousel/ImageCarousel";
 import { materials, production, decisions, expirience } from "./data";
 
 import Image from "next/image";
@@ -88,14 +89,16 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-5 md:flex-row">
-            <div className="relative w-full h-[216px] xl:h-auto rounded-[14px] overflow-hidden xl:w-[570px]">
-              <Image
-                src="/images/about/about-three.webp"
-                alt="about-three"
-                fill
-                className="object-cover xl:object-[center_68%]"
-              />
-            </div>
+            <ImageCarousel
+              variant="right"
+              className="relative w-full h-[216px] xl:h-auto rounded-[14px] overflow-hidden xl:w-[570px]"
+              images={[
+                { src: "/images/about/carousel-one.webp", alt: "carousel-one" },
+                { src: "/images/about/carousel-two.webp", alt: "carousel-two" },
+                { src: "/images/about/carousel-three.webp", alt: "carousel-three" },
+                { src: "/images/about/carousel-four.webp", alt: "carousel-four" },
+              ]}
+            />
 
             <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[530px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
