@@ -31,7 +31,7 @@ export default function About() {
         </div>
         <div className="flex flex-col gap-5 pt-[142px] l:pt-[194px] pb-[342px] md:pb-[69px] relative z-10 mx-auto max-w-[328px] md:max-w-none">
           <div className="flex flex-col gap-5 md:flex-row">
-            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[478px]">
+            <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[478px]">
               <h3 className="text-secondary-white-gradient text-[24px] uppercase font-e-ukraine font-extralight not-italic">
                 Про нас
               </h3>
@@ -55,7 +55,7 @@ export default function About() {
               />
             </div>
 
-            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[393px]">
+            <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[393px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 Сировина і потужності:
               </h5>
@@ -64,7 +64,7 @@ export default function About() {
           </div>
 
           <div className="flex flex-col gap-5 md:flex-row">
-            <div className="bg-[#1E73D7] px-4 py-7 xl:p-7 backdrop-blur-md rounded-[14px] md:w-[30%] xl:w-[373px]">
+            <div className="bg-[#1E73D7] px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md rounded-[14px] md:w-[30%] xl:w-[373px]">
               <h5 className="xl:max-w-[180px] text-white text-[18px] font-medium uppercase italic mb-6">
                 Сучасне виробництво
               </h5>
@@ -80,7 +80,7 @@ export default function About() {
               />
             </div>
 
-            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md md:order-2 md:w-[45%] xl:w-[455px]">
+            <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md md:order-2 md:w-[45%] xl:w-[455px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 Гнучкі рішення для клієнтів
               </h5>
@@ -91,16 +91,22 @@ export default function About() {
           <div className="flex flex-col gap-5 md:flex-row">
             <ImageCarousel
               variant="right"
-              className="relative w-full h-[216px] xl:h-auto rounded-[14px] overflow-hidden xl:w-[570px]"
+              className="relative w-full h-[216px] rounded-[14px] overflow-hidden xl:w-[570px]"
               images={[
                 { src: "/images/about/carousel-one.webp", alt: "carousel-one" },
                 { src: "/images/about/carousel-two.webp", alt: "carousel-two" },
-                { src: "/images/about/carousel-three.webp", alt: "carousel-three" },
-                { src: "/images/about/carousel-four.webp", alt: "carousel-four" },
+                {
+                  src: "/images/about/carousel-three.webp",
+                  alt: "carousel-three",
+                },
+                {
+                  src: "/images/about/carousel-four.webp",
+                  alt: "carousel-four",
+                },
               ]}
             />
 
-            <div className="about-card px-4 py-7 xl:p-7 backdrop-blur-md xl:w-[530px]">
+            <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[530px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 Досвід та надійність
               </h5>

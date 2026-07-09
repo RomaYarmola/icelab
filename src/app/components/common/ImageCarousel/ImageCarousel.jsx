@@ -19,7 +19,7 @@ function getCardClass(idx, activeIndex, total) {
 export default function ImageCarousel({
   images,
   variant = "right",
-  className = "relative w-full min-w-0 flex-1 h-[193px] lg:h-[252px] overflow-hidden",
+  className = "relative w-full min-w-0 flex-1 h-[216px] overflow-hidden",
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const N = images.length;
@@ -47,7 +47,7 @@ export default function ImageCarousel({
   return (
     <div className={className}>
       <div
-        className={`carousel-card-stack w-full h-full min-h-[193px] lg:min-h-[252px] ${
+        className={`carousel-card-stack w-full h-full min-h-[216px] ${
           isExtended ? "carousel-extended" : ""
         } ${variant === "left" ? "carousel-variant-left" : ""}`}
       >
