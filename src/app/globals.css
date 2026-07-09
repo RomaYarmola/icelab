@@ -403,7 +403,11 @@ textarea::placeholder {
   right: 0;
   width: calc(100% - 15px);
   transform-origin: right center;
-  transition: all 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition:
+    transform 2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    height 2s cubic-bezier(0.645, 0.045, 0.355, 1),
+    opacity 1s ease-in-out,
+    z-index 0s linear 1s;
 }
 
 @media (min-width: 1024px) {
@@ -416,6 +420,7 @@ textarea::placeholder {
   height: 193px;
   transform: translate(-15px, -50%);
   z-index: 30;
+  opacity: 1;
   animation: carouselMoveToLeft 15s cubic-bezier(0.645, 0.045, 0.355, 1)
     infinite;
 }
@@ -424,6 +429,7 @@ textarea::placeholder {
   height: 172px;
   transform: translate(-7px, -50%);
   z-index: 20;
+  opacity: 1;
   animation: carouselMoveToRight 15s cubic-bezier(0.645, 0.045, 0.355, 1)
     infinite;
 }
@@ -432,6 +438,7 @@ textarea::placeholder {
   height: 139px;
   transform: translate(0, -50%);
   z-index: 10;
+  opacity: 1;
   animation: carouselMoveToMiddle 15s cubic-bezier(0.645, 0.045, 0.355, 1)
     infinite;
 }
@@ -447,6 +454,7 @@ textarea::placeholder {
   height: 172px;
   transform: translate(-7px, -50%);
   z-index: 5;
+  opacity: 0;
 }
 
 @media (min-width: 1024px) {
@@ -473,6 +481,7 @@ textarea::placeholder {
   .carousel-backstack-card {
     height: 224px;
     transform: translate(-14px, -50%);
+    opacity: 0;
   }
 }
 
@@ -665,6 +674,7 @@ textarea::placeholder {
 
 .carousel-variant-left .carousel-backstack-card {
   transform: translate(7px, -50%);
+  opacity: 0;
 }
 
 .carousel-variant-left.carousel-extended .carousel-right-card,
@@ -694,6 +704,7 @@ textarea::placeholder {
 
   .carousel-variant-left .carousel-backstack-card {
     transform: translate(14px, -50%);
+    opacity: 0;
   }
 }
 
