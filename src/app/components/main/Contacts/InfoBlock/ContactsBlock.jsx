@@ -10,8 +10,8 @@ const cities = {
       "https://maps.google.com/maps?q=Icelab%2C%20%D0%B2%D1%83%D0%BB.%20%D0%A3%D1%81%D0%BF%D1%96%D1%88%D0%BD%D0%B0%2C%20%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&output=embed",
     address: "Львівська\u00A0обл., с.\u00A0Годовиця",
     phones: [
-      { phone: "+38 (050) 279 50 31", phoneHref: "tel:+380502795031" },
       { phone: "+38 (095) 160 68 81", phoneHref: "tel:+380951606881" },
+      { phone: "+38 (050) 279 50 31", phoneHref: "tel:+380502795031" },
     ],
     schedule: [
       "Пн–Пт: 9:00–17:00",
@@ -26,7 +26,7 @@ const cities = {
     address: "вул.\u00A0Ягідна, 22а, Вишгород, Київська\u00A0обл.",
     phones: [
       { phone: "+38 (095) 160 68 81", phoneHref: "tel:+380951606881" },
-      { phone: "+38 (050) 381 19 30", phoneHref: "tel:+380503811930" },
+      { phone: "+38 (050) 279 50 31", phoneHref: "tel:+380502795031" },
     ],
     schedule: [
       "Пн–Пт: 9:00–17:00",
