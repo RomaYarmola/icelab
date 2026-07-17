@@ -81,7 +81,7 @@ export default async function ProductPage({ params }) {
     <Container className="pt-[120px] md:pt-[170px] pb-[100px] md:pb-[140px]">
       <JsonLd data={productSchema(product, productPath)} />
       <Breadcrumbs items={crumbs} />
-      <div className="flex flex-col md:flex-row gap-8 l:gap-16">
+      <div data-product-card className="flex flex-col md:flex-row gap-8 l:gap-16">
         {/* Галерея */}
         <div className="md:w-1/2 md:sticky md:top-[110px] self-start w-full">
           <ProductGallery

@@ -60,6 +60,7 @@ export default function Header() {
             }}
             href="/basket"
             className="relative"
+            data-cart-target="true"
           >
             <Image
               src="/icons/basket.svg"
