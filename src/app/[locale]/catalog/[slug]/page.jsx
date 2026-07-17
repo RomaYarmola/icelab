@@ -1,12 +1,19 @@
 import Container from "@/utils/Container";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getProductBySlug, getAllProductSlugs } from "@/lib/products";
+import {
+  getProductBySlug,
+  getAllProductSlugs,
+  getProductsByCategory,
+} from "@/lib/products";
 import { toNextMetadata } from "@/lib/seo";
 import ProductGallery from "@/app/components/main/Catalog/ProductGallery";
 import AddToCartControl from "@/app/components/main/Catalog/AddToCartControl";
+import ProductInfoBlocks from "@/app/components/main/Catalog/ProductInfoBlocks";
+import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import JsonLd from "@/app/components/common/JsonLd";
+import { Link } from "@/i18n/navigation";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
 
@@ -39,7 +46,15 @@ export default async function ProductPage({ params }) {
   const t = await getTranslations({ locale, namespace: "ProductPage" });
   const tc = await getTranslations({ locale, namespace: "Catalog" });
   const tcat = await getTranslations({ locale, namespace: "Categories" });
+  const tu = await getTranslations({ locale, namespace: "Usp" });
   const isAvailable = product.availability === "in-stock";
+
+  // Cross-sell «Схожі товари» — та сама категорія, крім поточного (до 3).
+  const similar = product.category
+    ? (await getProductsByCategory(locale, product.category))
+        .filter((p) => p.slug !== product.slug)
+        .slice(0, 3)
+    : [];
   const productPath = `${locale === "uk" ? "" : "/" + locale}/catalog/${
     product.slug
   }`;
@@ -128,11 +143,38 @@ export default async function ProductPage({ params }) {
             </div>
           )}
 
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row gap-3">
             <AddToCartControl product={product} variant="page" />
+            {/* Другий CTA для B2B — веде на форму заявки (P1-7) */}
+            <Link
+              href="/contacts"
+              className="inline-flex items-center justify-center rounded-full border border-commonBlue/40 px-6 py-3 not-italic font-e-ukraine text-commonBlue hover:bg-commonBlue/10 transition-colors"
+            >
+              {t("getPrice")}
+            </Link>
           </div>
+
+          {/* Комерційні блоки: доставка/оплата, способи оплати, УТП (P1-7) */}
+          <ProductInfoBlocks
+            deliveryTitle={t("deliveryTitle")}
+            deliveryItems={t.raw("deliveryItems")}
+            paymentTitle={t("paymentTitle")}
+            paymentItems={t.raw("paymentItems")}
+            uspTitle={tu("title")}
+            uspItems={tu.raw("items")}
+          />
         </div>
       </div>
+
+      {/* Cross-sell «Схожі товари» (P1-7) */}
+      {similar.length > 0 && (
+        <div className="mt-16 md:mt-24">
+          <h2 className="text-xl md:text-2xl main-title-gradient mb-6">
+            {t("similarTitle")}
+          </h2>
+          <CatalogList products={similar} />
+        </div>
+      )}
     </Container>
   );
 }
