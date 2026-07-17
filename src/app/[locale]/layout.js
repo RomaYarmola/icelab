@@ -11,6 +11,7 @@ import { routing } from "@/i18n/routing";
 import { getPriceSettings } from "@/lib/priceSettings";
 import { organizationSchema } from "@/lib/schema";
 import JsonLd from "../components/common/JsonLd";
+import TrackingProvider from "../components/common/TrackingProvider";
 import { PriceSettingsProvider } from "../components/providers/PriceSettingsProvider";
 import Footer from "../components/modules/Footer/Footer";
 import Header from "../components/modules/Header/Header";
@@ -192,6 +193,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           `}
         </Script>
         <NextIntlClientProvider messages={messages}>
+          <TrackingProvider />
           <PriceSettingsProvider value={priceSettings}>
             <Header />
             <main>{children}</main>

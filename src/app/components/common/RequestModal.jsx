@@ -90,7 +90,10 @@ export default function RequestModal({
                     setForm((f) => ({ ...f, name: e.target.value }))
                   }
                   className="rounded-md contactInput overflow-hidden"
-                  classNames={{ input: "font-thin not-italic" }}
+                  classNames={{
+                    input:
+                      "font-e-ukraine font-thin not-italic placeholder:font-e-ukraine placeholder:not-italic placeholder:font-thin placeholder:text-commonBlue/50",
+                  }}
                 />
 
                 <div>
@@ -102,7 +105,10 @@ export default function RequestModal({
                       setForm((f) => ({ ...f, phone: e.target.value }))
                     }
                     className="rounded-md contactInput overflow-hidden"
-                    classNames={{ input: "font-thin not-italic" }}
+                    classNames={{
+                      input:
+                        "font-e-ukraine font-thin not-italic placeholder:font-e-ukraine placeholder:not-italic placeholder:font-thin placeholder:text-commonBlue/50",
+                    }}
                   />
                   {phoneError && (
                     <p className="text-[#F31260] text-[11px] mt-1">
@@ -117,7 +123,7 @@ export default function RequestModal({
                   onChange={(e) =>
                     setForm((f) => ({ ...f, comment: e.target.value }))
                   }
-                  className="contactTextarea block w-full bg-transparent border border-commonBlue rounded-md px-4 py-3 resize-none h-[110px] outline-none font-e-ukraine font-thin not-italic"
+                  className="contactTextarea block w-full bg-transparent border border-commonBlue rounded-md px-4 py-3 resize-none h-[110px] outline-none font-e-ukraine font-thin not-italic placeholder:font-e-ukraine placeholder:not-italic placeholder:font-thin placeholder:text-commonBlue/50"
                 />
 
                 <GradientButton type="submit" text={t("submit")} />

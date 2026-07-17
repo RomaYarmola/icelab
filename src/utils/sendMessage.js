@@ -1,7 +1,12 @@
+import { getClientContext } from "./tracking";
+
 export async function sendMessage(message) {
   if (!message) {
     return { success: false, error: "Введите сообщение!" };
   }
+
+  // Додаємо контекст клієнта (джерело, UTM, маршрут по сайту, час).
+  const fullMessage = `${message}${getClientContext()}`;
 
   try {
     const response = await fetch("/api/sendMessageTelegram", {
@@ -9,7 +14,7 @@ export async function sendMessage(message) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message: fullMessage }),
     });
 
     const data = await response.json();
