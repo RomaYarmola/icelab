@@ -173,6 +173,12 @@ export async function getProducts(locale) {
     .map((p) => normalizeProduct(p, locale, pricing, t));
 }
 
+// Товари однієї категорії (для категорійних посадкових сторінок P1-3).
+export async function getProductsByCategory(locale, categoryKey) {
+  const all = await getProducts(locale);
+  return all.filter((p) => p.category === categoryKey);
+}
+
 export async function getProductBySlug(slug, locale) {
   const raw = await sanityFetch(PRODUCT_BY_SLUG_QUERY, { slug }, null);
   if (!raw) return null;
