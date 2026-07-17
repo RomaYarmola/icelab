@@ -128,54 +128,49 @@ export default function Footer() {
         </div>
 
         {/* Версія для md і більше */}
-        <div className="hidden md:flex md:justify-between md:gap-6">
-          {/* Логотип, соцмережі, копірайт */}
-          <div className="flex flex-col justify-between">
+        <div className="hidden md:block">
+          {/* Верхній ряд: бренд ліворуч, CO2LAB праворуч */}
+          <div className="flex justify-between gap-6 mb-14">
             <div>
-              <Link href="/" className="mb-12 flex">
+              <Link href="/" className="mb-8 flex">
                 <Image
                   src="/icons/white-logo.svg"
-                  alt="logo"
+                  alt="IceLab логотип"
                   width={100}
                   height={88}
                 />
               </Link>
-
               <SocLinks variant="footer" />
             </div>
 
-            <p className="base-text text-white font-[200] md:mt-16">
-              © {new Date().getFullYear()} ICELAB
-            </p>
-          </div>
-
-          {/* Меню */}
-          <div className="md:mr-[14%] lg:mr-[19%]">
-            <FooterNav variant="column" />
-          </div>
-
-          {/* CO2LAB */}
-          <div className="flex flex-col justify-between">
-            <div>
+            <div className="text-right">
               <a
                 href="https://www.co2lab.pro/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-5 flex"
+                className="mb-5 flex justify-end"
               >
                 <Image
                   src="/icons/co2-logo.svg"
-                  alt="co2"
+                  alt="CO2LAB"
                   width={81}
                   height={36}
                 />
               </a>
-
-              <p className="max-w-[200px] font-e-ukraine not-italic text-[14px] font-[200] leading-[1.2] text-white">
+              <p className="max-w-[240px] ml-auto font-e-ukraine not-italic text-[14px] font-[200] leading-[1.2] text-white">
                 {t("co2Slogan")}
               </p>
             </div>
+          </div>
 
+          {/* Сітка посилань у стовпчики */}
+          <FooterNav variant="column" />
+
+          {/* Нижній ряд: копірайт та автор */}
+          <div className="flex justify-between items-end gap-6 mt-14 pt-8 border-t border-white/10">
+            <p className="base-text text-white font-[200]">
+              © {new Date().getFullYear()} ICELAB
+            </p>
             <CreatedBy align="right" />
           </div>
         </div>
