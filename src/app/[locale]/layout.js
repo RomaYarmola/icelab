@@ -92,6 +92,8 @@ export async function generateMetadata({ params }) {
     title: t("title"),
     description: t("description"),
     // Дефолтні OG/Twitter на рівні сайту — сторінки без власних успадковують.
+    // Квадратна картинка 600×600 + card "summary" → у Telegram компактне
+    // прев'ю (текст ліворуч, невелике фото праворуч), а не величезний банер.
     openGraph: {
       type: "website",
       siteName: "IceLab",
@@ -99,10 +101,12 @@ export async function generateMetadata({ params }) {
       url: locale === routing.defaultLocale ? "/" : `/${locale}`,
       title: t("title"),
       description: t("description"),
-      images: ["/og-default.jpg"],
+      images: [
+        { url: "/og-default.jpg", width: 600, height: 600, alt: "IceLab" },
+      ],
     },
     twitter: {
-      card: "summary_large_image",
+      card: "summary",
       title: t("title"),
       description: t("description"),
       images: ["/og-default.jpg"],
