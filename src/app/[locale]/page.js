@@ -34,8 +34,8 @@ export default async function Home({ params }) {
       <Hero />
       <Products />
       <About />
-      <Faq />
       <Reviews locale={locale} />
+      <Faq />
       <NoCompromises />
     </>
   );
