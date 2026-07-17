@@ -44,7 +44,7 @@ export default async function Reviews({ locale }) {
           </div>
         </div>
 
-        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-4 -mx-4 px-4 pb-2 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none scrollbar-hidden">
+        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-4 -mx-4 px-4 py-4 md:mx-0 md:px-0 md:py-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none scrollbar-hidden">
           {data.reviews.map((r, i) => (
             <li
               key={i}

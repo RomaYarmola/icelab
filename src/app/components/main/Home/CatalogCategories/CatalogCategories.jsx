@@ -16,7 +16,7 @@ export default function CatalogCategories() {
       <Container>
         <div className="py-16 md:py-24">
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-white text-2xl md:text-3xl font-bold not-italic font-e-ukraine mb-3">
+            <h2 className="text-white text-xl md:text-2xl mb-3">
               {t("categoriesTitle")}
             </h2>
             <p className="font-e-ukraine not-italic font-thin text-white/70 text-sm-responsive max-w-[520px] mx-auto">
