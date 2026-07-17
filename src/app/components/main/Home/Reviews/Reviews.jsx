@@ -44,11 +44,11 @@ export default async function Reviews({ locale }) {
           </div>
         </div>
 
-        <ul className="flex gap-5 overflow-x-auto snap-x pb-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:pb-0 scrollbar-hidden">
+        <ul className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-pl-4 -mx-4 px-4 pb-2 md:mx-0 md:px-0 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none scrollbar-hidden">
           {data.reviews.map((r, i) => (
             <li
               key={i}
-              className="snap-start shrink-0 w-[82%] sm:w-[340px] md:w-auto rounded-2xl border border-commonBlue/15 bg-white p-6 flex flex-col gap-3 shadow-card"
+              className="snap-start shrink-0 w-[80%] sm:w-[320px] md:w-auto rounded-2xl border border-commonBlue/15 bg-white p-6 flex flex-col gap-3 shadow-card"
             >
               <div className="flex items-center gap-3">
                 {r.photo ? (
