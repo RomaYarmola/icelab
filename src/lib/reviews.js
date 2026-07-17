@@ -1,20 +1,28 @@
 // Google-відгуки (Places API New). Викликається на сервері — ключ у браузер
-// не потрапляє. Кешується (ISR) на добу, щоб не смикати API щоразу.
+// не потрапляє. Кешується (ISR) на добу.
 //
-// Щоб працювали РЕАЛЬНІ відгуки Google, потрібно:
-//   1) увімкнути "Places API (New)" у Google Cloud Console;
-//   2) задати env GOOGLE_PLACES_API_KEY і GOOGLE_PLACE_ID.
-// Поки цього немає — повертаються тимчасові приклади (isFallback: true),
-// щоб секція на головній не була порожньою.
+// Щоб працювали РЕАЛЬНІ відгуки, потрібно (у Google Cloud Console):
+//   1) увімкнути "Places API (New)";
+//   2) дозволити цей API для ключа (API restrictions) і прибрати обмеження за
+//      HTTP referrer (для серверних запитів);
+//   3) задати env GOOGLE_PLACES_API_KEY.
+// Place ID можна не шукати вручну — код сам знайде місце за назвою (SEARCH_*).
+// Або задайте GOOGLE_PLACE_ID напряму, якщо він відомий.
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
 
-// Тимчасові відгуки-заглушки (показуються, доки не підключено Google API).
+// Дані бізнесу в Google (картка Icelab [сухий лід, dry ice]).
+const SEARCH_QUERY = "Icelab сухий лід dry ice";
+const SEARCH_BIAS = { latitude: 49.7570845, longitude: 23.9338176 };
+
+// Заглушки показуємо ЛИШЕ в dev (щоб бачити верстку). У проді без реальних
+// відгуків секція ховається — жодних вигаданих відгуків на бойовому сайті.
+const DEV = process.env.NODE_ENV !== "production";
 const FALLBACK = {
   rating: 5,
   total: 4,
-  mapsUri: "https://maps.google.com",
+  mapsUri: "https://maps.google.com/?cid=10392293426580711670",
   isFallback: true,
   reviews: [
     {
@@ -52,16 +60,36 @@ const FALLBACK = {
   ],
 };
 
-// Заглушки показуємо ЛИШЕ в dev (щоб бачити верстку). У проді без реальних
-// відгуків секція ховається — жодних вигаданих відгуків на бойовому сайті.
-const DEV = process.env.NODE_ENV !== "production";
+// Знаходить place_id за назвою (якщо не заданий GOOGLE_PLACE_ID).
+async function resolvePlaceId() {
+  if (PLACE_ID) return PLACE_ID;
+  const res = await fetch("https://places.googleapis.com/v1/places:searchText", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Goog-Api-Key": API_KEY,
+      "X-Goog-FieldMask": "places.id",
+    },
+    body: JSON.stringify({
+      textQuery: SEARCH_QUERY,
+      locationBias: { circle: { center: SEARCH_BIAS, radius: 5000 } },
+    }),
+    next: { revalidate: 86400 },
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data.places?.[0]?.id || null;
+}
 
 export async function getGoogleReviews(locale = "uk") {
-  if (!API_KEY || !PLACE_ID) return DEV ? FALLBACK : null;
+  if (!API_KEY) return DEV ? FALLBACK : null;
 
   try {
+    const placeId = await resolvePlaceId();
+    if (!placeId) return DEV ? FALLBACK : null;
+
     const res = await fetch(
-      `https://places.googleapis.com/v1/places/${PLACE_ID}?languageCode=${locale}`,
+      `https://places.googleapis.com/v1/places/${placeId}?languageCode=${locale}`,
       {
         headers: {
           "X-Goog-Api-Key": API_KEY,
@@ -71,11 +99,10 @@ export async function getGoogleReviews(locale = "uk") {
         next: { revalidate: 86400 },
       }
     );
-
     if (!res.ok) return DEV ? FALLBACK : null;
+
     const data = await res.json();
     const raw = Array.isArray(data.reviews) ? data.reviews : [];
-
     const reviews = raw
       .map((r) => ({
         author: r.authorAttribution?.displayName || "Google",
@@ -92,7 +119,7 @@ export async function getGoogleReviews(locale = "uk") {
     return {
       rating: data.rating || 5,
       total: data.userRatingCount || reviews.length,
-      mapsUri: data.googleMapsUri || "https://maps.google.com",
+      mapsUri: data.googleMapsUri || FALLBACK.mapsUri,
       isFallback: false,
       reviews: reviews.slice(0, 8),
     };
