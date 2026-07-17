@@ -53,16 +53,34 @@ export default function PortableTextRenderer({ value, locale, fallbackAlt }) {
       strong: ({ children }) => <strong className="font-bold">{children}</strong>,
       em: ({ children }) => <em className="italic">{children}</em>,
       underline: ({ children }) => <span className="underline">{children}</span>,
-      link: ({ value, children }) => (
-        <a
-          href={value?.href}
-          target={value?.blank ? "_blank" : undefined}
-          rel={value?.blank ? "noopener noreferrer" : undefined}
-          className="text-commonBlue underline hover:opacity-80"
-        >
-          {children}
-        </a>
-      ),
+      link: ({ value, children }) => {
+        const href = value?.href || "";
+        const isExternal =
+          /^(https?:)?\/\//.test(href) ||
+          href.startsWith("mailto:") ||
+          href.startsWith("tel:");
+        // Відносні (внутрішні) посилання — через locale-aware Link (додає /ru).
+        if (!isExternal && href.startsWith("/")) {
+          return (
+            <Link
+              href={href}
+              className="text-commonBlue underline hover:opacity-80"
+            >
+              {children}
+            </Link>
+          );
+        }
+        return (
+          <a
+            href={href}
+            target={value?.blank ? "_blank" : undefined}
+            rel={value?.blank ? "noopener noreferrer" : undefined}
+            className="text-commonBlue underline hover:opacity-80"
+          >
+            {children}
+          </a>
+        );
+      },
       internalLink: ({ value, children }) => {
         const slug = value?.refSlug;
         if (!slug) return <span>{children}</span>;
