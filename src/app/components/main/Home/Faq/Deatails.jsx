@@ -3,7 +3,9 @@ import { useTranslations } from "next-intl";
 
 export default function Details() {
   const t = useTranslations("Faq");
-  const data = t.raw("items");
+  // На головній показуємо топ-N питань (повний список — на /faq).
+  const homeCount = t.raw("homeCount") || 5;
+  const data = t.raw("items").slice(0, homeCount);
   return (
     <div className="flex flex-col gap-5">
       {data.map(({ question, answer }, index) => (
@@ -17,7 +19,8 @@ export default function Details() {
             </p>
             <Image
               src="/icons/expand-more.svg"
-              alt="icon"
+              alt=""
+              aria-hidden="true"
               width={32}
               height={32}
               className="svg rotate-180"

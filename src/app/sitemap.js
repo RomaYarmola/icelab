@@ -5,6 +5,7 @@
 
 import { getAllProductSlugs } from "@/lib/products";
 import { getAllBlogSlugs } from "@/lib/blog";
+import { CATEGORY_SLUGS } from "@/lib/categories";
 
 // Статичні сторінки (спільний шлях для обох мов).
 const staticPaths = [
@@ -18,6 +19,14 @@ const staticPaths = [
   "/terms",
   "/payment",
   "/returns",
+  // Контентні сторінки (P1-5, P1-8).
+  "/faq",
+  "/zastosuvannia-suhogo-lodu",
+  "/about",
+  "/production",
+  "/certificates",
+  // Категорійні посадкові (P1-3).
+  ...CATEGORY_SLUGS.map((slug) => `/catalog/c/${slug}`),
 ];
 
 export default async function sitemap() {
