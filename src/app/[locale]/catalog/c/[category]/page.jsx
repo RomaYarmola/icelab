@@ -8,6 +8,9 @@ import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import { Link } from "@/i18n/navigation";
 
+// ISR: список товарів категорії оновлюється без ребілду. (P2-1)
+export const revalidate = 3600;
+
 // Пререндер трьох категорій (обидві локалі — через сегмент [locale]).
 export function generateStaticParams() {
   return CATEGORIES.map((c) => ({ category: c.slug }));

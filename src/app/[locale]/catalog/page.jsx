@@ -7,6 +7,9 @@ import { CATEGORIES } from "@/lib/categories";
 import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
+// ISR: новий товар у Sanity з'являється без ребілду (в межах revalidate). (P2-1)
+export const revalidate = 3600;
+
 // Метадані каталогу (локалізовані) + canonical/hreflang.
 export async function generateMetadata({ params }) {
   const { locale } = await params;

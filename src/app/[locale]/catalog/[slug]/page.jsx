@@ -17,6 +17,9 @@ import { Link } from "@/i18n/navigation";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
 
+// ISR: оновлення товару в CMS підхоплюється без ребілду. (P2-1)
+export const revalidate = 3600;
+
 // Пререндер сторінок товарів. Slug — єдиний для обох мов.
 export async function generateStaticParams() {
   const slugs = await getAllProductSlugs();

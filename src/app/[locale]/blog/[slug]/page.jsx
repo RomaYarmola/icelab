@@ -10,6 +10,9 @@ import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import JsonLd from "@/app/components/common/JsonLd";
 import { articleSchema } from "@/lib/schema";
 
+// ISR: оновлення статті в CMS підхоплюється без ребілду. (P2-1)
+export const revalidate = 3600;
+
 // Пререндер сторінок статей. Slug — єдиний для обох мов.
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs();
@@ -65,7 +68,7 @@ export default async function BlogPostPage({ params }) {
           </div>
         )}
 
-        <div className="blog-content">
+        <div className="blog-content not-italic font-e-ukraine">
           <PortableTextRenderer
             value={post.body}
             locale={locale}

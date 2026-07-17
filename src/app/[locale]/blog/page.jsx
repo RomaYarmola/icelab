@@ -6,6 +6,9 @@ import { routing } from "@/i18n/routing";
 import { getBlogPosts } from "@/lib/blog";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 
+// ISR: нова стаття у Sanity з'являється без ребілду. (P2-1)
+export const revalidate = 3600;
+
 // Метадані блогу (локалізовані) + canonical/hreflang.
 export async function generateMetadata({ params }) {
   const { locale } = await params;
