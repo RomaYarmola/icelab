@@ -120,9 +120,9 @@ function buildSeo(raw, locale, title, shortDescription, mainImageUrl) {
 // Тимчасові реальні фото клієнта для товарів-льоду (одні й ті самі для всього
 // льоду). Для боксів НЕ застосовуються. Прибрати, коли фото заведуть у Sanity.
 const ICE_PHOTOS = [
+  "/images/products/ice-3.webp", // головне — бокс із льодом
   "/images/products/ice-1.webp",
   "/images/products/ice-2.webp",
-  "/images/products/ice-3.webp",
   "/images/products/ice-4.webp",
 ];
 
