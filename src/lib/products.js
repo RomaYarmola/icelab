@@ -191,9 +191,12 @@ export async function getProducts(locale) {
 }
 
 // Товари однієї категорії (для категорійних посадкових сторінок P1-3).
+// Увесь наш лід — харчовий (виготовлений із сертифікованої харчової CO₂),
+// тому категорія «харчовий лід» показує ті самі товари, що й «сухий лід».
 export async function getProductsByCategory(locale, categoryKey) {
   const all = await getProducts(locale);
-  return all.filter((p) => p.category === categoryKey);
+  const key = categoryKey === "food-ice" ? "dry-ice" : categoryKey;
+  return all.filter((p) => p.category === key);
 }
 
 export async function getProductBySlug(slug, locale) {
