@@ -1,9 +1,9 @@
 "use client";
 import Container from "@/utils/Container";
 import GradientButton from "../GradientButton";
-import Link from "next/link";
-import { Link as LocaleLink } from "@/i18n/navigation";
+import RequestModal from "../RequestModal";
 import { useTranslations } from "next-intl";
+import { useDisclosure } from "@nextui-org/react";
 
 import NoCompromisesBg from "./NoCompromisesBg";
 import { useIsSafari } from "@/hooks/useIsSafari";
@@ -11,9 +11,7 @@ import { useIsSafari } from "@/hooks/useIsSafari";
 export default function NoCompromises({ variant = "common" }) {
   const isSafari = useIsSafari();
   const t = useTranslations("NoCompromises");
-  // Для головної (common) — якір на цій же сторінці, для інших — перехід на
-  // головну з якорем: тут потрібне локале-залежне посилання.
-  const LinkComp = variant === "common" ? Link : LocaleLink;
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <div
       className={`overflow-x-clip relative ${
@@ -35,12 +33,14 @@ export default function NoCompromises({ variant = "common" }) {
             <span className="font-e-ukraine font-thin not-italic">ICELAB</span>
             {t("descriptionEnd")}
           </p>
-          <LinkComp
-            href={`${variant === "common" ? "#products" : "/#products"}`}
-            className="flex w-[279px] mx-auto  relative z-10"
-          >
-            <GradientButton text={t("order")} />
-          </LinkComp>
+          <div className="flex w-[279px] mx-auto relative z-10">
+            <GradientButton text={t("order")} onPress={onOpen} />
+          </div>
+          <RequestModal
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            title={t("order")}
+          />
         </div>
       </Container>
     </div>
