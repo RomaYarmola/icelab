@@ -457,29 +457,44 @@ ru: аналогично на русском.
 # 5. Итоговый чек-лист (заполнить в конце)
 
 **P0**
-- [ ] P0-1 Главная серверная, контент в SSR-HTML без JS. Файлы: `page.js`, (удалён?) `withLoader.js`.
-- [ ] P0-2 Один H1 на страницу; добавлены H1 на contacts/payment; иерархия главной исправлена.
-- [ ] P0-3 Созданы privacy/terms/payment/returns; футер без 404; страницы в sitemap.
-- [ ] P0-4 `noindex` на basket/thanks; robots закрывает служебные.
-- [ ] P0-5 Разрулены `/delivery` vs `/payment-and-delivery` (301 или уникализация).
+- [x] P0-1 Главная серверная, контент в SSR-HTML без JS. `page.js` переписан на async-server; `withLoader` убран с главной (файл оставлен — используется Basket/Delivery).
+- [x] P0-2 Один H1 на страницу; H1 на contacts/payment; иерархия главной h1→h2→h3 без пропусков.
+- [x] P0-3 Созданы privacy/terms/payment/returns; футер на i18n-ключах; страницы в sitemap.
+- [x] P0-4 `noindex` на basket/thanks; robots закрывает служебные (+/delivery).
+- [x] P0-5 `/delivery` — функциональный checkout, помечен `noindex` (не дубль), решение в комментарии.
 
 **P1**
-- [ ] P1-1 Обновлены Meta/страничные title+description (uk+ru).
-- [ ] P1-2 `schema.js` + `JsonLd`; Organization/LocalBusiness/Product/Breadcrumb/FAQ/BlogPosting размещены.
-- [ ] P1-3 Категории `/catalog/c/{suhyi-lid,harchovyi-lid,termoboksy}` + тексты + sitemap.
-- [ ] P1-4 Хлебные крошки везде + BreadcrumbList.
-- [ ] P1-5 Страница `/faq` (15–20 вопросов) + pillar «Застосування»; на главной 5 + ссылка.
-- [ ] P1-6 robots для AI-ботов + `llms.txt` + `pricing.md`.
-- [ ] P1-7 Усилена карточка товара (крошки, доставка, оплата, УТП, cross-sell, 2 CTA).
-- [ ] P1-8 Страницы about/production/certificates + sitemap + футер.
-- [ ] P1-9 OG/Twitter дефолты + fallback-картинка.
-- [ ] P1-10 CWV: priority/preload, осмысленные alt, CLS < 0.1, Lighthouse ≥ 85.
-- [ ] P1-11 Перелинковка: ≤3 клика до товара, нет висячих страниц.
+- [x] P1-1 Обновлены `Meta` title+description (uk+ru).
+- [x] P1-2 `src/lib/schema.js` + `JsonLd`; Organization (layout), LocalBusiness×2 (contacts), Product (товар), Breadcrumb, FAQ (главная+/faq), BlogPosting (статья) — валидность проверена.
+- [x] P1-3 Категории `/catalog/c/{suhyi-lid,harchovyi-lid,termoboksy}` + тексты + sitemap + хаб `/catalog`.
+- [x] P1-4 `Breadcrumbs.jsx` + BreadcrumbList на всех вложенных страницах.
+- [x] P1-5 `/faq` (15 вопросов) + pillar `/zastosuvannia-suhogo-lodu`; на главной топ-5 + ссылка.
+- [x] P1-6 robots для AI-ботов + `llms.txt` (route, использует env-домен) + `public/pricing.md`.
+- [x] P1-7 Карточка товара: крошки, доставка/оплата/УТП, cross-sell «Схожі товари», 2-й CTA «Отримати прайс», Product schema.
+- [x] P1-8 Страницы about/production/certificates + sitemap + футер.
+- [x] P1-9 OG/Twitter дефолты (siteName/locale/url) + fallback `public/og-default.jpg`.
+- [~] P1-10 Осмысленные alt (footer/about/faq/basket), декоративные `alt=""`. Hero LCP — CSS-фон (не `<Image>`), priority неприменим. Lighthouse-замеры не проводились (нужен запуск вручную).
+- [x] P1-11 Перелинковка: футер (категории+инфо), хаб каталога, главная (FAQ→/faq, Products→категории). Нет висячих страниц.
 
 **P2**
-- [ ] P2-1 ISR/revalidate. [ ] P2-2 Гео-лендинги. [ ] P2-3 Cross-sell в корзине. [ ] P2-4 Italic пересмотрен. [ ] P2-5 Карта+контакты. [ ] P2-6 Дубли ключей/кода убраны.
+- [x] P2-1 ISR `revalidate=3600` (catalog, товар, категория, blog, статья, sitemap). On-demand webhook — не делали (нужен секрет).
+- [x] P2-2 Гео-лендинги `/suhyi-lid-kyiv`, `/suhyi-lid-lviv` + LocalBusiness + sitemap.
+- [x] P2-3 Cross-sell в корзине (блок «З цим купують» → термобоксы).
+- [x] P2-4 Новые контентные страницы `not-italic`; тело блога `not-italic`.
+- [x] P2-5 Карта Google на контактах — уже была (lazy iframe, переключатель Київ/Львів, `tel:`).
+- [x] P2-6 Убран дубль namespace `Order`→`Basket`; удалён неиспользуемый `AccordionComponent.jsx`.
 
 **Глобально**
-- [ ] `npm run build` зелёный. [ ] Все новые ключи в обоих `messages/*.json`. [ ] JSON-LD валиден. [ ] Один H1/страница. [ ] Нет 404 во внутренних ссылках.
+- [x] `npm run build` зелёный (81 страница).
+- [x] Все новые ключи в обоих `messages/*.json` (parity: uk-only=[], ru-only=[]).
+- [x] JSON-LD валиден (проверено парсингом собранного HTML).
+- [x] Один H1/страница (проверено на ключевых).
+- [x] Нет 404 во внутренних ссылках (все ссылки футера/меню ведут на созданные страницы).
 
-_Указать список всех изменённых/созданных файлов._
+**Изменённые/созданные файлы (основное):**
+- Роуты/страницы: `src/app/[locale]/page.js`, `layout.js`, `contacts/page.jsx`, `catalog/page.jsx`, `catalog/[slug]/page.jsx`, `catalog/c/[category]/page.jsx`, `blog/page.jsx`, `blog/[slug]/page.jsx`, `faq/page.jsx`, `zastosuvannia-suhogo-lodu/page.jsx`, `about/page.jsx`, `production/page.jsx`, `certificates/page.jsx`, `privacy-policy/page.jsx`, `terms/page.jsx`, `payment/page.jsx`, `returns/page.jsx`, `suhyi-lid-kyiv/page.jsx`, `suhyi-lid-lviv/page.jsx`, `basket/page.jsx`, `thanks/page.jsx`, `delivery/page.jsx`.
+- Библиотеки: `src/lib/schema.js` (new), `src/lib/categories.js` (new), `src/lib/seo.js`, `src/lib/products.js`.
+- Компоненты: `common/JsonLd.jsx` (new), `common/Breadcrumbs.jsx` (new), `common/FaqSection.jsx` (new), `main/Legal/LegalPage.jsx` (new), `main/Geo/GeoLanding.jsx` (new), `main/Catalog/ProductInfoBlocks.jsx` (new), `modules/Footer/FooterNav.jsx`, `Footer.jsx`, `Home/Hero/Hero.jsx`, `Home/Products.jsx/Products.jsx`, `Home/About/About.jsx`, `Home/Faq/Faq.jsx`, `Home/Faq/Deatails.jsx`, `common/NoCompromises/NoCompromises.jsx`, `Contacts/Banner/Banner.jsx`, `PaymentAndDelivery/Banner/Banner.jsx`, `Basket/Basket.jsx`, `Delivery/Order.jsx`. Удалён `Home/Faq/AccordionComponent.jsx`.
+- Прочее: `src/app/robots.js`, `src/app/sitemap.js`, `src/app/llms.txt/route.js` (new), `public/pricing.md` (new), `public/og-default.jpg` (new), `src/utils/routes.js`, `messages/uk.json`, `messages/ru.json`.
+
+_Ветка: `seo-implementation`. Не входило в ТЗ (нет данных): боевой домен (используется `NEXT_PUBLIC_SITE_URL`), отзывы/`aggregateRating`. Тексты-заготовки помечены `TODO` для копирайта/юр-вычитки._
