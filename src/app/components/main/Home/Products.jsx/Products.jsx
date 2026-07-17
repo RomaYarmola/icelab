@@ -48,19 +48,54 @@ export default function Products() {
           ))}
         </ul>
 
-        {/* Перелінковка на категорійні посадкові (P1-11) */}
-        <ul className="relative z-[4] flex flex-wrap justify-center gap-3 pb-[100px] md:pb-[112px]">
-          {CATEGORIES.map((c) => (
-            <li key={c.slug}>
-              <Link
-                href={`/catalog/c/${c.slug}`}
-                className="inline-block rounded-full border border-white/40 px-5 py-2 text-white not-italic font-e-ukraine text-sm hover:bg-white/10 transition-colors"
-              >
-                {tcat(`${c.msgKey}.h1`)}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {/* SEO-блок «Каталог за категоріями» — перелінковка на посадкові (P1-11) */}
+        <section className="relative z-[4] pb-[100px] md:pb-[112px]">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-white-title-gradient text-xl md:text-2xl mb-3">
+              {t("categoriesTitle")}
+            </h2>
+            <p className="font-e-ukraine not-italic font-thin text-white/60 text-sm-responsive max-w-[520px] mx-auto">
+              {t("categoriesSubtitle")}
+            </p>
+          </div>
+
+          <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-[1000px] mx-auto">
+            {CATEGORIES.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  href={`/catalog/c/${c.slug}`}
+                  className="group flex flex-col h-full rounded-2xl border border-white/15 bg-white/[0.06] backdrop-blur-sm p-6 md:p-7 hover:bg-white/[0.12] hover:border-white/30 transition-colors"
+                >
+                  <span className="text-white text-[20px] md:text-[22px] not-italic font-e-ukraine font-medium mb-2">
+                    {tcat(`${c.msgKey}.h1`)}
+                  </span>
+                  <span className="flex-1 font-e-ukraine not-italic font-thin text-white/55 text-[14px] leading-relaxed mb-6">
+                    {t(`categoryHints.${c.msgKey}`)}
+                  </span>
+                  <span className="inline-flex items-center gap-2 text-white not-italic font-e-ukraine text-[14px] font-medium">
+                    {t("toCatalog")}
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      aria-hidden="true"
+                      className="transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      <path
+                        d="M5 12h14M13 6l6 6-6 6"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       </Container>
     </div>
   );

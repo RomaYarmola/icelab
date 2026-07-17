@@ -14,7 +14,7 @@ export default function Hero() {
       </div>
       <Container>
         <div className="pt-[218px] md:pt-[200px] z-[9999]">
-          <h1 className="text-4xl main-title-gradient text-center mb-[53px] md:mb-[22px] relative z-[1] md:z-[3]">
+          <h1 className="text-3xl md:text-4xl main-title-gradient text-center mb-[53px] md:mb-[22px] relative z-[1] md:z-[3] px-2 break-words">
             {t("title")}
           </h1>
           <p className="text-lg-extended text-blue-gradient text-center mb-8 md:mb-12 max-w-[98%] sm:max-w-[66%] mx-auto relative z-10">
