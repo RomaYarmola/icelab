@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { getBlogPosts } from "@/lib/blog";
+import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 
 // Метадані блогу (локалізовані) + canonical/hreflang.
 export async function generateMetadata({ params }) {
@@ -30,6 +31,7 @@ export default async function BlogPage({ params }) {
 
   return (
     <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[160px]">
+      <Breadcrumbs items={[{ name: t("title") }]} />
       <h1 className="text-3xl main-title-gradient text-center mb-10 md:mb-14">
         {t("title")}
       </h1>

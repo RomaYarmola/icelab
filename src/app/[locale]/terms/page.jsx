@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import LegalPage from "../../components/main/Legal/LegalPage";
+import Breadcrumbs from "../../components/common/Breadcrumbs";
 
 const NS = "LegalPages.terms";
 
@@ -21,5 +22,11 @@ export default async function TermsPage({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: NS });
-  return <LegalPage title={t("h1")} body={t("body")} />;
+  return (
+    <LegalPage
+      title={t("h1")}
+      body={t("body")}
+      breadcrumbs={<Breadcrumbs items={[{ name: t("h1") }]} />}
+    />
+  );
 }

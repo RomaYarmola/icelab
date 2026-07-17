@@ -2,6 +2,9 @@ import Container from "@/utils/Container";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getProducts } from "@/lib/products";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
+import Breadcrumbs from "@/app/components/common/Breadcrumbs";
+import { CATEGORIES } from "@/lib/categories";
+import { Link } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
 // Метадані каталогу (локалізовані) + canonical/hreflang.
@@ -30,13 +33,31 @@ export default async function CatalogPage({ params }) {
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "Catalog" });
+  const tcat = await getTranslations({ locale, namespace: "Categories" });
   const products = await getProducts(locale);
 
   return (
     <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[140px]">
+      <Breadcrumbs items={[{ name: t("title") }]} />
+
       <h1 className="text-3xl main-title-gradient text-center mb-10 md:mb-14">
         {t("title")}
       </h1>
+
+      {/* Хаб категорій — перелінковка на категорійні посадкові (P1-3/P1-11) */}
+      <ul className="flex flex-wrap justify-center gap-4 mb-12 md:mb-16">
+        {CATEGORIES.map((c) => (
+          <li key={c.slug}>
+            <Link
+              href={`/catalog/c/${c.slug}`}
+              className="inline-block rounded-full border border-commonBlue/30 px-6 py-2.5 not-italic font-e-ukraine text-commonBlue hover:bg-commonBlue/10 transition-colors"
+            >
+              {tcat(`${c.msgKey}.h1`)}
+            </Link>
+          </li>
+        ))}
+      </ul>
+
       <CatalogList products={products} />
     </Container>
   );

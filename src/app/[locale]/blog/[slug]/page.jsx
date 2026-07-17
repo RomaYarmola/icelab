@@ -2,9 +2,13 @@ import Container from "@/utils/Container";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import { getTranslations } from "next-intl/server";
 import { getBlogPostBySlug, getAllBlogSlugs } from "@/lib/blog";
 import { toNextMetadata } from "@/lib/seo";
 import PortableTextRenderer from "@/app/components/main/Blog/PortableTextRenderer";
+import Breadcrumbs from "@/app/components/common/Breadcrumbs";
+import JsonLd from "@/app/components/common/JsonLd";
+import { articleSchema } from "@/lib/schema";
 
 // Пререндер сторінок статей. Slug — єдиний для обох мов.
 export async function generateStaticParams() {
@@ -31,9 +35,19 @@ export default async function BlogPostPage({ params }) {
   const post = await getBlogPostBySlug(slug, locale);
   if (!post) notFound();
 
+  const tb = await getTranslations({ locale, namespace: "Blog" });
+  const postPath = `${locale === "uk" ? "" : "/" + locale}/blog/${post.slug}`;
+
   return (
     <Container className="pt-[120px] md:pt-[170px] pb-[100px] md:pb-[140px]">
+      <JsonLd data={articleSchema(post, postPath)} />
       <article className="max-w-[760px] mx-auto">
+        <Breadcrumbs
+          items={[
+            { name: tb("title"), href: "/blog" },
+            { name: post.title },
+          ]}
+        />
         <h1 className="text-2xl md:text-3xl main-title-gradient leading-tight mb-6">
           {post.title}
         </h1>

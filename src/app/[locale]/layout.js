@@ -9,6 +9,8 @@ import {
 } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { getPriceSettings } from "@/lib/priceSettings";
+import { organizationSchema } from "@/lib/schema";
+import JsonLd from "../components/common/JsonLd";
 import { PriceSettingsProvider } from "../components/providers/PriceSettingsProvider";
 import Footer from "../components/modules/Footer/Footer";
 import Header from "../components/modules/Header/Header";
@@ -89,6 +91,22 @@ export async function generateMetadata({ params }) {
     ),
     title: t("title"),
     description: t("description"),
+    // Дефолтні OG/Twitter на рівні сайту — сторінки без власних успадковують.
+    openGraph: {
+      type: "website",
+      siteName: "IceLab",
+      locale: locale === "ru" ? "ru_RU" : "uk_UA",
+      url: locale === routing.defaultLocale ? "/" : `/${locale}`,
+      title: t("title"),
+      description: t("description"),
+      images: ["/og-default.jpg"],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("title"),
+      description: t("description"),
+      images: ["/og-default.jpg"],
+    },
     manifest: "/site.webmanifest",
     icons: {
       icon: [
@@ -135,6 +153,8 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={locale} className={`${eUkraine.variable} ${michelin.className}`}>
       <body className="leading-[1.2] italic bg-white">
+        {/* Organization JSON-LD (глобально, один раз) */}
+        <JsonLd data={organizationSchema()} />
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

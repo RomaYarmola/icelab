@@ -5,6 +5,10 @@ import { getProductBySlug, getAllProductSlugs } from "@/lib/products";
 import { toNextMetadata } from "@/lib/seo";
 import ProductGallery from "@/app/components/main/Catalog/ProductGallery";
 import AddToCartControl from "@/app/components/main/Catalog/AddToCartControl";
+import Breadcrumbs from "@/app/components/common/Breadcrumbs";
+import JsonLd from "@/app/components/common/JsonLd";
+import { productSchema } from "@/lib/schema";
+import { categoryByKey } from "@/lib/categories";
 
 // Пререндер сторінок товарів. Slug — єдиний для обох мов.
 export async function generateStaticParams() {
@@ -33,10 +37,32 @@ export default async function ProductPage({ params }) {
   if (!product) notFound();
 
   const t = await getTranslations({ locale, namespace: "ProductPage" });
+  const tc = await getTranslations({ locale, namespace: "Catalog" });
+  const tcat = await getTranslations({ locale, namespace: "Categories" });
   const isAvailable = product.availability === "in-stock";
+  const productPath = `${locale === "uk" ? "" : "/" + locale}/catalog/${
+    product.slug
+  }`;
+
+  // Хлібні крошки: Головна → Каталог → Категорія → Товар.
+  const cat = categoryByKey(product.category);
+  const crumbs = [
+    { name: tc("title"), href: "/catalog" },
+    ...(cat
+      ? [
+          {
+            name: tcat(`${cat.msgKey}.h1`),
+            href: `/catalog/c/${cat.slug}`,
+          },
+        ]
+      : []),
+    { name: product.title },
+  ];
 
   return (
     <Container className="pt-[120px] md:pt-[170px] pb-[100px] md:pb-[140px]">
+      <JsonLd data={productSchema(product, productPath)} />
+      <Breadcrumbs items={crumbs} />
       <div className="flex flex-col md:flex-row gap-8 l:gap-16">
         {/* Галерея */}
         <div className="md:w-1/2 md:sticky md:top-[110px] self-start w-full">
