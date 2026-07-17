@@ -7,7 +7,8 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function Order({ handleSubmit, products, totalValue, variant }) {
-  const t = useTranslations("Order");
+  // Використовуємо namespace Basket (Order дублював empty/total/submit). (P2-6)
+  const t = useTranslations("Basket");
   const deleteProduct = useProductStore((state) => state.deleteProduct);
   return (
     <div

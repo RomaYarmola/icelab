@@ -30,7 +30,7 @@ function Basket() {
             <Link href={"/"}>
               <Image
                 src="/icons/logo.svg"
-                alt="logo"
+                alt="IceLab логотип"
                 width={122}
                 height={106}
               />
@@ -61,6 +61,24 @@ function Basket() {
           </ul>
         )}
       </div>
+      {products.length !== 0 && (
+        <div className="mb-10 px-5 l:px-16 py-4 l:py-8 rounded-xl basket-bg w-full bg-white text-commonBlue">
+          <h3 className="text-[16px] md:text-[24px] font-bold mb-3">
+            {t("crossSellTitle")}
+          </h3>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link
+              href="/catalog/c/termoboksy"
+              className="inline-block rounded-full border border-commonBlue/40 px-5 py-2 not-italic font-e-ukraine hover:bg-commonBlue/10 transition-colors"
+            >
+              {t("crossSellBox")}
+            </Link>
+            <span className="not-italic font-e-ukraine font-thin text-commonBlue/70 text-sm">
+              {t("crossSellHint")}
+            </span>
+          </div>
+        </div>
+      )}
       {products.length !== 0 && (
         <div className="mb-20 md:mb-[147px] px-5 l:px-16 py-4 l:py-12 rounded-xl basket-bg w-full  flex flex-col md:flex-row justify-between gap-10 items-center">
           <div className="flex gap-4 md:gap-[35px] items-center">
