@@ -29,9 +29,9 @@ export default async function Reviews({ locale }) {
   if (!data || !data.reviews?.length) return null;
 
   return (
-    <section className="bg-white py-16 md:py-24">
+    <section className="relative z-20 bg-white pt-8 md:pt-12 pb-20 md:pb-28">
       <Container>
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl main-title-gradient mb-4">{t("title")}</h2>
           <div className="inline-flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
             <span className="font-e-ukraine not-italic font-bold text-2xl text-commonBlue">

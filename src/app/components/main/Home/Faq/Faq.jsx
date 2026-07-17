@@ -15,7 +15,7 @@ export default function Faq() {
   return (
     <div className={`${isSafari && "faq-safari"}`}>
       <Container>
-        <div className="pb-[293px] md:pb-[232px] md:pt-[125px] relative z-[5]">
+        <div className="pb-[120px] md:pb-[150px] md:pt-[125px] relative z-[5]">
           <h2 className="text-center text-white-title-gradient text-2xl mb-10">
             {t("title")}
           </h2>
