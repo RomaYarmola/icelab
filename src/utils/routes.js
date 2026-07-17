@@ -20,6 +20,16 @@ export const footerLinks = [
   { key: "returns", path: "/returns" },
 ];
 
+// Інформаційні/EEAT сторінки для футера (P1-8/P1-11).
+// key — ключ перекладу з неймспейсу "Breadcrumbs".
+export const infoLinks = [
+  { key: "about", path: "/about" },
+  { key: "production", path: "/production" },
+  { key: "certificates", path: "/certificates" },
+  { key: "faq", path: "/faq" },
+  { key: "applications", path: "/zastosuvannia-suhogo-lodu" },
+];
+
 // Соц.сети
 
 export const socialLinks = [

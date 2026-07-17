@@ -1,15 +1,18 @@
 "use client";
 import Container from "@/utils/Container";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { data } from "./data";
 import ProductCard from "./ProductCard";
 import { useIsSafari } from "@/hooks/useIsSafari";
 import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvider";
+import { CATEGORIES } from "@/lib/categories";
 
 export default function Products() {
   const isSafari = useIsSafari();
   const settings = usePriceSettings();
   const t = useTranslations("Products");
+  const tcat = useTranslations("Categories");
 
   // Розміри/ваги беруться з Price Settings (Sanity → fallback константи).
   const sizesFor = (variant) => {
@@ -42,6 +45,20 @@ export default function Products() {
               sizes={sizesFor(variant)}
               variant={variant}
             />
+          ))}
+        </ul>
+
+        {/* Перелінковка на категорійні посадкові (P1-11) */}
+        <ul className="relative z-[4] flex flex-wrap justify-center gap-3 pb-[100px] md:pb-[112px]">
+          {CATEGORIES.map((c) => (
+            <li key={c.slug}>
+              <Link
+                href={`/catalog/c/${c.slug}`}
+                className="inline-block rounded-full border border-white/40 px-5 py-2 text-white not-italic font-e-ukraine text-sm hover:bg-white/10 transition-colors"
+              >
+                {tcat(`${c.msgKey}.h1`)}
+              </Link>
+            </li>
           ))}
         </ul>
       </Container>

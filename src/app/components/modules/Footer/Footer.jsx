@@ -88,7 +88,7 @@ export default function Footer() {
           <Link href="/" className="mb-12 flex">
             <Image
               src="/icons/white-logo.svg"
-              alt="logo"
+              alt="IceLab логотип"
               width={100}
               height={88}
             />
@@ -102,7 +102,7 @@ export default function Footer() {
           >
             <Image
               src="/icons/co2-logo.svg"
-              alt="co2"
+              alt="CO2LAB"
               width={81}
               height={36}
               className="mb-5"
