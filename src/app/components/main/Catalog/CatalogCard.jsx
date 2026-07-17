@@ -10,6 +10,8 @@ export default function CatalogCard({ product }) {
   const t = useTranslations("ProductPage");
   const href = `/catalog/${product.slug}`;
   const isAvailable = product.availability === "in-stock";
+  // Реальні фото льоду показуємо на весь кадр; рендери боксів — вписуємо.
+  const imgFit = product.category === "ice-box" ? "object-contain" : "object-cover";
 
   return (
     <li className="group rounded-xl bg-gradient-card shadow-card p-4 l:p-5 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-modal">
@@ -22,7 +24,7 @@ export default function CatalogCard({ product }) {
             src={product.mainImage}
             alt={product.mainImageAlt || product.title}
             fill
-            className="object-contain transition-transform duration-300 group-hover:scale-105"
+            className={`${imgFit} transition-transform duration-300 group-hover:scale-105`}
             sizes="(max-width: 768px) 100vw, 33vw"
           />
         )}

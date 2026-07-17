@@ -7,6 +7,7 @@ import { CATEGORIES, categoryBySlug } from "@/lib/categories";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 // ISR: список товарів категорії оновлюється без ребілду. (P2-1)
 export const revalidate = 3600;
@@ -57,10 +58,23 @@ export default async function CategoryPage({ params }) {
 
       <h1 className="text-3xl main-title-gradient mb-6">{t(`${cat.msgKey}.h1`)}</h1>
 
-      {/* SEO-текст категорії (заготовка з TODO на копірайт) */}
-      <p className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75 max-w-[900px] mb-12">
-        {t(`${cat.msgKey}.intro`)}
-      </p>
+      <div className="flex flex-col lg:flex-row gap-8 mb-12 items-start">
+        {/* SEO-текст категорії */}
+        <p className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75 lg:flex-1">
+          {t(`${cat.msgKey}.intro`)}
+        </p>
+        {cat.image && (
+          <div className="relative w-full lg:w-[42%] aspect-[4/3] rounded-2xl overflow-hidden shrink-0">
+            <Image
+              src={cat.image}
+              alt={t(`${cat.msgKey}.h1`)}
+              fill
+              sizes="(max-width: 1024px) 100vw, 42vw"
+              className="object-cover"
+            />
+          </div>
+        )}
+      </div>
 
       {products.length > 0 ? (
         <CatalogList products={products} />

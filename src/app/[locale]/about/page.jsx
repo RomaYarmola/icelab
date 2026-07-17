@@ -28,6 +28,7 @@ export default async function AboutPage({ params }) {
       title={t("h1")}
       body={t("intro")}
       breadcrumbs={<Breadcrumbs items={[{ name: tb("about") }]} />}
+      image={{ src: "/images/products/ice-4.webp", alt: t("h1") }}
     />
   );
 }

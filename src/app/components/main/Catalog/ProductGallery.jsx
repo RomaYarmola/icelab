@@ -4,12 +4,15 @@ import { useState } from "react";
 
 // Проста галерея товару: велике головне зображення + мініатюри.
 // Мінімальний клієнтський стан для перемикання активного зображення.
-export default function ProductGallery({ images, alt }) {
+export default function ProductGallery({ images, alt, fit = "contain" }) {
   const [active, setActive] = useState(0);
   const list = images && images.length > 0 ? images : [];
   const mainSrc = list[active] ?? list[0];
 
   if (!mainSrc) return null;
+
+  // Реальні фото — на весь кадр (cover), рендери товарів — вписуємо (contain).
+  const isCover = fit === "cover";
 
   return (
     <div className="flex flex-col gap-4">
@@ -18,7 +21,7 @@ export default function ProductGallery({ images, alt }) {
           src={mainSrc}
           alt={alt}
           fill
-          className="object-contain p-6"
+          className={isCover ? "object-cover" : "object-contain p-6"}
           sizes="(max-width: 768px) 100vw, 50vw"
           priority
         />
@@ -40,7 +43,7 @@ export default function ProductGallery({ images, alt }) {
                   src={src}
                   alt={alt}
                   fill
-                  className="object-contain p-2"
+                  className={isCover ? "object-cover" : "object-contain p-2"}
                   sizes="72px"
                 />
               </button>

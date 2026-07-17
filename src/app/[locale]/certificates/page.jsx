@@ -35,6 +35,7 @@ export default async function CertificatesPage({ params }) {
       title={t("h1")}
       body={t("intro")}
       breadcrumbs={<Breadcrumbs items={[{ name: tb("certificates") }]} />}
+      image={{ src: "/images/products/ice-1.webp", alt: t("h1") }}
     />
   );
 }

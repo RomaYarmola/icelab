@@ -33,6 +33,7 @@ export default async function ProductionPage({ params }) {
       title={t("h1")}
       body={t("intro")}
       breadcrumbs={<Breadcrumbs items={[{ name: tb("production") }]} />}
+      image={{ src: "/images/pages/production.webp", alt: t("h1") }}
     />
   );
 }

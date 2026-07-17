@@ -3,9 +3,24 @@
 //  • slug     — URL-слаг категорійної сторінки (/catalog/c/<slug>);
 //  • msgKey   — ключ у namespace "Categories" (messages/*.json).
 export const CATEGORIES = [
-  { key: "dry-ice", slug: "suhyi-lid", msgKey: "dryIce" },
-  { key: "food-ice", slug: "harchovyi-lid", msgKey: "foodIce" },
-  { key: "ice-box", slug: "termoboksy", msgKey: "iceBox" },
+  {
+    key: "dry-ice",
+    slug: "suhyi-lid",
+    msgKey: "dryIce",
+    image: "/images/products/ice-1.webp",
+  },
+  {
+    key: "food-ice",
+    slug: "harchovyi-lid",
+    msgKey: "foodIce",
+    image: "/images/products/ice-2.webp",
+  },
+  {
+    key: "ice-box",
+    slug: "termoboksy",
+    msgKey: "iceBox",
+    image: "/images/pages/ice-box.webp",
+  },
 ];
 
 export const CATEGORY_SLUGS = CATEGORIES.map((c) => c.slug);

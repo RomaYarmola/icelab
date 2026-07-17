@@ -84,7 +84,11 @@ export default async function ProductPage({ params }) {
       <div className="flex flex-col md:flex-row gap-8 l:gap-16">
         {/* Галерея */}
         <div className="md:w-1/2 md:sticky md:top-[110px] self-start w-full">
-          <ProductGallery images={product.gallery} alt={product.title} />
+          <ProductGallery
+            images={product.gallery}
+            alt={product.title}
+            fit={product.category === "ice-box" ? "contain" : "cover"}
+          />
         </div>
 
         {/* Інформація про товар */}

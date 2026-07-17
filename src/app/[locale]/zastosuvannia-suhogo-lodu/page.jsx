@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { CATEGORIES } from "@/lib/categories";
 
 const PATH = "/zastosuvannia-suhogo-lodu";
@@ -36,9 +37,19 @@ export default async function ApplicationsPage({ params }) {
           <h1 className="not-italic font-e-ukraine font-medium text-[28px] md:text-[40px] leading-tight mb-6 text-black">
             {t("h1")}
           </h1>
-          <p className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75 mb-12">
+          <p className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75 mb-8">
             {t("intro")}
           </p>
+
+          <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden mb-12">
+            <Image
+              src="/images/pages/applications.webp"
+              alt={t("h1")}
+              fill
+              sizes="(max-width: 900px) 100vw, 900px"
+              className="object-cover"
+            />
+          </div>
 
           <div className="flex flex-col gap-10">
             {sections.map((s, i) => (

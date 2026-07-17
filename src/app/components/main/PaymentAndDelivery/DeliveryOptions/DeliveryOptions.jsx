@@ -20,10 +20,10 @@ export default function DeliveryOptions() {
               {t("chooseOption")}
             </p>
             <Image
-              src="/images/payment-and-delivery/delivery-image.webp"
-              alt="delivery-image"
+              src="/images/pages/delivery.webp"
+              alt="Доставка сухого льоду IceLab"
               fill
-              className="object-cover"
+              className="object-cover object-center brightness-[0.85]"
             />
           </div>
           <div className="flex flex-col gap-5">
