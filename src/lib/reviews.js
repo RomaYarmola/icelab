@@ -10,9 +10,12 @@
 // Або задайте GOOGLE_PLACE_ID напряму, якщо він відомий.
 
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
-const PLACE_ID = process.env.GOOGLE_PLACE_ID;
+// Place ID картки Icelab у Google (публічний ідентифікатор). Env може
+// перевизначити. У проді достатньо задати лише GOOGLE_PLACES_API_KEY.
+const PLACE_ID =
+  process.env.GOOGLE_PLACE_ID || "ChIJnQltpR3lOkcR9mj4jM_XOJA";
 
-// Дані бізнесу в Google (картка Icelab [сухий лід, dry ice]).
+// Резервний пошук за назвою, якщо Place ID колись зміниться.
 const SEARCH_QUERY = "Icelab сухий лід dry ice";
 const SEARCH_BIAS = { latitude: 49.7570845, longitude: 23.9338176 };
 
