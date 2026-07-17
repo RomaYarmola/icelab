@@ -11,10 +11,13 @@ export const routes = [
   { key: "contacts", path: "/contacts" },
 ];
 
-// Ссылки, которые используются только в футере
+// Ссылки, которые используются только в футере (юридические/сервисные страницы).
+// key — ключ перевода из неймспейса "Footer.links" (messages/*.json).
 export const footerLinks = [
-  { name: "Privacy Policy", path: "/privacy-policy" },
-  { name: "Terms & Conditions", path: "/terms" },
+  { key: "privacy", path: "/privacy-policy" },
+  { key: "terms", path: "/terms" },
+  { key: "payment", path: "/payment" },
+  { key: "returns", path: "/returns" },
 ];
 
 // Соц.сети

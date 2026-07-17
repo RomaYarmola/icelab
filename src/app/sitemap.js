@@ -13,6 +13,11 @@ const staticPaths = [
   "/payment-and-delivery",
   "/blog",
   "/contacts",
+  // Юридичні/сервісні сторінки (P0-3).
+  "/privacy-policy",
+  "/terms",
+  "/payment",
+  "/returns",
 ];
 
 export default async function sitemap() {
