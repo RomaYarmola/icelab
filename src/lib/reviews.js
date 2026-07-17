@@ -19,6 +19,10 @@ const PLACE_ID =
 const SEARCH_QUERY = "Icelab сухий лід dry ice";
 const SEARCH_BIAS = { latitude: 49.7570845, longitude: 23.9338176 };
 
+// Скільки відгуків показуємо (щоб рівно вкладались у ряд) і як часто оновлюємо.
+const REVIEWS_LIMIT = 4;
+const REVALIDATE = 60 * 60 * 24 * 3; // раз на 3 дні (щоб не смикати API)
+
 // Заглушки показуємо ЛИШЕ в dev (щоб бачити верстку). У проді без реальних
 // відгуків секція ховається — жодних вигаданих відгуків на бойовому сайті.
 const DEV = process.env.NODE_ENV !== "production";
@@ -77,7 +81,7 @@ async function resolvePlaceId() {
       textQuery: SEARCH_QUERY,
       locationBias: { circle: { center: SEARCH_BIAS, radius: 5000 } },
     }),
-    next: { revalidate: 86400 },
+    next: { revalidate: REVALIDATE },
   });
   if (!res.ok) return null;
   const data = await res.json();
@@ -97,9 +101,9 @@ export async function getGoogleReviews(locale = "uk") {
         headers: {
           "X-Goog-Api-Key": API_KEY,
           "X-Goog-FieldMask":
-            "rating,userRatingCount,googleMapsUri,reviews.rating,reviews.text,reviews.originalText,reviews.authorAttribution,reviews.relativePublishTimeDescription",
+            "rating,userRatingCount,googleMapsUri,reviews.rating,reviews.text,reviews.originalText,reviews.authorAttribution,reviews.relativePublishTimeDescription,reviews.publishTime",
         },
-        next: { revalidate: 86400 },
+        next: { revalidate: REVALIDATE },
       }
     );
     if (!res.ok) return DEV ? FALLBACK : null;
@@ -114,8 +118,11 @@ export async function getGoogleReviews(locale = "uk") {
         rating: r.rating || 5,
         text: (r.text?.text || r.originalText?.text || "").trim(),
         relativeTime: r.relativePublishTimeDescription || "",
+        publishTime: r.publishTime || "",
       }))
-      .filter((r) => r.text);
+      .filter((r) => r.text)
+      // Найсвіжіші зверху.
+      .sort((a, b) => new Date(b.publishTime) - new Date(a.publishTime));
 
     if (!reviews.length) return DEV ? FALLBACK : null;
 
@@ -124,7 +131,7 @@ export async function getGoogleReviews(locale = "uk") {
       total: data.userRatingCount || reviews.length,
       mapsUri: data.googleMapsUri || FALLBACK.mapsUri,
       isFallback: false,
-      reviews: reviews.slice(0, 8),
+      reviews: reviews.slice(0, REVIEWS_LIMIT),
     };
   } catch {
     return DEV ? FALLBACK : null;
