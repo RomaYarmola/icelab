@@ -44,17 +44,46 @@ export default async function CategoryPage({ params }) {
   const t = await getTranslations({ locale, namespace: "Categories" });
   const products = await getProductsByCategory(locale, cat.key);
 
+  const tc = await getTranslations({ locale, namespace: "Catalog" });
   const crumbs = [
-    { name: (await getTranslations({ locale, namespace: "Catalog" }))("title"), href: "/catalog" },
+    { name: tc("title"), href: "/catalog" },
     { name: t(`${cat.msgKey}.h1`) },
   ];
 
   // Інші категорії для перелінковки.
   const others = CATEGORIES.filter((c) => c.slug !== cat.slug);
 
+  const pillBase =
+    "inline-block rounded-full px-6 py-2.5 not-italic font-e-ukraine transition-colors";
+  const pillInactive =
+    "border border-commonBlue/30 text-commonBlue hover:bg-commonBlue/10";
+  const pillActive = "bg-commonBlue text-white hover:opacity-90";
+
   return (
     <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[140px]">
       <Breadcrumbs items={crumbs} />
+
+      {/* Фільтр за категоріями (активна — поточна) */}
+      <ul className="flex flex-wrap gap-3 md:gap-4 mb-8">
+        <li>
+          <Link href="/catalog" className={`${pillBase} ${pillInactive}`}>
+            {tc("all")}
+          </Link>
+        </li>
+        {CATEGORIES.map((c) => (
+          <li key={c.slug}>
+            <Link
+              href={`/catalog/c/${c.slug}`}
+              aria-current={c.slug === cat.slug ? "page" : undefined}
+              className={`${pillBase} ${
+                c.slug === cat.slug ? pillActive : pillInactive
+              }`}
+            >
+              {t(`${c.msgKey}.h1`)}
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <h1 className="text-3xl main-title-gradient mb-6">{t(`${cat.msgKey}.h1`)}</h1>
 

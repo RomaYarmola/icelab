@@ -234,6 +234,13 @@ textarea::placeholder {
   font-size: clamp(14px, 1.4vw, 16px);
 }
 
+/* Єдиний шрифт плейсхолдерів у всіх формах/модалках (e-Ukraine, не курсив). */
+input::placeholder,
+textarea::placeholder {
+  font-family: var(--font-e-ukraine), "e-Ukraine", sans-serif;
+  font-style: normal;
+}
+
 .radial-dark-gradient {
   border-radius: 1981px;
   background: radial-gradient(circle, #001731 67.02%, #1b3048 125.24%);

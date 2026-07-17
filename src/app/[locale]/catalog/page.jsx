@@ -47,8 +47,18 @@ export default async function CatalogPage({ params }) {
         {t("title")}
       </h1>
 
-      {/* Хаб категорій — перелінковка на категорійні посадкові (P1-3/P1-11) */}
-      <ul className="flex flex-wrap justify-center gap-4 mb-12 md:mb-16">
+      {/* Фільтр за категоріями. «Всі» — активна (показує всі товари),
+          решта ведуть на категорійні посадкові (P1-3/P1-11). */}
+      <ul className="flex flex-wrap justify-center gap-3 md:gap-4 mb-12 md:mb-16">
+        <li>
+          <Link
+            href="/catalog"
+            aria-current="page"
+            className="inline-block rounded-full bg-commonBlue text-white px-6 py-2.5 not-italic font-e-ukraine hover:opacity-90 transition-opacity"
+          >
+            {t("all")}
+          </Link>
+        </li>
         {CATEGORIES.map((c) => (
           <li key={c.slug}>
             <Link

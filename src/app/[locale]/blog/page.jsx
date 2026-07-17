@@ -32,6 +32,15 @@ export default async function BlogPage({ params }) {
   const t = await getTranslations({ locale, namespace: "Blog" });
   const posts = await getBlogPosts(locale);
 
+  const fmtDate = (iso) =>
+    iso
+      ? new Intl.DateTimeFormat(locale === "ru" ? "ru-RU" : "uk-UA", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }).format(new Date(iso))
+      : null;
+
   return (
     <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[160px]">
       <Breadcrumbs items={[{ name: t("title") }]} />
@@ -69,6 +78,11 @@ export default async function BlogPage({ params }) {
                   {post.excerpt && (
                     <p className="font-e-ukraine font-thin not-italic text-commonBlue/70 text-sm line-clamp-3">
                       {post.excerpt}
+                    </p>
+                  )}
+                  {post.publishedAt && (
+                    <p className="mt-1 font-e-ukraine not-italic text-commonBlue/50 text-xs">
+                      {fmtDate(post.publishedAt)}
                     </p>
                   )}
                 </div>
