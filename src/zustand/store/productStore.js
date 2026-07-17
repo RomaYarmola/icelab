@@ -15,18 +15,25 @@ const useProductStore = create(
       updateProductQuantity: (index, quantity) =>
         set((state) => {
           const updatedProducts = [...state.products];
-          if (updatedProducts[index]) {
-            updatedProducts[index].quantity = quantity;
+          const product = updatedProducts[index];
+          if (product) {
+            product.quantity = quantity;
 
-            const { size, iceVariantEnglish, pricePerUnit } =
-              updatedProducts[index];
-
-            updatedProducts[index].totalPrice = calculateTotalPrice(
-              quantity,
-              size,
-              iceVariantEnglish,
-              pricePerUnit
-            );
+            if (product.type === "catalog") {
+              // Узагальнений товар каталогу: проста ціна = ціна × кількість.
+              product.totalPrice = (product.price * quantity).toFixed(0);
+            } else {
+              // Наявна логіка розрахунку для сухого льоду / боксів.
+              // tiers (з Price Settings) прокидуються, щоб джерело цін було одне.
+              const { size, iceVariantEnglish, pricePerUnit, tiers } = product;
+              product.totalPrice = calculateTotalPrice(
+                quantity,
+                size,
+                iceVariantEnglish,
+                pricePerUnit,
+                tiers
+              );
+            }
           }
           return { products: updatedProducts };
         }),

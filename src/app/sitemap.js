@@ -1,0 +1,50 @@
+// Карта сайту з hreflang-альтернативами для двох мовних версій.
+// Статичні сторінки — у коді; товари й статті блогу — автоматично з Sanity
+// (з окремими slug на кожну мову). Новий товар/стаття в CMS з'являється тут
+// без змін у коді.
+
+import { getAllProductSlugs } from "@/lib/products";
+import { getAllBlogSlugs } from "@/lib/blog";
+
+// Статичні сторінки (спільний шлях для обох мов).
+const staticPaths = [
+  "",
+  "/catalog",
+  "/payment-and-delivery",
+  "/blog",
+  "/contacts",
+];
+
+export default async function sitemap() {
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const lastModified = new Date();
+
+  const entry = (ukPath, ruPath, priority) => ({
+    url: `${base}${ukPath}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority,
+    alternates: {
+      languages: { uk: `${base}${ukPath}`, ru: `${base}${ruPath}` },
+    },
+  });
+
+  // Статичні сторінки (однаковий slug для uk/ru).
+  const staticEntries = staticPaths.map((path) =>
+    entry(path === "" ? "/" : path, `/ru${path}`, path === "" ? 1 : 0.8)
+  );
+
+  // Товари (єдиний slug для обох мов).
+  const productSlugs = await getAllProductSlugs();
+  const productEntries = productSlugs.map((slug) =>
+    entry(`/catalog/${slug}`, `/ru/catalog/${slug}`, 0.7)
+  );
+
+  // Статті блогу (єдиний slug для обох мов).
+  const blogSlugs = await getAllBlogSlugs();
+  const blogEntries = blogSlugs.map((slug) =>
+    entry(`/blog/${slug}`, `/ru/blog/${slug}`, 0.6)
+  );
+
+  return [...staticEntries, ...productEntries, ...blogEntries];
+}

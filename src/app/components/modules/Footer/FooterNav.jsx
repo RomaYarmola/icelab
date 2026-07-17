@@ -1,12 +1,14 @@
 import { routes } from "@/utils/routes";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function FooterNav({ variant = "row" }) {
+  const t = useTranslations();
   if (variant === "column") {
     return (
       <div>
         <p className="hidden md:block text-[12px] font-e-ukraine not-italic font-[200] text-white leading-[180%] mb-5">
-          Меню
+          {t("Footer.menuTitle")}
         </p>
         <ul className="text-white flex flex-col gap-4">
           {routes.map((route) => (
@@ -15,7 +17,7 @@ export default function FooterNav({ variant = "row" }) {
                 href={route.path}
                 className="text-[16px] font-e-ukraine not-italic font-[200]"
               >
-                {route.name}
+                {t(`Nav.${route.key}`)}
               </Link>
             </li>
           ))}
@@ -32,7 +34,7 @@ export default function FooterNav({ variant = "row" }) {
             href={route.path}
             className="text-[16px] font-e-ukraine not-italic font-[200]"
           >
-            {route.name}
+            {t(`Nav.${route.key}`)}
           </Link>
         </li>
       ))}

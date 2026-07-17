@@ -14,17 +14,26 @@ export default function HeroClouds() {
 
     const clouds = document.querySelectorAll(".animated-cloud");
 
+    const DURATION = 30000;
+
     clouds.forEach((cloud, index) => {
       if (isSafariBrowser && index >= 4) return;
 
+      // Хмара плавно з'являється на початку циклу і розчиняється в кінці.
+      // Скидання transform (-100% → 0) відбувається, поки opacity === 0,
+      // тож переходу «ривком» не видно — рух виглядає безперервним.
       const keyframes = [
-        { transform: "translateX(0)" },
-        { transform: "translateX(-100%)" },
+        { transform: "translateX(0)", opacity: 0 },
+        { transform: "translateX(-8%)", opacity: 1, offset: 0.08 },
+        { transform: "translateX(-92%)", opacity: 1, offset: 0.92 },
+        { transform: "translateX(-100%)", opacity: 0 },
       ];
 
       const options = {
-        duration: 30000,
-        delay: index === 3 ? 4000 : 0,
+        duration: DURATION,
+        // Від'ємна затримка розводить фази хмар — поле рухається безперервно,
+        // без синхронного «пульсу» появи/зникнення.
+        delay: -((index * DURATION) / clouds.length),
         iterations: Infinity,
         easing: "linear",
       };

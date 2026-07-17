@@ -1,10 +1,12 @@
 "use client";
 
 import { Accordion, AccordionItem } from "@nextui-org/react";
-import { data } from "./data";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function AccordionComponent() {
+  const t = useTranslations("Faq");
+  const data = t.raw("items");
   return (
     <Accordion className="accordion" defaultExpandedKeys={["0"]}>
       {data.map(({ question, answer }, index) => (

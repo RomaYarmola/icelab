@@ -1,11 +1,13 @@
 import { DRY_ICE_PRICING } from "@/app/constants/constants";
 
-export const getDryIcePrice = (quantity) => {
-  const pricing = DRY_ICE_PRICING.find(
+// Тарифи можна передати ззовні (з Price Settings у Sanity). Якщо не передані —
+// використовуються існуючі константи сайту. Логіка розрахунку одна.
+export const getDryIcePrice = (quantity, tiers = DRY_ICE_PRICING) => {
+  const list = Array.isArray(tiers) && tiers.length ? tiers : DRY_ICE_PRICING;
+  const pricing = list.find(
     (range) => quantity >= range.min && quantity <= range.max
   );
 
-  console.log(pricing);
   return pricing ? pricing.price : 60;
 };
 
@@ -13,11 +15,12 @@ export const calculateTotalPrice = (
   quantity,
   size,
   variant,
-  pricePerUnit = {}
+  pricePerUnit = {},
+  tiers = DRY_ICE_PRICING
 ) => {
   switch (variant) {
     case "dryIce":
-      return (quantity * getDryIcePrice(quantity)).toFixed(0);
+      return (quantity * getDryIcePrice(quantity, tiers)).toFixed(0);
     case "iceBox":
       if (!size) return "0";
 

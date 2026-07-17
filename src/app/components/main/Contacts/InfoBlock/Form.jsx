@@ -4,8 +4,11 @@ import { validateField } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 import { Input } from "@nextui-org/react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Form() {
+  const t = useTranslations("ContactForm");
+  const tv = useTranslations("Validation");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -20,11 +23,11 @@ export default function Form() {
     phone: false,
   });
 
-  const [buttonText, setButtonText] = useState("Відправити");
+  const [buttonText, setButtonText] = useState(t("submit"));
 
   const handleSubmit = async () => {
     const errors = {
-      phone: validateField("phone", formData.phone),
+      phone: validateField("phone", formData.phone, tv),
     };
 
     setFormErrors(errors);
@@ -40,8 +43,8 @@ export default function Form() {
       const result = await sendMessage(message);
 
       if (result.success) {
-        setButtonText("Дякуємо");
-        setTimeout(() => setButtonText("Відправити"), 2000);
+        setButtonText(t("success"));
+        setTimeout(() => setButtonText(t("submit")), 2000);
       }
 
       setFormData({
@@ -62,7 +65,7 @@ export default function Form() {
 
   const handleBlur = (field) => {
     setTouchedFields((prev) => ({ ...prev, [field]: true }));
-    const error = validateField(field, formData[field]);
+    const error = validateField(field, formData[field], tv);
     setFormErrors((prevErrors) => ({ ...prevErrors, [field]: error }));
   };
 
@@ -85,8 +88,8 @@ export default function Form() {
   return (
     <div className="">
       <h3 className="mb-[52px] text-xl-heading font-medium main-title-gradient text-center ">
-        Напишіть
-        <br /> повідомлення
+        {t("headingLine1")}
+        <br /> {t("headingLine2")}
       </h3>
       <form
         onSubmit={(e) => {
@@ -102,7 +105,7 @@ export default function Form() {
               "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0 xl:h-full xl:min-h-full",
           }}
           className="block w-full mb-1 rounded-md contactInput overflow-hidden xl:!h-[54px]"
-          placeholder="Імʼя або назва компанії"
+          placeholder={t("companyPlaceholder")}
           name="name"
           value={name}
           onChange={handleChange}
@@ -118,7 +121,7 @@ export default function Form() {
             className={`block w-full mb-1 rounded-md contactInput overflow-hidden xl:!h-[54px] ${
               phone === "" && "required-field"
             }`}
-            placeholder="Номер телефону"
+            placeholder={t("phonePlaceholder")}
             name="phone"
             value={phone}
             onChange={handleChange}
@@ -132,7 +135,7 @@ export default function Form() {
         </div>
         <textarea
           className="contactTextarea block w-full bg-transparent border border-commonBlue rounded-md px-5 py-[17px] mb-4 resize-none h-[145px] outline-none font-e-ukraine font-thin not-italic"
-          placeholder="Ваше повідомлення"
+          placeholder={t("messagePlaceholder")}
           name="comment"
           value={comment}
           onChange={(e) => handleFormDataChange("comment", e.target.value)}

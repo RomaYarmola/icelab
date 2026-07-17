@@ -6,16 +6,17 @@ import {
   NavbarBrand,
   NavbarContent,
   NavbarMenuToggle,
-  Link,
 } from "@nextui-org/react";
 import Image from "next/image";
 import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
 import useProductStore from "@/zustand/store/productStore";
 import BasketModal from "./BasketModal";
-import { useRouter } from "next/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function Header() {
+  const t = useTranslations("Header");
   const [isBasketModalOpen, setIsBasketModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const modalRef = useRef(null);
@@ -77,7 +78,7 @@ export default function Header() {
         </div>
 
         <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
           className="sm:hidden w-9 h-9"
         />
 

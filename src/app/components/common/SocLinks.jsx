@@ -1,14 +1,16 @@
 import { socialContactsLinks, socialLinks } from "@/utils/routes";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function SocLinks({ variant }) {
+  const t = useTranslations("Social");
   const data = variant === "footer" ? socialLinks : socialContactsLinks;
 
   return (
     <div className={`${variant === "footer" && "mb-12 md:mb-0"}`}>
       {variant === "footer" && (
         <p className="max-w-[270px] text-white not-italic font-e-ukraine text-[16px] mb-5 font-[200] leading-[1.2]">
-          Слідкуйте за нами в соціальних мережах
+          {t("follow")}
         </p>
       )}
 

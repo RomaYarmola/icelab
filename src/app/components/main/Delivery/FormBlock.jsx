@@ -1,5 +1,6 @@
 import { validateField } from "@/helpers/validation";
 import { Input, Switch } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 
 export default function FormBlock({
   handleSubmit,
@@ -12,9 +13,11 @@ export default function FormBlock({
   isPickup,
   handlePickupChange,
 }) {
+  const t = useTranslations("DeliveryForm");
+  const tv = useTranslations("Validation");
   const handleBlur = (field) => {
     setTouchedFields((prev) => ({ ...prev, [field]: true }));
-    const error = validateField(field, formData[field]);
+    const error = validateField(field, formData[field], tv);
     setFormErrors((prevErrors) => ({ ...prevErrors, [field]: error }));
   };
 
@@ -28,7 +31,7 @@ export default function FormBlock({
   return (
     <div className="md:w-[48%]">
       <h3 className="mb-8 text-xl-heading font-medium main-title-gradient text-center ">
-        Доставка
+        {t("heading")}
       </h3>
       <div className="mb-4 flex justify-end xs:w-[90%]  sm:max-w-[448px] sm:w-full mx-auto">
         <Switch
@@ -36,7 +39,7 @@ export default function FormBlock({
           onChange={handlePickupChange}
           color="default"
         >
-          Самовивіз
+          {t("pickup")}
         </Switch>
       </div>
 
@@ -52,7 +55,7 @@ export default function FormBlock({
             isRequired
             classNames={{ input: "font-thin" }}
             className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field`}
-            placeholder="Імʼя"
+            placeholder={t("namePlaceholder")}
             name="name"
             value={name}
             onChange={handleChange}
@@ -70,7 +73,7 @@ export default function FormBlock({
             isRequired
             classNames={{ input: "font-thin" }}
             className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field`}
-            placeholder="Номер телефону"
+            placeholder={t("phonePlaceholder")}
             name="phone"
             value={phone}
             onChange={handleChange}
@@ -86,7 +89,7 @@ export default function FormBlock({
         <Input
           classNames={{ input: "font-thin" }}
           className={`block w-full mb-1 rounded-md custom-input overflow-hidden`}
-          placeholder="Email"
+          placeholder={t("emailPlaceholder")}
           name="email"
           value={email}
           onChange={handleChange}
@@ -100,7 +103,7 @@ export default function FormBlock({
                 classNames={{ input: "font-thin" }}
                 className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field
             `}
-                placeholder="Місто"
+                placeholder={t("cityPlaceholder")}
                 name="city"
                 value={city}
                 onChange={handleChange}
@@ -119,7 +122,7 @@ export default function FormBlock({
                 classNames={{ input: "font-thin" }}
                 className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field
             `}
-                placeholder="Відділення Нової пошти"
+                placeholder={t("addressPlaceholder")}
                 name="address"
                 value={address}
                 onChange={handleChange}

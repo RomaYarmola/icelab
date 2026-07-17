@@ -4,12 +4,9 @@ import { Modal, ModalContent } from "@nextui-org/react";
 import { useState } from "react";
 import FirstStep from "./FirstStep/FirstStep";
 import useProductStore from "@/zustand/store/productStore";
-import {
-  PRICE_PER_15,
-  PRICE_PER_30,
-  DRY_ICE_PRICING,
-} from "@/app/constants/constants";
 import { calculateTotalPrice } from "@/utils/pricing";
+import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvider";
+import { buildPricing } from "@/lib/priceSettings";
 
 export default function MultiStepModal({
   isOpen,
@@ -18,17 +15,15 @@ export default function MultiStepModal({
   variant,
   sizes,
 }) {
+  // Тарифи/ціни з Price Settings (Sanity → fallback константи). Джерело одне.
+  const settings = usePriceSettings();
+  const pricing = buildPricing(settings);
+
   const [formData, setFormData] = useState({
     iceVariant: "",
     size: "",
     quantity: variant === "dryIce" ? 5 : 1,
-    pricePerUnit: {
-      dryIce: DRY_ICE_PRICING,
-      iceBox: {
-        15: PRICE_PER_15,
-        30: PRICE_PER_30,
-      },
-    },
+    pricePerUnit: pricing.pricePerUnit,
     totalPrice: "0",
   });
 
@@ -55,7 +50,8 @@ export default function MultiStepModal({
           quantity,
           size,
           variant,
-          updatedData.pricePerUnit
+          updatedData.pricePerUnit,
+          pricing.tiers
         );
       }
 
@@ -68,14 +64,8 @@ export default function MultiStepModal({
     setFormData({
       iceVariant: "",
       size: "",
-      quantity: variant === "dryIce" ? 5 : 1,
-      pricePerUnit: {
-        dryIce: DRY_ICE_PRICING,
-        iceBox: {
-          15: PRICE_PER_15,
-          30: PRICE_PER_30,
-        },
-      },
+      quantity: variant === "dryIce" ? settings.dryIceRange?.min ?? 5 : 1,
+      pricePerUnit: pricing.pricePerUnit,
       totalPrice: "0",
     });
   };
@@ -87,6 +77,8 @@ export default function MultiStepModal({
       size: formData.size,
       quantity: formData.quantity,
       pricePerUnit: formData.pricePerUnit,
+      // Тарифи для перерахунку ціни в корзині (dryIce) — щоб джерело було одне.
+      tiers: pricing.tiers,
       totalPrice: formData.totalPrice,
     };
 

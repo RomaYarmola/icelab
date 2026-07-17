@@ -5,6 +5,8 @@ import FirstStepHeader from "./FirsStepHeader";
 import TextPart from "./TextPart";
 import BtnsBlock from "./BtnsBlock";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvider";
 
 export default function FirstStep({
   onSubmit,
@@ -15,6 +17,10 @@ export default function FirstStep({
   handleFormDataChange,
   variant,
 }) {
+  const t = useTranslations("Modal");
+  const settings = usePriceSettings();
+  // Діапазон повзунка ваги сухого льоду — з Price Settings (fallback константи).
+  const dryRange = variant === "dryIce" ? settings.dryIceRange : undefined;
   useEffect(() => {
     if (variant === "iceBox" && !selectedOption) {
       handleFormDataChange("size", sizes[1]);
@@ -57,6 +63,9 @@ export default function FirstStep({
               handleFormDataChange={handleFormDataChange}
               isDisabled={!selectedOption}
               variant={variant}
+              minValue={dryRange?.min}
+              maxValue={dryRange?.max}
+              step={dryRange?.step}
             />
           </div>
 
@@ -70,7 +79,7 @@ export default function FirstStep({
               variant="small"
               onPress={handleOrderClick}
               isDisabled={!selectedOption}
-              text="Замовити"
+              text={t("order")}
             />
           </div>
         </div>

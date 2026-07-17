@@ -1,17 +1,17 @@
 import TextList from "@/app/components/common/TextList/TextList";
-import Container from "@/utils/Container";
-import { data } from "./data";
+import { useTranslations } from "next-intl";
 
 export default function SelfDelivery() {
+  const t = useTranslations("SelfDelivery");
   return (
     <div className="overflow-x-clip relative">
       <div className="about-card py-7 px-4 xl:p-7 relative z-[4]">
         <h3 className="text-white font-medium text-[20px] mb-5 md:text-commonBlue">
-          САМОВИВІЗ З <br />
-          ВИРОБНИЦТВА:
+          {t("titleLine1")} <br />
+          {t("titleLine2")}
         </h3>
         <TextList
-          data={data}
+          data={t.raw("items")}
           variant="self-delivery"
           textSize="12px"
           textClassName="md:text-commonBlue"

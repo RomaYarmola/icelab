@@ -1,11 +1,14 @@
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-// Основные ссылки для хедера, бургера и других общих компонентов
+// Основные ссылки для хедера, бургера и других общих компонентов.
+// key — ключ перевода из неймспейса "Nav" (messages/*.json).
 export const routes = [
-  { name: "Головна", path: "/" },
-  { name: "Доставка та оплата", path: "/payment-and-delivery" },
-  { name: "Контакти", path: "/contacts" },
+  { key: "home", path: "/" },
+  { key: "catalog", path: "/catalog" },
+  { key: "paymentAndDelivery", path: "/payment-and-delivery" },
+  { key: "blog", path: "/blog" },
+  { key: "contacts", path: "/contacts" },
 ];
 
 // Ссылки, которые используются только в футере

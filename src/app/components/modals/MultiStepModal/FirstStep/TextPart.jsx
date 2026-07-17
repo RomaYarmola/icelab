@@ -1,14 +1,26 @@
+import { useTranslations } from "next-intl";
+import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvider";
+
 export default function TextPart({ quantity, variant }) {
+  const t = useTranslations("Modal");
+  const tp = useTranslations("Products");
+  const settings = usePriceSettings();
+  const isDryIce = variant === "dryIce";
+  // Табличка тарифів будується з Price Settings (Sanity → fallback константи),
+  // тож при зміні тарифів вона оновлюється разом із розрахунком ціни.
+  const tiers = settings.dryIceTiers || [];
+  const mid = Math.ceil(tiers.length / 2);
+  const columns = [tiers.slice(0, mid), tiers.slice(mid)];
   return (
     <>
       <div className="mt-[-45px] flex gap-[19px] items-center">
         <h3 className="main-title-gradient text-[24px] leading-[1.08] font-medium">
-          {variant === "dryIce" ? "Сухий лід" : "Бокс для льоду"}
+          {isDryIce ? tp("dryIceName") : tp("iceBoxName")}
         </h3>
         <p className="text-[20px] font-e-ukraine not-italic font-medium leadong-[1.3] text-commonBlue">
-          {variant === "dryIce" ? (
+          {isDryIce ? (
             <>
-              {quantity} <span>кг</span>
+              {quantity} <span>{t("dryIceUnit")}</span>
             </>
           ) : (
             quantity
@@ -16,28 +28,27 @@ export default function TextPart({ quantity, variant }) {
         </p>
       </div>
       <p className="mb-4 font-e-ukraine font-thin text-[#686466] leading-normal not-italic text-[12px]">
-        {variant === "dryIce" ? (
+        {isDryIce ? (
           <>
-            Сухий лід виготовлений з високоякісної вуглекислоти (CO₂).
-            Відрізняється різним діаметром гранул, що дозволяє обрати
-            оптимальний варіант для ваших потреб.
+            {t("dryIceDescLine1")}
             <br />
-            Виберіть потрібний діаметр та кількість для замовлення
+            {t("dryIceDescLine2")}
           </>
         ) : (
-          "Бокс для льоду — це контейнер, спеціально призначений для транспортування, зберігання або використання льоду. Він може мати різні форми, розміри та конструкції, залежно від потреб: збереження низької температури, створення естетичного ефекту."
+          t("iceBoxDescription")
         )}
       </p>
-      {variant === "dryIce" && (
+      {isDryIce && (
         <div className="flex flex-col xs:flex-row xs:gap-8 main-title-gradient font-bold font-e-ukraine mb-4">
-          <div>
-            <p>5 - 30 кг - 75 грн/кг</p>
-            <p>31 - 100 кг - 60 грн/кг</p>
-          </div>
-          <div>
-            <p>101 - 300 кг - 60 грн/кг</p>
-            <p>301 - 500 кг - 55 грн/кг</p>
-          </div>
+          {columns.map((col, i) => (
+            <div key={i}>
+              {col.map((tier, j) => (
+                <p key={j}>
+                  {tier.min} - {tier.max} кг - {tier.price} грн/кг
+                </p>
+              ))}
+            </div>
+          ))}
         </div>
       )}
     </>

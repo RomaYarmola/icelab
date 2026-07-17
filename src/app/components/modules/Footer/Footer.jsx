@@ -1,13 +1,15 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import SocLinks from "../../common/SocLinks";
 import FooterNav from "./FooterNav";
 
 function CreatedBy({ align = "left" }) {
+  const t = useTranslations("Footer");
   return (
     <div className={`text-white ${align === "right" ? "ml-auto" : ""}`}>
       <p className="text-[7px] font-e-ukraine not-italic text-white font-[200] leading-[180%] uppercase">
-        Created by
+        {t("createdBy")}
       </p>
       <a
         href="https://www.code-site.art/"
@@ -52,6 +54,7 @@ function CreatedBy({ align = "left" }) {
 }
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   return (
     <footer className="bg-dark-gradient dark:bg-gray-900 relative z-10 overflow-hidden">
       {/* Декоративні картинки (позиціонування додається окремо) */}
@@ -107,7 +110,7 @@ export default function Footer() {
           </a>
 
           <p className="max-w-[227px] mb-12 font-e-ukraine not-italic text-[14px] font-[200] leading-[1.2] text-white">
-            Наші CO₂-рішення повного циклу — від джерела до використання
+            {t("co2Slogan")}
           </p>
 
           <div className="mb-12">
@@ -169,7 +172,7 @@ export default function Footer() {
               </a>
 
               <p className="max-w-[200px] font-e-ukraine not-italic text-[14px] font-[200] leading-[1.2] text-white">
-                Наші CO₂-рішення повного циклу — від джерела до використання
+                {t("co2Slogan")}
               </p>
             </div>
 

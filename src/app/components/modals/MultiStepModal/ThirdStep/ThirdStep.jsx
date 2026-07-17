@@ -1,8 +1,10 @@
 import { ModalBody, ModalContent } from "@nextui-org/react";
 import Image from "next/image";
 import ThirdStepHeader from "./ThirdStepHeader";
+import { useTranslations } from "next-intl";
 
 export default function ThirdStep({ handleClose }) {
+  const t = useTranslations("Modal");
   return (
     <ModalContent className="relative third-modal-bg overflow-x-clip">
       <ThirdStepHeader handleClose={handleClose} />
@@ -17,10 +19,10 @@ export default function ThirdStep({ handleClose }) {
           />
         </div>
         <h3 className="font-medium text-[24px] leading-[1.3] md:leading-[0.9] text-center text-white-title-gradient mt-[14px]">
-          Дякуємо за замовлення!
+          {t("thanksTitle")}
         </h3>
         <p className="font-e-ukraine text-[16px] md:text-[20px] mt-[18px] text-white-title-gradient text-center  ">
-          Очікуйте на повідомлення від менеджера!
+          {t("thanksSubtitle")}
         </p>
       </ModalBody>
     </ModalContent>

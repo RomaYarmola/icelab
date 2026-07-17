@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import Order from "../../main/Delivery/Order";
 
 export default function BasketModal({

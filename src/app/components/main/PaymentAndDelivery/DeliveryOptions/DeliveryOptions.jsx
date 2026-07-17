@@ -2,8 +2,10 @@ import Container from "@/utils/Container";
 import Image from "next/image";
 import SelfDelivery from "../SelfDelivery/Self.delivery";
 import UkraineDelivery from "../UkraineDelivery/UkraineDelivery";
+import { useTranslations } from "next-intl";
 
 export default function DeliveryOptions() {
+  const t = useTranslations("DeliveryOptions");
   return (
     <div className="relative overflow-x-clip">
       <>
@@ -15,7 +17,7 @@ export default function DeliveryOptions() {
         <div className="flex flex-col md:flex-row gap-5 pb-[315px] md:pb-[491px]">
           <div className="relative shrink-0 overflow-hidden h-[428px] md:h-auto md:w-[300px] l:w-[400px] xl:w-[466px] rounded-[14px] overflow-hidden p-7">
             <p className="relative z-10 max-w-[221px] text-white text-[24px] font-bold">
-              Обирай зручний для себе варіант
+              {t("chooseOption")}
             </p>
             <Image
               src="/images/payment-and-delivery/delivery-image.webp"

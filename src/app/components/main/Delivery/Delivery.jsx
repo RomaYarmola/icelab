@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import Container from "@/utils/Container";
 import Order from "./Order";
 import FormBlock from "./FormBlock";
@@ -11,6 +12,7 @@ import { withLoader } from "@/helpers/withLoader";
 
 function Delivery() {
   const router = useRouter();
+  const tv = useTranslations("Validation");
   const products = useProductStore((state) => state.products);
   const clearProducts = useProductStore((state) => state.clearProducts);
 
@@ -47,10 +49,10 @@ function Delivery() {
 
   const handleSubmit = () => {
     const errors = {
-      phone: validateField("phone", formData.phone),
-      name: validateField("name", formData.name),
-      city: !isPickup ? validateField("city", formData.city) : "",
-      address: !isPickup ? validateField("address", formData.address) : "",
+      phone: validateField("phone", formData.phone, tv),
+      name: validateField("name", formData.name, tv),
+      city: !isPickup ? validateField("city", formData.city, tv) : "",
+      address: !isPickup ? validateField("address", formData.address, tv) : "",
     };
 
     setFormErrors(errors);

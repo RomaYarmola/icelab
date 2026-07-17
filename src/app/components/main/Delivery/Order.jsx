@@ -2,10 +2,12 @@
 import useProductStore from "@/zustand/store/productStore";
 import BasketCard from "../../common/BasketCard";
 import GradientButton from "../../common/GradientButton";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export default function Order({ handleSubmit, products, totalValue, variant }) {
+  const t = useTranslations("Order");
   const deleteProduct = useProductStore((state) => state.deleteProduct);
   return (
     <div
@@ -15,7 +17,7 @@ export default function Order({ handleSubmit, products, totalValue, variant }) {
     >
       {products.length === 0 ? (
         <div className="flex flex-col gap-5 items-center">
-          <p>Ваш кошик порожній</p>
+          <p>{t("empty")}</p>
           <Link href={"/"}>
             <Image src="/icons/logo.svg" alt="logo" width={122} height={106} />
           </Link>
@@ -27,6 +29,9 @@ export default function Order({ handleSubmit, products, totalValue, variant }) {
             {products.map((product, index) => (
               <BasketCard
                 key={index}
+                type={product.type}
+                image={product.image}
+                name={product.name}
                 iceVariant={product.iceVariant}
                 iceVariantEnglish={product.iceVariantEnglish}
                 size={product.size}
@@ -43,7 +48,7 @@ export default function Order({ handleSubmit, products, totalValue, variant }) {
           </ul>
           <div className="flex gap-4 justify-between items-center mt-[14px] mb-5">
             <p className="text-[16px] font-semibold font-e-ukraine not-italic">
-              Сума замовлення:
+              {t("total")}
             </p>
             <p className="text-[20px] font-medium text-[#F31260]">
               {totalValue}&nbsp;грн
@@ -51,7 +56,7 @@ export default function Order({ handleSubmit, products, totalValue, variant }) {
           </div>
           <div className="w-[220px] md:w-[258px] mx-auto">
             <GradientButton
-              text="Оформити замовлення"
+              text={t("submit")}
               type="submit"
               onPress={handleSubmit}
             />

@@ -1,6 +1,7 @@
 import { Input, ModalBody, ModalContent } from "@nextui-org/react";
 import GradientButton from "../../../common/GradientButton";
 import SecondStepHeader from "./SecondStepHeader";
+import { useTranslations } from "next-intl";
 
 export default function SecondStep({
   name,
@@ -13,6 +14,7 @@ export default function SecondStep({
   touchedFields,
   handleClose,
 }) {
+  const t = useTranslations("Modal");
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -37,7 +39,7 @@ export default function SecondStep({
               className={`block w-full mb-1 border rounded custom-input ${
                 name === "" && "required-field"
               }`}
-              placeholder="Імʼя"
+              placeholder={t("namePlaceholder")}
               name="name"
               value={name}
               onChange={handleChange}
@@ -55,7 +57,7 @@ export default function SecondStep({
               className={`block w-full mb-1 border rounded custom-input ${
                 phone === "" && "required-field"
               }`}
-              placeholder="Телефон"
+              placeholder={t("phonePlaceholder")}
               name="phone"
               value={phone}
               onChange={handleChange}
@@ -69,12 +71,12 @@ export default function SecondStep({
           </div>
           <textarea
             className="block w-full rounded-md px-5 pt-[13px] pb-4 resize-none h-[158px] outline-none"
-            placeholder="Ваше повідомлення"
+            placeholder={t("messagePlaceholder")}
             name="comment"
             value={comment}
             onChange={(e) => onFormDataChange("comment", e.target.value)}
           />
-          <GradientButton variant="small" type="submit" text="Відправити" />
+          <GradientButton variant="small" type="submit" text={t("submit")} />
         </form>
       </ModalBody>
     </ModalContent>

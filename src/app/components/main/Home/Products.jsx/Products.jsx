@@ -3,9 +3,20 @@ import Container from "@/utils/Container";
 import { data } from "./data";
 import ProductCard from "./ProductCard";
 import { useIsSafari } from "@/hooks/useIsSafari";
+import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvider";
 
 export default function Products() {
   const isSafari = useIsSafari();
+  const settings = usePriceSettings();
+
+  // Розміри/ваги беруться з Price Settings (Sanity → fallback константи).
+  const sizesFor = (variant) => {
+    if (variant === "dryIce") return settings.granuleSizes;
+    if (variant === "iceBox")
+      return (settings.boxPrices || []).map((b) => `${b.size} кг`);
+    return [];
+  };
+
   return (
     <div
       id="products"
@@ -21,12 +32,11 @@ export default function Products() {
       {/* /gradient */}
       <Container>
         <ul className="pt-[111px] pb-[124px] l:pt-[122px] 2xl:pt-[200px] l:pb-[112px] relative z-[4] flex flex-col md:flex-row gap-[88.6px] md:gap-5 items-center justify-center">
-          {data.map(({ img, title, sizes, variant }, index) => (
+          {data.map(({ img, variant }, index) => (
             <ProductCard
               key={index}
               img={img}
-              title={title}
-              sizes={sizes}
+              sizes={sizesFor(variant)}
               variant={variant}
             />
           ))}

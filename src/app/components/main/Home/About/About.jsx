@@ -5,12 +5,17 @@ import AboutClouds from "./AboutClouds";
 import { useIsSafari } from "@/hooks/useIsSafari";
 import TextList from "@/app/components/common/TextList/TextList";
 import ImageCarousel from "@/app/components/common/ImageCarousel/ImageCarousel";
-import { materials, production, decisions, expirience } from "./data";
+import { useTranslations } from "next-intl";
 
 import Image from "next/image";
 
 export default function About() {
   const isSafari = useIsSafari();
+  const t = useTranslations("About");
+  const materials = t.raw("materials");
+  const production = t.raw("production");
+  const decisions = t.raw("decisions");
+  const expirience = t.raw("experience");
   return (
     <div
       className={`overflow-x-clip relative  ${
@@ -33,7 +38,7 @@ export default function About() {
           <div className="flex flex-col gap-5 md:flex-row">
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[478px]">
               <h3 className="text-secondary-white-gradient text-[24px] uppercase font-e-ukraine font-extralight not-italic">
-                Про нас
+                {t("subtitle")}
               </h3>
               <h2 className="text-white text-[48px] font-bold leading-normal mb-[57px]">
                 ICELAB
@@ -41,7 +46,7 @@ export default function About() {
               <div className="flex items-center gap-5">
                 <div className="w-[55px] h-[3px] bg-white" />
                 <h4 className="text-white text-[16px] font-medium uppercase italic">
-                  Ваш надійний постачальник сухого льоду
+                  {t("tagline")}
                 </h4>
               </div>
             </div>
@@ -57,7 +62,7 @@ export default function About() {
 
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[393px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
-                Сировина і потужності:
+                {t("rawMaterialsTitle")}
               </h5>
               <TextList data={materials} />
             </div>
@@ -66,7 +71,7 @@ export default function About() {
           <div className="flex flex-col gap-5 md:flex-row">
             <div className="bg-[#1E73D7] px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md rounded-[14px] md:w-[30%] xl:w-[373px]">
               <h5 className="xl:max-w-[180px] text-white text-[18px] font-medium uppercase italic mb-6">
-                Сучасне виробництво
+                {t("productionTitle")}
               </h5>
               <TextList data={production} bulletVariant="white" />
             </div>
@@ -82,7 +87,7 @@ export default function About() {
 
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md md:order-2 md:w-[45%] xl:w-[455px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
-                Гнучкі рішення для клієнтів
+                {t("decisionsTitle")}
               </h5>
               <TextList data={decisions} />
             </div>
@@ -108,7 +113,7 @@ export default function About() {
 
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[530px]">
               <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
-                Досвід та надійність
+                {t("experienceTitle")}
               </h5>
               <TextList data={expirience} bulletVariant="white" />
             </div>

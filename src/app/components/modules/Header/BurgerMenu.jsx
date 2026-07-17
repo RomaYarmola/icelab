@@ -1,8 +1,10 @@
 import { routes } from "@/utils/routes";
 import { NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export default function BurgerMenu({ onClick }) {
+  const t = useTranslations("Nav");
   return (
     <NavbarMenu className=" bg-white flex flex-col gap-9 px-4 py-8">
       {routes.map((route) => (
@@ -13,7 +15,7 @@ export default function BurgerMenu({ onClick }) {
             href={route.path}
             size="lg"
           >
-            {route.name}
+            {t(route.key)}
           </Link>
           <hr className="h-[1.5px] w-full bg-hr-gradient mt-[14px]" />
         </NavbarMenuItem>

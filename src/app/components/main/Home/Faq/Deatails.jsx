@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { data } from "./data";
+import { useTranslations } from "next-intl";
 
 export default function Details() {
+  const t = useTranslations("Faq");
+  const data = t.raw("items");
   return (
     <div className="flex flex-col gap-5">
       {data.map(({ question, answer }, index) => (

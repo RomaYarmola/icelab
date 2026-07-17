@@ -1,14 +1,24 @@
 import { Slider } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 
 export default function RangeInput({
   value,
   handleFormDataChange,
   isDisabled,
   variant,
+  // Опційні перевизначення діапазону (напр. з Price Settings для сухого льоду).
+  minValue,
+  maxValue,
+  step,
 }) {
+  const t = useTranslations("Common");
   const handleChange = (quantity) => {
     handleFormDataChange("quantity", quantity);
   };
+
+  const resolvedMin = minValue ?? (variant === "dryIce" ? 5 : 1);
+  const resolvedMax = maxValue ?? (variant === "dryIce" ? 500 : 10);
+  const resolvedStep = step ?? (variant === "dryIce" ? 5 : 1);
 
   return (
     <div className="w-full">
@@ -20,7 +30,7 @@ export default function RangeInput({
           label:
             "font-e-ukraine not-italic text-[10px] font-medium leading-[2]",
         }}
-        label="Кількість"
+        label={t("quantity")}
         size="sm"
         renderValue={({ children, ...props }) => (
           <output
@@ -41,9 +51,9 @@ export default function RangeInput({
         )}
         value={value}
         onChange={handleChange}
-        minValue={variant === "dryIce" ? 5 : 1}
-        maxValue={variant === "dryIce" ? 500 : 10}
-        step={variant === "dryIce" ? 5 : 1}
+        minValue={resolvedMin}
+        maxValue={resolvedMax}
+        step={resolvedStep}
         aria-label="quantity"
       />
     </div>

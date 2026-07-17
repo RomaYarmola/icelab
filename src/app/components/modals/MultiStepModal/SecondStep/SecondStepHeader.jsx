@@ -1,11 +1,13 @@
 import { Button, ModalHeader } from "@nextui-org/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export default function SecondStepHeader({ handleClose }) {
+  const t = useTranslations("Modal");
   return (
     <ModalHeader className="px-[70px] pt-[70px] md:pt-[77px] pb-2 md:pb-7 justify-center relative">
       <h3 className="main-title-gradient text-[24px] leading-[1.08] font-medium text-center">
-        Залишити заявку
+        {t("leaveRequest")}
       </h3>
       <Button
         isIconOnly

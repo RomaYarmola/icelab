@@ -1,6 +1,7 @@
 import Image from "next/image";
 import RangeInput from "./RangeInput";
 import { Button } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 
 export default function BasketCard({
   iceVariantEnglish,
@@ -11,7 +12,20 @@ export default function BasketCard({
   totalPrice,
   deleteItem,
   basket,
+  type,
+  image,
+  name,
 }) {
+  const t = useTranslations("Products");
+  const isCatalog = type === "catalog";
+  // Для товарів каталогу назва та зображення беруться напряму з товару
+  // (вже локалізовані). Для сухого льоду/боксів — наявна логіка:
+  // назва зі словника за стабільним ключем iceVariantEnglish.
+  const displayName = isCatalog
+    ? name
+    : iceVariantEnglish === "iceBox"
+    ? t("iceBoxName")
+    : t("dryIceName");
   const prodImg = (variantEnglish) => {
     switch (variantEnglish) {
       case "dryIce":
@@ -22,6 +36,7 @@ export default function BasketCard({
         return "/images/products/ice2.png";
     }
   };
+  const imageSrc = isCatalog ? image : prodImg(iceVariantEnglish);
 
   return (
     <li
@@ -40,8 +55,8 @@ export default function BasketCard({
           }   overflow-hidden border border-commonBlue rounded-[10px] p-4`}
         >
           <Image
-            src={prodImg(iceVariantEnglish)}
-            alt={iceVariant}
+            src={imageSrc}
+            alt={displayName}
             width={134}
             height={134}
             className="w-full h-auto"
@@ -49,7 +64,7 @@ export default function BasketCard({
         </div>
         <div className={`${basket ? "max-w-[277px]" : "max-w-[147px]"} `}>
           <p className={`text-[16px] ${basket && "md:text-[24px]"}  font-bold`}>
-            {iceVariant}
+            {displayName}
           </p>
 
           <p className="font-e-ukraine not-italic text-[16px]">{size}</p>
