@@ -29,7 +29,8 @@ export default function About() {
         <div className="hidden md:block absolute z-10 bottom-[-73px] right-[-201px] w-[483px] h-[482px]">
           <Image
             src="/images/about/about-decor.webp"
-            alt="about-decor"
+            alt=""
+            aria-hidden="true"
             fill
             className="object-cover"
           />
@@ -37,58 +38,58 @@ export default function About() {
         <div className="flex flex-col gap-5 pt-[142px] l:pt-[194px] pb-[342px] md:pb-[69px] relative z-10 mx-auto max-w-[328px] md:max-w-none">
           <div className="flex flex-col gap-5 md:flex-row">
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[478px]">
-              <h3 className="text-secondary-white-gradient text-[24px] uppercase font-e-ukraine font-extralight not-italic">
+              <h2 className="text-secondary-white-gradient text-[24px] uppercase font-e-ukraine font-extralight not-italic">
                 {t("subtitle")}
-              </h3>
-              <h2 className="text-white text-[48px] font-bold leading-normal mb-[57px]">
-                ICELAB
               </h2>
+              <p className="text-white text-[48px] font-bold leading-normal mb-[57px]">
+                ICELAB
+              </p>
               <div className="flex items-center gap-5">
                 <div className="w-[55px] h-[3px] bg-white" />
-                <h4 className="text-white text-[16px] font-medium uppercase italic">
+                <p className="text-white text-[16px] font-medium uppercase italic">
                   {t("tagline")}
-                </h4>
+                </p>
               </div>
             </div>
 
             <div className="relative w-full h-[264px] md:h-auto rounded-[14px] overflow-hidden xl:w-[211px]">
               <Image
                 src="/images/about/about-one.webp"
-                alt="about-one"
+                alt="Виробництво сухого льоду IceLab"
                 fill
                 className="object-cover"
               />
             </div>
 
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[393px]">
-              <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
+              <h3 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 {t("rawMaterialsTitle")}
-              </h5>
+              </h3>
               <TextList data={materials} />
             </div>
           </div>
 
           <div className="flex flex-col gap-5 md:flex-row">
             <div className="bg-[#1E73D7] px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md rounded-[14px] md:w-[30%] xl:w-[373px]">
-              <h5 className="xl:max-w-[180px] text-white text-[18px] font-medium uppercase italic mb-6">
+              <h3 className="xl:max-w-[180px] text-white text-[18px] font-medium uppercase italic mb-6">
                 {t("productionTitle")}
-              </h5>
+              </h3>
               <TextList data={production} bulletVariant="white" />
             </div>
 
             <div className="relative w-full h-[250px] md:h-auto rounded-[14px] overflow-hidden md:order-3 md:w-[25%] xl:w-[254px]">
               <Image
                 src="/images/about/about-two.webp"
-                alt="about-two"
+                alt="Гранули сухого льоду IceLab"
                 fill
                 className="object-cover"
               />
             </div>
 
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md md:order-2 md:w-[45%] xl:w-[455px]">
-              <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
+              <h3 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 {t("decisionsTitle")}
-              </h5>
+              </h3>
               <TextList data={decisions} />
             </div>
           </div>
@@ -98,23 +99,29 @@ export default function About() {
               variant="right"
               className="relative w-full h-[216px] rounded-[14px] overflow-hidden xl:w-[570px]"
               images={[
-                { src: "/images/about/carousel-one.webp", alt: "carousel-one" },
-                { src: "/images/about/carousel-two.webp", alt: "carousel-two" },
+                {
+                  src: "/images/about/carousel-one.webp",
+                  alt: "Виробництво сухого льоду IceLab",
+                },
+                {
+                  src: "/images/about/carousel-two.webp",
+                  alt: "Обладнання для виробництва сухого льоду",
+                },
                 {
                   src: "/images/about/carousel-three.webp",
-                  alt: "carousel-three",
+                  alt: "Термобокси для сухого льоду",
                 },
                 {
                   src: "/images/about/carousel-four.webp",
-                  alt: "carousel-four",
+                  alt: "Склад сировини IceLab",
                 },
               ]}
             />
 
             <div className="about-card px-4 py-7 md:py-4 xl:p-7 backdrop-blur-md xl:w-[530px]">
-              <h5 className="text-white text-[18px] font-medium uppercase italic mb-6">
+              <h3 className="text-white text-[18px] font-medium uppercase italic mb-6">
                 {t("experienceTitle")}
-              </h5>
+              </h3>
               <TextList data={expirience} bulletVariant="white" />
             </div>
           </div>

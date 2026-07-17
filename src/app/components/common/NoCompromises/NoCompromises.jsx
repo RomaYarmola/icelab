@@ -27,9 +27,9 @@ export default function NoCompromises({ variant = "common" }) {
           <h2 className="text-white-title-gradient text-center text-2xl max-w-[623px] mb-3 mx-auto">
             {t("title")}
           </h2>
-          <h3 className="text-md-responsive text-white text-center mb-6 md:mb-9">
+          <p className="text-md-responsive text-white text-center mb-6 md:mb-9">
             {t("subtitle")}
-          </h3>
+          </p>
           <p className="max-w-[432px] mx-auto text-xs-responsive text-white text-center mb-[46px] md:mb-[58px] font-e-ukraine font-thin not-italic">
             {t("descriptionStart")}
             <span className="font-e-ukraine font-thin not-italic">ICELAB</span>

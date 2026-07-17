@@ -17,9 +17,9 @@ export default function Hero() {
           <h1 className="text-4xl main-title-gradient text-center mb-[53px] md:mb-[22px] relative z-[1] md:z-[3]">
             {t("title")}
           </h1>
-          <h3 className="text-lg-extended text-blue-gradient text-center mb-8 md:mb-12 max-w-[98%] sm:max-w-[66%] mx-auto relative z-10">
+          <p className="text-lg-extended text-blue-gradient text-center mb-8 md:mb-12 max-w-[98%] sm:max-w-[66%] mx-auto relative z-10">
             {t("subtitle")}
-          </h3>
+          </p>
           <p className="font-e-ukraine font-thin not-italic text-sm-responsive text-center mb-8 md:mb-12 max-w-[86%] sm:max-w-[41.7%] mx-auto relative z-10">
             {t("description")}
           </p>

@@ -1,5 +1,6 @@
 "use client";
 import Container from "@/utils/Container";
+import { useTranslations } from "next-intl";
 import { data } from "./data";
 import ProductCard from "./ProductCard";
 import { useIsSafari } from "@/hooks/useIsSafari";
@@ -8,6 +9,7 @@ import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvid
 export default function Products() {
   const isSafari = useIsSafari();
   const settings = usePriceSettings();
+  const t = useTranslations("Products");
 
   // Розміри/ваги беруться з Price Settings (Sanity → fallback константи).
   const sizesFor = (variant) => {
@@ -31,6 +33,7 @@ export default function Products() {
 
       {/* /gradient */}
       <Container>
+        <h2 className="sr-only">{t("sectionTitle")}</h2>
         <ul className="pt-[111px] pb-[124px] l:pt-[122px] 2xl:pt-[200px] l:pb-[112px] relative z-[4] flex flex-col md:flex-row gap-[88.6px] md:gap-5 items-center justify-center">
           {data.map(({ img, variant }, index) => (
             <ProductCard
