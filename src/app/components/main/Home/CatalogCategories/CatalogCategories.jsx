@@ -12,14 +12,14 @@ export default function CatalogCategories() {
   const tcat = useTranslations("Categories");
 
   return (
-    <section className="bg-dark-gradient">
+    <section className="relative z-10 bg-dark-gradient">
       <Container>
         <div className="py-16 md:py-24">
           <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-white-title-gradient text-xl md:text-2xl mb-3">
+            <h2 className="text-white text-2xl md:text-3xl font-bold not-italic font-e-ukraine mb-3">
               {t("categoriesTitle")}
             </h2>
-            <p className="font-e-ukraine not-italic font-thin text-white/60 text-sm-responsive max-w-[520px] mx-auto">
+            <p className="font-e-ukraine not-italic font-thin text-white/70 text-sm-responsive max-w-[520px] mx-auto">
               {t("categoriesSubtitle")}
             </p>
           </div>
