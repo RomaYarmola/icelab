@@ -10,10 +10,10 @@ import { toNextMetadata } from "@/lib/seo";
 import ProductGallery from "@/app/components/main/Catalog/ProductGallery";
 import AddToCartControl from "@/app/components/main/Catalog/AddToCartControl";
 import ProductInfoBlocks from "@/app/components/main/Catalog/ProductInfoBlocks";
+import RequestPriceButton from "@/app/components/main/Catalog/RequestPriceButton";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import JsonLd from "@/app/components/common/JsonLd";
-import { Link } from "@/i18n/navigation";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
 
@@ -152,13 +152,11 @@ export default async function ProductPage({ params }) {
 
           <div className="pt-2 flex flex-col sm:flex-row gap-3">
             <AddToCartControl product={product} variant="page" />
-            {/* Другий CTA для B2B — веде на форму заявки (P1-7) */}
-            <Link
-              href="/contacts"
-              className="inline-flex items-center justify-center rounded-full border border-commonBlue/40 px-6 py-3 not-italic font-e-ukraine text-commonBlue hover:bg-commonBlue/10 transition-colors"
-            >
-              {t("getPrice")}
-            </Link>
+            {/* Другий CTA для B2B — відкриває модалку заявки (без переходу) */}
+            <RequestPriceButton
+              label={t("getPrice")}
+              productTitle={product.title}
+            />
           </div>
 
           {/* Комерційні блоки: доставка/оплата, способи оплати, УТП (P1-7) */}
