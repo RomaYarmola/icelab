@@ -5,6 +5,7 @@ import About from "../components/main/Home/About/About";
 import Faq from "../components/main/Home/Faq/Faq";
 import Hero from "../components/main/Home/Hero/Hero";
 import Products from "../components/main/Home/Products.jsx/Products";
+import Reviews from "../components/main/Home/Reviews/Reviews";
 
 // Метадані головної — з неймспейсу Meta (для кожної мови окремо).
 export async function generateMetadata({ params }) {
@@ -34,6 +35,7 @@ export default async function Home({ params }) {
       <Products />
       <About />
       <Faq />
+      <Reviews locale={locale} />
       <NoCompromises />
     </>
   );
