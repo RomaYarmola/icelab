@@ -25,7 +25,6 @@ export const footerLinks = [
 export const infoLinks = [
   { key: "about", path: "/about" },
   { key: "production", path: "/production" },
-  { key: "certificates", path: "/certificates" },
   { key: "faq", path: "/faq" },
   { key: "applications", path: "/zastosuvannia-suhogo-lodu" },
 ];

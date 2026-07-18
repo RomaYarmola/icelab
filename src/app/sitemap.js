@@ -27,7 +27,6 @@ const staticPaths = [
   "/zastosuvannia-suhogo-lodu",
   "/about",
   "/production",
-  "/certificates",
   // Гео-лендинги (P2-2).
   "/suhyi-lid-kyiv",
   "/suhyi-lid-lviv",
