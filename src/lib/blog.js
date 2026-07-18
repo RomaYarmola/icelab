@@ -48,6 +48,8 @@ function normalizeListItem(raw, locale) {
     coverImage: cover,
     coverAlt: loc(raw.coverImage?.alt, locale) || title,
     publishedAt: raw.publishedAt ?? null,
+    // Дата останньої зміни документа в Sanity — для dateModified у schema.
+    updatedAt: raw._updatedAt ?? null,
     seo: buildSeo(raw, locale, title, excerpt, cover),
   };
 }

@@ -117,36 +117,22 @@ function buildSeo(raw, locale, title, shortDescription, mainImageUrl) {
   };
 }
 
-// Тимчасові реальні фото клієнта для товарів-льоду (одні й ті самі для всього
-// льоду). Для боксів НЕ застосовуються. Прибрати, коли фото заведуть у Sanity.
-const ICE_PHOTOS = [
-  "/images/products/ice-3.webp", // головне — бокс із льодом
-  "/images/products/ice-1.webp",
-  "/images/products/ice-2.webp",
-  "/images/products/ice-4.webp",
-];
-
 function normalizeProduct(raw, locale, pricing, t) {
   const title = loc(raw.title, locale);
   const shortDescription = loc(raw.shortDescription, locale);
   const description = loc(raw.description, locale);
   const variant = variantOf(raw.category);
 
+  // Зображення — ЄДИНЕ джерело Sanity (mainImage/gallery). Alt: image.alt
+  // або назва товару (fallback у image()).
   const main = image(raw.mainImage, title, locale);
   const gallery = Array.isArray(raw.gallery)
     ? raw.gallery.map((g) => image(g, title, locale)).filter(Boolean)
     : [];
-  let galleryUrls = (gallery.length ? gallery : main ? [main] : []).map(
+  const galleryUrls = (gallery.length ? gallery : main ? [main] : []).map(
     (g) => g.url
   );
-
-  // Для льоду (сухий/харчовий, але НЕ бокси) підставляємо реальні фото клієнта.
-  const isIce = raw.category === "dry-ice" || raw.category === "food-ice";
-  let mainUrl = main?.url ?? null;
-  if (isIce) {
-    galleryUrls = ICE_PHOTOS;
-    mainUrl = ICE_PHOTOS[0];
-  }
+  const mainUrl = main?.url ?? null;
 
   const kg = t("Catalog.kg");
   const specs =

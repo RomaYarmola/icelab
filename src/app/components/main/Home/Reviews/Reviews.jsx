@@ -1,6 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import Container from "@/utils/Container";
 import { getGoogleReviews } from "@/lib/reviews";
+import JsonLd from "@/app/components/common/JsonLd";
+import { organizationRatingSchema } from "@/lib/schema";
 
 function Stars({ n, size = 16 }) {
   const rounded = Math.round(n);
@@ -28,8 +30,19 @@ export default async function Reviews({ locale }) {
   const data = await getGoogleReviews(locale);
   if (!data || !data.reviews?.length) return null;
 
+  // aggregateRating + Review у розмітці — лише на РЕАЛЬНИХ Google-даних
+  // (не на dev-заглушці) і лише тут, де відгуки реально видно на сторінці.
+  const ratingSchema = data.isFallback
+    ? null
+    : organizationRatingSchema({
+        rating: data.rating,
+        total: data.total,
+        reviews: data.reviews,
+      });
+
   return (
     <section className="relative z-20 bg-white pt-8 md:pt-12 pb-20 md:pb-28">
+      {ratingSchema && <JsonLd data={ratingSchema} />}
       <Container>
         <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl main-title-gradient mb-4">{t("title")}</h2>

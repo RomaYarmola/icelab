@@ -59,14 +59,16 @@ export default async function BlogPostPage({ params }) {
   return (
     <Container className="pt-[120px] md:pt-[170px] pb-[100px] md:pb-[140px]">
       <JsonLd data={articleSchema(post, postPath)} />
-      <article className="max-w-[760px] mx-auto">
+      <article>
         <Breadcrumbs
           items={[
             { name: tb("title"), href: "/blog" },
             { name: post.title },
           ]}
         />
-        <h1 className="text-2xl md:text-3xl main-title-gradient leading-tight mb-4">
+        {/* Заголовок статті — звичайний регістр і помірний розмір (НЕ display-токени
+            text-3xl = clamp→88px uppercase, які ламали верстку довгих заголовків). */}
+        <h1 className="text-[22px] md:text-[32px] font-e-ukraine not-italic font-medium main-title-gradient leading-tight mb-4">
           {post.title}
         </h1>
 
@@ -86,7 +88,7 @@ export default async function BlogPostPage({ params }) {
               alt={post.coverAlt}
               fill
               className="object-cover"
-              sizes="(max-width: 768px) 100vw, 760px"
+              sizes="(max-width: 768px) 100vw, 1200px"
               priority
             />
           </div>

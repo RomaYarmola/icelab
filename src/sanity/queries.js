@@ -53,6 +53,7 @@ const BLOG_LIST_FIELDS = `
   "slug": slug.current,
   coverImage,
   publishedAt,
+  _updatedAt,
   seo
 `;
 
