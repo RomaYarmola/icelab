@@ -12,6 +12,11 @@ export default function HeroClouds() {
     );
     setIsSafari(isSafariBrowser);
 
+    // На мобільному не запускаємо нескінченну анімацію хмар — вона тримає
+    // головний потік/композитор зайнятим і гальмує LCP. Хмари лишаються
+    // статичними (верстка не змінюється), рух — лише на десктопі.
+    if (window.matchMedia("(max-width: 767px)").matches) return;
+
     const clouds = document.querySelectorAll(".animated-cloud");
 
     const DURATION = 30000;
