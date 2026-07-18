@@ -45,7 +45,7 @@ export default function NoCompromisesBg() {
         >
           <Image
             src="/images/hero/cloud-right.png"
-            alt="cloud"
+            alt=""
             width={812}
             height={289}
             className="h-full w-full object-cover object-left"
@@ -62,7 +62,7 @@ export default function NoCompromisesBg() {
         >
           <Image
             src="/images/hero/cloud-left.png"
-            alt="cloud"
+            alt=""
             width={812}
             height={289}
             className="h-full w-full object-cover object-right"
@@ -82,7 +82,7 @@ export default function NoCompromisesBg() {
             >
               <Image
                 src="/images/no-compromises/bg-left.png"
-                alt="cloud"
+                alt=""
                 width={200}
                 height={568}
                 className="h-full w-full object-cover object-left"
@@ -99,7 +99,7 @@ export default function NoCompromisesBg() {
             >
               <Image
                 src="/images/no-compromises/bg-right.png"
-                alt="cloud"
+                alt=""
                 width={200}
                 height={568}
                 className="h-full w-full object-cover object-left"

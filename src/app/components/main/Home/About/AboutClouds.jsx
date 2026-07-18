@@ -35,11 +35,10 @@ export default function AboutClouds() {
       >
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
-          priority
         />
       </motion.div>
       <motion.div
@@ -54,11 +53,10 @@ export default function AboutClouds() {
       >
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
-          priority
         />
       </motion.div>
       <motion.div
@@ -73,13 +71,12 @@ export default function AboutClouds() {
       >
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className={`w-full object-cover  ${
             isSafari ? "" : "object-right h-full "
           }`}
-          priority
         />
       </motion.div>
     </>

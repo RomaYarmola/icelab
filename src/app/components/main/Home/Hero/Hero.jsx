@@ -1,4 +1,5 @@
 import Container from "@/utils/Container";
+import Image from "next/image";
 import GradientButton from "../../../common/GradientButton";
 import HeroClouds from "./HeroClouds";
 import Link from "next/link";
@@ -8,7 +9,18 @@ import { useTranslations } from "next-intl";
 export default function Hero() {
   const t = useTranslations("Hero");
   return (
-    <div className="overflow-x-clip relative heroBg h-[864px] ">
+    <div className="overflow-x-clip relative h-[864px] ">
+      {/* LCP-фон: пріоритетне оптимізоване зображення (preload), а не CSS-фон */}
+      <Image
+        src="/images/hero/main-bg.webp"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-right"
+      />
+      {/* Градієнтне перекриття над фото */}
+      <div className="absolute inset-0 heroBg" />
       <div className="absolute inset-0">
         <HeroClouds />
       </div>

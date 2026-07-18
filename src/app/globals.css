@@ -50,19 +50,15 @@ nav {
   max-width: unset;
 }
 
+/* Градієнтне перекриття над Hero-зображенням. Саме фото — пріоритетний
+   next/image у Hero.jsx (preload + оптимізація), а не CSS-фон, щоб не гальмувати
+   LCP на мобільному. */
 .heroBg {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(245, 247, 255, 0.12) 35.19%,
-      rgba(242, 246, 255, 0.86) 88.93%
-    ),
-    url(/images/hero/main-bg.webp);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: right;
-  width: auto;
-  height: 864px;
+  background: linear-gradient(
+    180deg,
+    rgba(245, 247, 255, 0.12) 35.19%,
+    rgba(242, 246, 255, 0.86) 88.93%
+  );
 }
 
 .aboutBg {

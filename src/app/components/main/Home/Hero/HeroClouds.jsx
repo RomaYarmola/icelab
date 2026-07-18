@@ -48,7 +48,7 @@ export default function HeroClouds() {
       <div className="absolute h-[289px] top-[115px] right-[-20.7%] animated-cloud">
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={1012}
           height={289}
           className="h-full w-full object-cover"
@@ -62,7 +62,7 @@ export default function HeroClouds() {
       >
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -72,7 +72,7 @@ export default function HeroClouds() {
       <div className="absolute h-[289px] z-[2] top-[348px] right-[9.2%] animated-cloud">
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -82,7 +82,7 @@ export default function HeroClouds() {
       <div className="absolute h-[289px] z-[3] top-[427px] right-[7.5%] animated-cloud">
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -96,7 +96,7 @@ export default function HeroClouds() {
       >
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -106,7 +106,7 @@ export default function HeroClouds() {
       <div className="hidden md:block absolute h-[289px] z-[2] top-[667px] right-[29.4%] animated-cloud">
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -116,7 +116,7 @@ export default function HeroClouds() {
       <div className="absolute h-[289px] z-[3] top-[729px] right-[59.5%] animated-cloud">
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -130,7 +130,7 @@ export default function HeroClouds() {
       >
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -144,7 +144,7 @@ export default function HeroClouds() {
       >
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -154,7 +154,7 @@ export default function HeroClouds() {
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[759px] left-[8%] ">
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -164,7 +164,7 @@ export default function HeroClouds() {
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[790px] left-[-19%] ">
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -178,7 +178,7 @@ export default function HeroClouds() {
       >
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -188,7 +188,7 @@ export default function HeroClouds() {
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[759px] left-[8%] ">
         <Image
           src="/images/hero/cloud-right.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -198,7 +198,7 @@ export default function HeroClouds() {
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[790px] left-[-19%] animated-cloud">
         <Image
           src="/images/hero/cloud-left.png"
-          alt="cloud"
+          alt=""
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
