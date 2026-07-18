@@ -13,7 +13,7 @@
 ```
 docs/blog/1-skilky-suhogo-lodu-potribno.md
 docs/blog/2-yak-zberigaty-ta-perevozyty-suhyi-lid.md
-docs/blog/3-granuly-suhogo-lodu-3-8-16-mm.md
+docs/blog/3-granuly-suhogo-lodu-3-16-19-mm.md
 docs/blog/4-krioblasting-ochyshchennia-suhym-lodom.md
 docs/blog/5-yak-vyroblyayut-suhyi-lid.md
 ```
