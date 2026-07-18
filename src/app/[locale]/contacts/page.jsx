@@ -3,6 +3,20 @@ import InfoBlock from "../../components/main/Contacts/InfoBlock/InfoBlock";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import JsonLd from "../../components/common/JsonLd";
 import { localBusinessSchema } from "@/lib/schema";
+import { pageMeta } from "@/lib/seo";
+
+// Унікальні, мовозалежні метадані сторінки контактів (раніше успадковувались
+// від головної — і title/description, і canonical).
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "ContactsBanner" });
+  return pageMeta({
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+    path: "/contacts",
+    locale,
+  });
+}
 
 export default async function Contacts({ params }) {
   const { locale } = await params;

@@ -20,7 +20,7 @@ import {
   PRODUCT_BY_SLUG_QUERY,
   PRODUCT_SLUGS_QUERY,
 } from "@/sanity/queries";
-import { urlForImage } from "@/sanity/image";
+import { urlForImage, urlForImageSquare } from "@/sanity/image";
 import { calculateTotalPrice } from "@/utils/pricing";
 import { getPriceSettings, buildPricing } from "@/lib/priceSettings";
 
@@ -101,7 +101,11 @@ function buildSeo(raw, locale, title, shortDescription, mainImageUrl) {
   const seoDescription = loc(s.description, locale) || shortDescription;
   const ogTitle = loc(s.ogTitle, locale) || seoTitle;
   const ogDescription = loc(s.ogDescription, locale) || seoDescription;
-  const ogImage = urlForImage(s.ogImage) || mainImageUrl;
+  // Квадратний кроп для компактної OG-картки (маленьке фото праворуч).
+  const ogImage =
+    urlForImageSquare(s.ogImage) ||
+    urlForImageSquare(raw.mainImage) ||
+    mainImageUrl;
   return {
     title: seoTitle,
     description: seoDescription,
@@ -112,7 +116,7 @@ function buildSeo(raw, locale, title, shortDescription, mainImageUrl) {
     ogImage,
     twitterTitle: loc(s.twitterTitle, locale) || ogTitle,
     twitterDescription: loc(s.twitterDescription, locale) || ogDescription,
-    twitterImage: urlForImage(s.twitterImage) || ogImage,
+    twitterImage: urlForImageSquare(s.twitterImage) || ogImage,
     robots: s.robots || "index,follow",
   };
 }

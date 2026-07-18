@@ -2,7 +2,7 @@ import Container from "@/utils/Container";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 import { getBlogPosts } from "@/lib/blog";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 
@@ -13,16 +13,12 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Blog" });
-  const path = locale === routing.defaultLocale ? "/blog" : `/${locale}/blog`;
-
-  return {
+  return pageMeta({
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical: path,
-      languages: { uk: "/blog", ru: "/ru/blog", "x-default": "/blog" },
-    },
-  };
+    path: "/blog",
+    locale,
+  });
 }
 
 export default async function BlogPage({ params }) {

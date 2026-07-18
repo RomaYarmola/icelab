@@ -15,3 +15,21 @@ export function urlForImage(source, { width, height } = {}) {
     return null;
   }
 }
+
+// Квадратний кроп для OpenGraph/Twitter (компактна картка summary → маленьке
+// прев'ю праворуч у Telegram/соцмережах, а не величезний банер). За замовчуванням
+// 600×600 із фокусом за hotspot.
+export function urlForImageSquare(source, size = 600) {
+  if (!builder || !source?.asset) return null;
+  try {
+    return builder
+      .image(source)
+      .width(size)
+      .height(size)
+      .fit("crop")
+      .auto("format")
+      .url();
+  } catch {
+    return null;
+  }
+}

@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 import LegalPage from "../../components/main/Legal/LegalPage";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
 
@@ -8,15 +8,12 @@ const NS = "LegalPages.payment";
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: NS });
-  return {
+  return pageMeta({
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical:
-        locale === routing.defaultLocale ? "/payment" : `/${locale}/payment`,
-      languages: { uk: "/payment", ru: "/ru/payment", "x-default": "/payment" },
-    },
-  };
+    path: "/payment",
+    locale,
+  });
 }
 
 export default async function PaymentPage({ params }) {

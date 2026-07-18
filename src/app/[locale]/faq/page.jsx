@@ -1,21 +1,18 @@
 import Container from "@/utils/Container";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import FaqSection from "@/app/components/common/FaqSection";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Faq" });
-  const canonical = locale === routing.defaultLocale ? "/faq" : `/${locale}/faq`;
-  return {
+  return pageMeta({
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical,
-      languages: { uk: "/faq", ru: "/ru/faq", "x-default": "/faq" },
-    },
-  };
+    path: "/faq",
+    locale,
+  });
 }
 
 export default async function FaqPage({ params }) {

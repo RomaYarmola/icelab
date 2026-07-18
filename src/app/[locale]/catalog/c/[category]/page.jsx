@@ -1,7 +1,7 @@
 import Container from "@/utils/Container";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 import { getProductsByCategory } from "@/lib/products";
 import { CATEGORIES, categoryBySlug } from "@/lib/categories";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
@@ -22,16 +22,12 @@ export async function generateMetadata({ params }) {
   const cat = categoryBySlug(category);
   if (!cat) return {};
   const t = await getTranslations({ locale, namespace: "Categories" });
-  const path = `/catalog/c/${cat.slug}`;
-  const canonical = locale === routing.defaultLocale ? path : `/${locale}${path}`;
-  return {
+  return pageMeta({
     title: t(`${cat.msgKey}.metaTitle`),
     description: t(`${cat.msgKey}.metaDescription`),
-    alternates: {
-      canonical,
-      languages: { uk: path, ru: `/ru${path}`, "x-default": path },
-    },
-  };
+    path: `/catalog/c/${cat.slug}`,
+    locale,
+  });
 }
 
 export default async function CategoryPage({ params }) {

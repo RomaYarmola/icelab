@@ -23,6 +23,10 @@ function detectSource(referrer, utm) {
   if (utm.utm_source) {
     return utm.utm_source + (utm.utm_medium ? ` / ${utm.utm_medium}` : "");
   }
+  // Клік з реклами часто приходить БЕЗ реферера, лише з click id — раніше такий
+  // трафік (зокрема Google Ads з пошуку) помилково визначався як «прямий захід».
+  if (utm.gclid || utm.gbraid || utm.wbraid || utm.gad_source) return "Google Ads";
+  if (utm.fbclid) return "Facebook / Instagram (реклама)";
   if (!referrer) return "Прямий захід / закладка";
 
   let host = "";
@@ -73,6 +77,9 @@ export function recordVisit(pathname) {
       "utm_content",
       "utm_term",
       "gclid",
+      "gbraid",
+      "wbraid",
+      "gad_source",
       "fbclid",
     ].forEach((k) => {
       const v = params.get(k);

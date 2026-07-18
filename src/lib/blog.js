@@ -7,7 +7,7 @@ import {
   BLOG_POST_BY_SLUG_QUERY,
   BLOG_SLUGS_QUERY,
 } from "@/sanity/queries";
-import { urlForImage } from "@/sanity/image";
+import { urlForImage, urlForImageSquare } from "@/sanity/image";
 
 function loc(value, locale) {
   if (value && typeof value === "object") return value[locale] ?? value.uk ?? "";
@@ -20,7 +20,11 @@ function buildSeo(raw, locale, title, excerpt, coverUrl) {
   const seoDescription = loc(s.description, locale) || excerpt;
   const ogTitle = loc(s.ogTitle, locale) || seoTitle;
   const ogDescription = loc(s.ogDescription, locale) || seoDescription;
-  const ogImage = urlForImage(s.ogImage) || coverUrl;
+  // Квадратний кроп обкладинки для компактної OG-картки.
+  const ogImage =
+    urlForImageSquare(s.ogImage) ||
+    urlForImageSquare(raw.coverImage) ||
+    coverUrl;
   return {
     title: seoTitle,
     description: seoDescription,
@@ -31,7 +35,7 @@ function buildSeo(raw, locale, title, excerpt, coverUrl) {
     ogImage,
     twitterTitle: loc(s.twitterTitle, locale) || ogTitle,
     twitterDescription: loc(s.twitterDescription, locale) || ogDescription,
-    twitterImage: urlForImage(s.twitterImage) || ogImage,
+    twitterImage: urlForImageSquare(s.twitterImage) || ogImage,
     robots: s.robots || "index,follow",
   };
 }

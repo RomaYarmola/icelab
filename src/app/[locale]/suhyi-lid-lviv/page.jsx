@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 import GeoLanding from "../../components/main/Geo/GeoLanding";
 
 const PATH = "/suhyi-lid-lviv";
@@ -8,14 +8,12 @@ const NS = "GeoPages.lviv";
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: NS });
-  return {
+  return pageMeta({
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical: locale === routing.defaultLocale ? PATH : `/${locale}${PATH}`,
-      languages: { uk: PATH, ru: `/ru${PATH}`, "x-default": PATH },
-    },
-  };
+    path: PATH,
+    locale,
+  });
 }
 
 export default async function LvivPage({ params }) {

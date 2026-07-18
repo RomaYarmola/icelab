@@ -5,7 +5,7 @@ import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import { CATEGORIES } from "@/lib/categories";
 import { Link } from "@/i18n/navigation";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 
 // ISR: новий товар у Sanity з'являється без ребілду (в межах revalidate). (P2-1)
 export const revalidate = 3600;
@@ -14,20 +14,12 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Catalog" });
-  const path = locale === routing.defaultLocale ? "/catalog" : `/${locale}/catalog`;
-
-  return {
+  return pageMeta({
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical: path,
-      languages: {
-        uk: "/catalog",
-        ru: "/ru/catalog",
-        "x-default": "/catalog",
-      },
-    },
-  };
+    path: "/catalog",
+    locale,
+  });
 }
 
 export default async function CatalogPage({ params }) {

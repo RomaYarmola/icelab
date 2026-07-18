@@ -1,6 +1,6 @@
 import Container from "@/utils/Container";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMeta } from "@/lib/seo";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
@@ -11,15 +11,12 @@ const PATH = "/zastosuvannia-suhogo-lodu";
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Applications" });
-  const canonical = locale === routing.defaultLocale ? PATH : `/${locale}${PATH}`;
-  return {
+  return pageMeta({
     title: t("metaTitle"),
     description: t("metaDescription"),
-    alternates: {
-      canonical,
-      languages: { uk: PATH, ru: `/ru${PATH}`, "x-default": PATH },
-    },
-  };
+    path: PATH,
+    locale,
+  });
 }
 
 export default async function ApplicationsPage({ params }) {
