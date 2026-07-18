@@ -52,10 +52,6 @@ const eUkraine = localFont({
   ],
   variable: "--font-e-ukraine",
   display: "swap",
-  // Не прелоадимо тіло-шрифт: 5 файлів e-Ukraine конкурували з LCP-зображенням
-  // Hero на мобільному. display:swap показує текст одразу (fallback), а сам
-  // шрифт підвантажується без високого пріоритету — Hero-фон вантажиться першим.
-  preload: false,
 });
 
 const michelin = localFont({
