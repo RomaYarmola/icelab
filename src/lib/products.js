@@ -156,6 +156,7 @@ function normalizeProduct(raw, locale, pricing, t) {
     slug: raw.slug,
     category: raw.category ?? null,
     variant,
+    badge: loc(raw.badge, locale),
     availability: raw.availability ?? "in-stock",
     price: resolvePrice(raw, pricing),
     unit: t("Catalog.currency"),

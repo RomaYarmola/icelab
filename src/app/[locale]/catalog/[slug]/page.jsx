@@ -97,21 +97,28 @@ export default async function ProductPage({ params }) {
 
         {/* Інформація про товар */}
         <div className="md:w-1/2 flex flex-col gap-5">
-          {/* Бейдж наявності */}
-          <span
-            className={`inline-flex items-center gap-2 self-start rounded-full px-3 py-1 text-xs font-e-ukraine not-italic ${
-              isAvailable
-                ? "bg-commonBlue/10 text-commonBlue"
-                : "bg-[#F31260]/10 text-[#F31260]"
-            }`}
-          >
+          {/* Бейджі: наявність + промо-плашка */}
+          <div className="flex flex-wrap items-center gap-2">
             <span
-              className={`w-1.5 h-1.5 rounded-full ${
-                isAvailable ? "bg-commonBlue" : "bg-[#F31260]"
+              className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-e-ukraine not-italic ${
+                isAvailable
+                  ? "bg-commonBlue/10 text-commonBlue"
+                  : "bg-[#F31260]/10 text-[#F31260]"
               }`}
-            />
-            {isAvailable ? t("inStock") : t("outOfStock")}
-          </span>
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full ${
+                  isAvailable ? "bg-commonBlue" : "bg-[#F31260]"
+                }`}
+              />
+              {isAvailable ? t("inStock") : t("outOfStock")}
+            </span>
+            {product.badge && (
+              <span className="inline-flex items-center rounded-full px-3 py-1 text-xs font-e-ukraine not-italic bg-commonBlue text-white">
+                {product.badge}
+              </span>
+            )}
+          </div>
 
           <h1 className="text-2xl main-title-gradient leading-tight">
             {product.title}

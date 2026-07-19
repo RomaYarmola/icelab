@@ -12,6 +12,7 @@ const PRODUCT_FIELDS = `
   weight,
   availability,
   order,
+  badge,
   useAutoPrice,
   manualPrice,
   mainImage,

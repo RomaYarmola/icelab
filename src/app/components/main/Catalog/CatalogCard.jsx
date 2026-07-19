@@ -49,6 +49,11 @@ export default function CatalogCard({ product }) {
         >
           {isAvailable ? t("inStock") : t("outOfStock")}
         </span>
+        {product.badge && (
+          <span className="absolute top-2 right-2 rounded-full px-3 py-1 text-[11px] font-e-ukraine not-italic bg-commonBlue text-white backdrop-blur-sm">
+            {product.badge}
+          </span>
+        )}
       </div>
 
       {/* Текстова інформація */}

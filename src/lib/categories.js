@@ -22,6 +22,12 @@ export const CATEGORIES = [
     image: "/images/pages/ice-box-real.webp",
   },
   {
+    key: "dry-ice-box",
+    slug: "korobka-z-suhym-lodom",
+    msgKey: "dryIceBox",
+    image: "/images/pages/korobka-suhyi-lid.webp",
+  },
+  {
     key: "krioblasting",
     slug: "chystka-suhym-lodom",
     msgKey: "dryIceCleaning",
