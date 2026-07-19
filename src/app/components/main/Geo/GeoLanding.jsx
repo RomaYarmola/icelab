@@ -2,14 +2,15 @@ import Container from "@/utils/Container";
 import { Link } from "@/i18n/navigation";
 import Breadcrumbs from "../../common/Breadcrumbs";
 import JsonLd from "../../common/JsonLd";
+import FaqSection from "@/app/components/common/FaqSection";
 import GeoCta from "./GeoCta";
 import { GEO_LABELS, CITIES, cityBySlug } from "@/lib/cities";
 import { localBusinessSchema, serviceSchema } from "@/lib/schema";
 
 // Гео-лендинг міста «сухий лід у <місті>». Дані — з lib/cities.js.
-// Верстка на всю ширину сайту (Container), у стилі проєкту: градієнтний H1,
-// картки, пігулки-посилання, CTA-заявка. Розмітка: LocalBusiness + Service
-// (+ BreadcrumbList рендерить сам компонент Breadcrumbs).
+// Верстка на всю ширину сайту (Container), у стилі проєкту.
+// Розмітка: Service (завжди) + LocalBusiness (лише де є фізичний склад —
+// Київ/Львів) + FAQPage (рендерить FaqSection) + BreadcrumbList (Breadcrumbs).
 export default function GeoLanding({ slug, locale }) {
   const city = cityBySlug(slug);
   if (!city) return null;
@@ -27,15 +28,7 @@ export default function GeoLanding({ slug, locale }) {
 
   return (
     <div className="bg-white">
-      <JsonLd
-        data={localBusinessSchema({
-          name: `IceLab — ${c.city}`,
-          address: pickup,
-          url: path,
-          id: `localbusiness-${city.key}`,
-          areaServed: c.city,
-        })}
-      />
+      {/* Service — завжди (продаж/доставка льоду в місті) */}
       <JsonLd
         data={serviceSchema({
           name: `Сухий лід ${c.cityIn}`,
@@ -44,6 +37,18 @@ export default function GeoLanding({ slug, locale }) {
           description: c.metaDescription,
         })}
       />
+      {/* LocalBusiness — лише там, де є фізична точка самовивозу */}
+      {pickup && (
+        <JsonLd
+          data={localBusinessSchema({
+            name: `IceLab — ${c.city}`,
+            address: pickup,
+            url: path,
+            id: `localbusiness-${city.key}`,
+            areaServed: c.city,
+          })}
+        />
+      )}
 
       <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[140px]">
         <Breadcrumbs items={[{ name: c.h1 }]} />
@@ -86,6 +91,25 @@ export default function GeoLanding({ slug, locale }) {
           </div>
         </div>
 
+        {/* Локальні сценарії використання (унікальний контент міста) */}
+        {c.local?.length > 0 && (
+          <section className="mb-16 max-w-[900px]">
+            <h2 className="not-italic font-e-ukraine font-medium text-[22px] md:text-[28px] mb-5 text-black">
+              {c.localTitle}
+            </h2>
+            <div className="flex flex-col gap-4">
+              {c.local.map((p, i) => (
+                <p
+                  key={i}
+                  className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75"
+                >
+                  {p}
+                </p>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Переваги */}
         <section className="mb-16">
           <h2 className="not-italic font-e-ukraine font-medium text-[22px] md:text-[28px] mb-6 text-black">
@@ -122,6 +146,13 @@ export default function GeoLanding({ slug, locale }) {
             ))}
           </ul>
         </section>
+
+        {/* Локальний FAQ (+ FAQPage schema всередині FaqSection) */}
+        {c.faq?.length > 0 && (
+          <section className="mb-16 max-w-[900px]">
+            <FaqSection title={L.faqTitle} items={c.faq} />
+          </section>
+        )}
 
         {/* CTA-смуга */}
         <section className="rounded-2xl bg-dark-gradient text-white p-8 md:p-10 mb-16 flex flex-col md:flex-row md:items-center gap-6 justify-between">
