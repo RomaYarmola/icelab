@@ -1,7 +1,8 @@
 import { routes, footerLinks, infoLinks } from "@/utils/routes";
 import { CATEGORIES } from "@/lib/categories";
+import { CITIES } from "@/lib/cities";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 // Група посилань футера (один стовпчик).
 function FooterGroup({ title, items }) {
@@ -28,6 +29,7 @@ function FooterGroup({ title, items }) {
 
 export default function FooterNav({ variant = "column" }) {
   const t = useTranslations();
+  const locale = useLocale();
 
   // Групи посилань — розкладаються у стовпчики (сітка), а не одним полотном.
   const groups = [
@@ -76,12 +78,32 @@ export default function FooterNav({ variant = "column" }) {
     );
   }
 
-  // column-варіант: сітка стовпчиків (2 колонки на мобільних, 4 — на десктопі).
+  // column-варіант: сітка стовпчиків (2 колонки на мобільних, 4 — на десктопі)
+  // + окремий ряд гео-перелінковки «сухий лід по містах».
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 lg:gap-x-10 gap-y-10">
-      {groups.map((g) => (
-        <FooterGroup key={g.title} title={g.title} items={g.items} />
-      ))}
+    <div>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 lg:gap-x-10 gap-y-10">
+        {groups.map((g) => (
+          <FooterGroup key={g.title} title={g.title} items={g.items} />
+        ))}
+      </div>
+      <div className="mt-10 pt-8 border-t border-white/10">
+        <p className="text-[12px] font-e-ukraine not-italic font-[200] text-white/60 leading-[180%] mb-3 uppercase tracking-wide">
+          {t("Footer.citiesTitle")}
+        </p>
+        <ul className="flex flex-wrap gap-x-5 gap-y-2">
+          {CITIES.map((c) => (
+            <li key={c.slug}>
+              <Link
+                href={`/${c.slug}`}
+                className="text-[14px] font-e-ukraine not-italic font-[200] text-white/85 hover:text-gray-300 transition-colors"
+              >
+                {(c[locale] || c.uk).city}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
