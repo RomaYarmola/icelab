@@ -42,3 +42,6 @@ next-env.d.ts
 # Client raw photos (not for repo)
 pics-temp/
 .thumbs/
+
+# Local staging photos (not for repo)
+temp-pics/
