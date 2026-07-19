@@ -3,7 +3,7 @@ import { pageMeta } from "@/lib/seo";
 import { cityBySlug } from "@/lib/cities";
 import GeoLanding from "../../components/main/Geo/GeoLanding";
 
-const SLUG = "suhyi-lid-lviv";
+const SLUG = "suhyi-lid-zaporizhzhia";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

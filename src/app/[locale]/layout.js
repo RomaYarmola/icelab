@@ -9,7 +9,7 @@ import {
 } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { getPriceSettings } from "@/lib/priceSettings";
-import { organizationSchema } from "@/lib/schema";
+import { siteGraph } from "@/lib/schema";
 import JsonLd from "../components/common/JsonLd";
 import TrackingProvider from "../components/common/TrackingProvider";
 import { PriceSettingsProvider } from "../components/providers/PriceSettingsProvider";
@@ -158,8 +158,8 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={locale} className={`${eUkraine.variable} ${michelin.className}`}>
       <body className="leading-[1.2] italic bg-white">
-        {/* Organization JSON-LD (глобально, один раз) */}
-        <JsonLd data={organizationSchema()} />
+        {/* Глобальний граф: WebSite + Organization, зв'язані @id (один раз) */}
+        <JsonLd data={siteGraph()} />
         {/* Google Tag Manager */}
         <Script id="google-tag-manager" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

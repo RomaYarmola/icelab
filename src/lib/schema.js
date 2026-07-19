@@ -14,6 +14,11 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 // Стабільний @id організації — щоб вузли Organization (глобальний у layout та
 // той, що з рейтингом на головній) зливались пошуковиками в одну сутність.
 const ORG_ID = `${SITE}/#organization`;
+const WEBSITE_ID = `${SITE}/#website`;
+
+// Короткий опис бренду для WebSite/AI (один рядок, факти).
+const SITE_DESCRIPTION =
+  "IceLab — виробник сухого льоду, харчового льоду та термобоксів в Україні. Власне виробництво до 400 кг/год, харчова (сертифікована) CO₂. Доставка по Україні, самовивіз у Києві та Львові.";
 
 // Телефони бізнесу в форматі E.164 — єдине джерело для розмітки (Organization,
 // LocalBusiness). Відображувані копії з форматуванням — у ContactsBlock.jsx.
@@ -42,14 +47,16 @@ export function stripHtml(html = "") {
     .trim();
 }
 
-export function organizationSchema() {
+// Вузол Organization без @context (для вкладення у @graph).
+function orgNode() {
   return {
-    "@context": "https://schema.org",
     "@type": "Organization",
     "@id": ORG_ID,
     name: "IceLab",
     url: SITE,
-    logo: abs("/icons/white-logo.svg"),
+    logo: { "@type": "ImageObject", url: abs("/icons/white-logo.svg") },
+    image: abs("/og-default.jpg"),
+    description: SITE_DESCRIPTION,
     telephone: CONTACT_PHONES[0],
     contactPoint: CONTACT_PHONES.map((tel) => ({
       "@type": "ContactPoint",
@@ -60,6 +67,33 @@ export function organizationSchema() {
     })),
     sameAs: ORG_SAME_AS,
   };
+}
+
+// Вузол WebSite, зв'язаний із Organization через publisher @id.
+function websiteNode() {
+  return {
+    "@type": "WebSite",
+    "@id": WEBSITE_ID,
+    url: SITE,
+    name: "IceLab",
+    description: SITE_DESCRIPTION,
+    publisher: { "@id": ORG_ID },
+    inLanguage: ["uk", "ru"],
+  };
+}
+
+// Глобальний граф (рендериться в layout на всіх сторінках): WebSite +
+// Organization, зв'язані через @id → пошуковики зливають у єдину сутність.
+export function siteGraph() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [websiteNode(), orgNode()],
+  };
+}
+
+// Standalone Organization (сумісність) — на випадок точкового використання.
+export function organizationSchema() {
+  return { "@context": "https://schema.org", ...orgNode() };
 }
 
 // aggregateRating + окремі відгуки для Organization. Джерело — РЕАЛЬНІ дані
@@ -99,22 +133,53 @@ export function organizationRatingSchema({ rating, total, reviews = [] } = {}) {
   };
 }
 
-// city: { name, address, url, telephone? } — дані з messages.Contacts.cities.
-// telephone за замовчуванням — основний номер бізнесу (CONTACT_PHONES[0]).
-export function localBusinessSchema({ name, address, url, telephone }) {
+// city: { name, address, url, telephone?, id?, areaServed? }.
+// id → стабільний @id (напр. "localbusiness-kyiv"); parentOrganization зв'язує
+// точку з головною сутністю Organization через @id.
+export function localBusinessSchema({
+  name,
+  address,
+  url,
+  telephone,
+  id,
+  areaServed,
+}) {
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
+    ...(id ? { "@id": `${SITE}/#${id}` } : {}),
     name,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: address,
-      addressCountry: "UA",
-    },
+    parentOrganization: { "@id": ORG_ID },
+    ...(address
+      ? {
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: address,
+            addressCountry: "UA",
+          },
+        }
+      : {}),
     telephone: telephone || CONTACT_PHONES[0],
     openingHours: "Mo-Fr 09:00-17:00",
-    areaServed: "UA",
+    areaServed: areaServed || "UA",
     url: abs(url),
+  };
+}
+
+// Service — послуга доставки/продажу сухого льоду в конкретному місті
+// (для гео-лендингів). provider зв'язаний з Organization через @id.
+export function serviceSchema({ name, areaServed, url, description }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name,
+    serviceType: "Продаж і доставка сухого льоду",
+    provider: { "@id": ORG_ID },
+    areaServed: areaServed
+      ? { "@type": "City", name: areaServed }
+      : "UA",
+    ...(description ? { description } : {}),
+    ...(url ? { url: abs(url) } : {}),
   };
 }
 
@@ -185,8 +250,9 @@ export function articleSchema(post, path) {
     // Реальна дата останньої зміни (_updatedAt із Sanity) — сигнал свіжості.
     // Fallback на дату публікації, якщо оновлення ще не було.
     dateModified: post.updatedAt || post.publishedAt || undefined,
-    author: { "@type": "Organization", name: "IceLab" },
+    author: { "@type": "Organization", name: "IceLab", url: abs("/about") },
     publisher: {
+      "@id": ORG_ID,
       "@type": "Organization",
       name: "IceLab",
       logo: { "@type": "ImageObject", url: abs("/icons/white-logo.svg") },

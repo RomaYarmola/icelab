@@ -5,8 +5,10 @@
 export default function robots() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-  // Службові сторінки, закриті від індексації (обидві локалі).
+  // Службові сторінки та шляхи, закриті від індексації (обидві локалі).
   const disallow = [
+    "/api/",
+    "/_next/image",
     "/basket",
     "/thanks",
     "/delivery",

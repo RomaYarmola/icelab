@@ -1,24 +1,24 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { pageMeta } from "@/lib/seo";
+import { cityBySlug } from "@/lib/cities";
 import GeoLanding from "../../components/main/Geo/GeoLanding";
 
-const PATH = "/suhyi-lid-kyiv";
-const NS = "GeoPages.kyiv";
+const SLUG = "suhyi-lid-kyiv";
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: NS });
-  return pageMeta({
-    title: t("metaTitle"),
-    description: t("metaDescription"),
-    path: PATH,
+  const c = (cityBySlug(SLUG))[locale];
+  const meta = pageMeta({
+    title: c.metaTitle,
+    description: c.metaDescription,
+    path: `/${SLUG}`,
     locale,
   });
+  return { ...meta, keywords: c.keywords };
 }
 
-export default async function KyivPage({ params }) {
+export default async function Page({ params }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: NS });
-  return <GeoLanding city="kyiv" t={t} />;
+  return <GeoLanding slug={SLUG} locale={locale} />;
 }

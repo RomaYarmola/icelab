@@ -6,6 +6,7 @@
 import { getAllProductSlugs } from "@/lib/products";
 import { getAllBlogSlugs } from "@/lib/blog";
 import { CATEGORY_SLUGS } from "@/lib/categories";
+import { CITY_SLUGS } from "@/lib/cities";
 
 // ISR: новий товар/стаття потрапляє в sitemap без ребілду. (P2-1)
 export const revalidate = 3600;
@@ -27,9 +28,8 @@ const staticPaths = [
   "/zastosuvannia-suhogo-lodu",
   "/about",
   "/production",
-  // Гео-лендинги (P2-2).
-  "/suhyi-lid-kyiv",
-  "/suhyi-lid-lviv",
+  // Гео-лендинги по містах (P2-2) — з lib/cities.js.
+  ...CITY_SLUGS.map((s) => `/${s}`),
   // Категорійні посадкові (P1-3).
   ...CATEGORY_SLUGS.map((slug) => `/catalog/c/${slug}`),
 ];
