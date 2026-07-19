@@ -2,6 +2,7 @@ import Image from "next/image";
 import RangeInput from "./RangeInput";
 import { Button } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import { formatPrice } from "@/utils/pricing";
 
 export default function BasketCard({
   iceVariantEnglish,
@@ -83,7 +84,7 @@ export default function BasketCard({
             </div>
             {!basket && (
               <p className="text-[12px] l:text-[16px] font-medium">
-                {totalPrice}&nbsp;ГРН
+                {formatPrice(totalPrice)}&nbsp;ГРН
               </p>
             )}
           </div>
@@ -92,7 +93,7 @@ export default function BasketCard({
       <div className="flex gap-5 md:gap-9 items-center ">
         {basket && (
           <p className="text-[12px] sm:text-[16px] md:text-[24px] font-medium">
-            {totalPrice}&nbsp;ГРН
+            {formatPrice(totalPrice)}&nbsp;ГРН
           </p>
         )}
 

@@ -2,6 +2,10 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import AddToCartControl from "./AddToCartControl";
+import { formatPrice } from "@/utils/pricing";
+
+// Категорії, товари яких — рендери/предмети на світлі (вписуємо, не обрізаємо).
+const CONTAIN_CATEGORIES = ["ice-box", "krioblasting"];
 
 // Картка товару. Уся картка клікабельна (розтягнуте посилання), а покупка
 // можлива прямо з картки через AddToCartControl (він над посиланням і не
@@ -10,8 +14,10 @@ export default function CatalogCard({ product }) {
   const t = useTranslations("ProductPage");
   const href = `/catalog/${product.slug}`;
   const isAvailable = product.availability === "in-stock";
-  // Реальні фото льоду показуємо на весь кадр; рендери боксів — вписуємо.
-  const imgFit = product.category === "ice-box" ? "object-contain" : "object-cover";
+  // Реальні фото льоду показуємо на весь кадр; рендери боксів/апаратів — вписуємо.
+  const imgFit = CONTAIN_CATEGORIES.includes(product.category)
+    ? "object-contain"
+    : "object-cover";
 
   return (
     <li
@@ -54,7 +60,7 @@ export default function CatalogCard({ product }) {
           {product.shortDescription}
         </p>
         <p className="mt-auto pt-1 font-e-ukraine not-italic font-bold text-white text-[26px] leading-none">
-          {product.price}
+          {formatPrice(product.price)}
           <span className="text-[16px] font-medium text-white/80 ml-1">
             {product.unit}
           </span>

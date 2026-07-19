@@ -19,7 +19,13 @@ export const CATEGORIES = [
     key: "ice-box",
     slug: "termoboksy",
     msgKey: "iceBox",
-    image: "/images/pages/ice-box.webp",
+    image: "/images/pages/ice-box-real.webp",
+  },
+  {
+    key: "krioblasting",
+    slug: "chystka-suhym-lodom",
+    msgKey: "dryIceCleaning",
+    image: "/images/pages/chystka-suhym-lodom.webp",
   },
 ];
 

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import BasketCard from "../../common/BasketCard";
 import GradientButton from "../../common/GradientButton";
 import { withLoader } from "@/helpers/withLoader";
+import { formatPrice } from "@/utils/pricing";
 
 function Basket() {
   const t = useTranslations("Basket");
@@ -86,7 +87,7 @@ function Basket() {
               {t("total")}
             </p>
             <p className="text-[16px] md:text-[24px] font-bold text-[#F31260]">
-              {totalValue}&nbsp;грн
+              {formatPrice(totalValue)}&nbsp;грн
             </p>
           </div>
           <Link href="/delivery" className="w-[220px] md:w-[258px]">

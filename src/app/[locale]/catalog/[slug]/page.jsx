@@ -16,6 +16,10 @@ import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import JsonLd from "@/app/components/common/JsonLd";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
+import { formatPrice } from "@/utils/pricing";
+
+// Категорії, товари яких — рендери/предмети на світлі (вписуємо, не обрізаємо).
+const CONTAIN_CATEGORIES = ["ice-box", "krioblasting"];
 
 // ISR: оновлення товару в CMS підхоплюється без ребілду. (P2-1)
 export const revalidate = 3600;
@@ -87,7 +91,7 @@ export default async function ProductPage({ params }) {
           <ProductGallery
             images={product.gallery}
             alt={product.title}
-            fit={product.category === "ice-box" ? "contain" : "cover"}
+            fit={CONTAIN_CATEGORIES.includes(product.category) ? "contain" : "cover"}
           />
         </div>
 
@@ -114,7 +118,7 @@ export default async function ProductPage({ params }) {
           </h1>
 
           {product.description && (
-            <p className="font-e-ukraine font-thin not-italic text-commonBlue/80 leading-relaxed">
+            <p className="font-e-ukraine font-thin not-italic text-commonBlue/80 leading-relaxed whitespace-pre-line">
               {product.description}
             </p>
           )}
@@ -122,7 +126,7 @@ export default async function ProductPage({ params }) {
           {/* Ціна */}
           <div className="flex items-baseline gap-2 py-2">
             <span className="main-title-gradient text-3xl font-medium font-michelin">
-              {product.price}
+              {formatPrice(product.price)}
             </span>
             <span className="font-e-ukraine not-italic text-commonBlue/70 text-lg">
               {product.unit}

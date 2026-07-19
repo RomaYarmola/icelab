@@ -29,6 +29,27 @@ export default function DeliveryOptions() {
           <div className="flex flex-col gap-5">
             <UkraineDelivery />
             <SelfDelivery />
+
+            {/* Як ми пакуємо — реальне фото відвантаження (упаковка + стретч ICELAB) */}
+            <div className="relative z-[4] rounded-[14px] overflow-hidden border border-commonBlue/15 bg-white">
+              <div className="relative w-full h-[220px] md:h-[260px]">
+                <Image
+                  src="/images/pages/packaging.webp"
+                  alt={t("packagingTitle")}
+                  fill
+                  className="object-cover object-center"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="text-commonBlue font-medium text-[20px] mb-2">
+                  {t("packagingTitle")}
+                </h3>
+                <p className="font-e-ukraine not-italic font-thin text-commonBlue/75 text-[13px] leading-relaxed">
+                  {t("packagingText")}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </Container>

@@ -142,12 +142,14 @@ function normalizeProduct(raw, locale, pricing, t) {
   const specs =
     variant === "iceBox"
       ? [{ label: t("Catalog.capacity"), value: `${raw.weight} ${kg}` }]
-      : [
+      : variant === "dryIce"
+      ? [
           ...(raw.granuleSize
             ? [{ label: t("Catalog.granuleSize"), value: raw.granuleSize }]
             : []),
           { label: t("Catalog.weight"), value: `${raw.weight} ${kg}` },
-        ];
+        ]
+      : []; // не-льодові категорії (обладнання) — характеристики в описі
 
   return {
     id: raw._id,
