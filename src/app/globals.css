@@ -369,27 +369,21 @@ textarea::placeholder {
   width: 100%;
 }
 
+/* FAQ (Safari-фолбек): згори плавно від світлого блоку відгуків (#f5f7ff) у
+   темний фон — далі темно до самого низу, щоб текст/картки читались і не було
+   ні світлої смуги посередині, ні різкого стику зі світлою секцією над ним. */
 .faq-safari {
-  background: -webkit-linear-gradient(
-    270deg,
-    #1b3048 10%,
-    #556b80 25%,
-    #f5f7ff 50%,
-    #1b3048 90%,
-    #001731 100%
-  );
-
+  background: -webkit-linear-gradient(270deg, #f5f7ff 0px, #001731 96px, #001731 100%);
+  background: linear-gradient(180deg, #f5f7ff 0px, #001731 96px, #001731 100%);
   width: 100%;
 }
 
+/* Секція «Порахуємо…» (Safari-фолбек): темно згори (плавний стик із FAQ) і
+   темно знизу (плавний стик із футером #001731), з ледь помітним підйомом
+   у центрі — без різкої світлої смуги. */
 .nocompromises-safari {
-  background: -webkit-linear-gradient(
-    270deg,
-    #001731 40%,
-    #1b3048 90%,
-    #556b80 140%
-  );
-
+  background: -webkit-linear-gradient(270deg, #001731 0%, #123252 55%, #001731 100%);
+  background: linear-gradient(180deg, #001731 0%, #123252 55%, #001731 100%);
   width: 100%;
 }
 
