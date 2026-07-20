@@ -55,7 +55,7 @@ function orgNode() {
     name: "IceLab",
     url: SITE,
     logo: { "@type": "ImageObject", url: abs("/icons/white-logo.svg") },
-    image: abs("/og-default.jpg"),
+    image: abs("/og-icelab.jpg"),
     description: SITE_DESCRIPTION,
     telephone: CONTACT_PHONES[0],
     contactPoint: CONTACT_PHONES.map((tel) => ({

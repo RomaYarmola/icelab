@@ -3,7 +3,7 @@
 //
 // ukPath / ruPath — шляхи сторінки для кожної мови (для canonical та hreflang).
 // Брендовий OG-fallback для сторінок без власної картинки.
-const DEFAULT_OG_IMAGE = "/og-default.jpg";
+const DEFAULT_OG_IMAGE = "/og-icelab.jpg";
 const OG_SIZE = 600;
 
 // Квадратне 600×600 прев'ю для картки summary → у Telegram/соцмережах невелике

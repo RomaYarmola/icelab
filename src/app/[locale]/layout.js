@@ -103,14 +103,14 @@ export async function generateMetadata({ params }) {
       title: t("title"),
       description: t("description"),
       images: [
-        { url: "/og-default.jpg", width: 600, height: 600, alt: "IceLab" },
+        { url: "/og-icelab.jpg", width: 600, height: 600, alt: "IceLab" },
       ],
     },
     twitter: {
       card: "summary",
       title: t("title"),
       description: t("description"),
-      images: ["/og-default.jpg"],
+      images: ["/og-icelab.jpg"],
     },
     manifest: "/site.webmanifest",
     icons: {
