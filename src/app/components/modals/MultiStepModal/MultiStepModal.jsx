@@ -22,7 +22,9 @@ export default function MultiStepModal({
   const [formData, setFormData] = useState({
     iceVariant: "",
     size: "",
-    quantity: variant === "dryIce" ? 5 : 1,
+    // Дефолт 10 кг для сухого льоду — щоб повзунок одразу стояв на розумній
+    // кількості, а не на мінімумі (див. також дефолт розміру у FirstStep).
+    quantity: variant === "dryIce" ? 10 : 1,
     pricePerUnit: pricing.pricePerUnit,
     totalPrice: "0",
   });
@@ -64,7 +66,7 @@ export default function MultiStepModal({
     setFormData({
       iceVariant: "",
       size: "",
-      quantity: variant === "dryIce" ? settings.dryIceRange?.min ?? 5 : 1,
+      quantity: variant === "dryIce" ? 10 : 1,
       pricePerUnit: pricing.pricePerUnit,
       totalPrice: "0",
     });

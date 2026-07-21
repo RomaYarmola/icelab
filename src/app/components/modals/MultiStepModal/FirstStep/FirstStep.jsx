@@ -22,9 +22,19 @@ export default function FirstStep({
   // Діапазон повзунка ваги сухого льоду — з Price Settings (fallback константи).
   const dryRange = variant === "dryIce" ? settings.dryIceRange : undefined;
   useEffect(() => {
-    if (variant === "iceBox" && !selectedOption) {
+    if (selectedOption || !sizes?.length) return;
+    if (variant === "iceBox") {
       handleFormDataChange("size", sizes[1]);
       handleFormDataChange("iceVariant", "Бокс для льоду");
+    } else if (variant === "dryIce") {
+      // Дефолт 16 мм (найпопулярніший розмір) — щоб на головній користувач одразу
+      // бачив вибір, ціну й активний повзунок, а не шукав, що треба клікнути.
+      // Шукаємо саме «16» за значенням (порядок розмірів може прийти з Sanity).
+      const preferred =
+        sizes.find((s) => /(^|\D)16(\D|$)/.test(String(s))) ??
+        sizes[Math.floor(sizes.length / 2)];
+      handleFormDataChange("size", preferred);
+      handleFormDataChange("iceVariant", "Сухий лід");
     }
   }, [variant, selectedOption, sizes, handleFormDataChange]);
 
