@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Modal, ModalContent, ModalBody, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import GradientButton from "@/app/components/common/GradientButton";
+import PhoneInput from "@/app/components/common/PhoneInput";
 import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 
@@ -107,12 +108,12 @@ export default function RequestModal({
                 />
 
                 <div>
-                  <Input
+                  <PhoneInput
                     isRequired
                     placeholder={t("phonePlaceholder")}
                     value={form.phone}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, phone: e.target.value }))
+                    onValueChange={(v) =>
+                      setForm((f) => ({ ...f, phone: v }))
                     }
                     onBlur={() =>
                       setPhoneError(validateField("phone", form.phone, tv))

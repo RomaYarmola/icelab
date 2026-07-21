@@ -1,4 +1,5 @@
 import { validateField, validateTelegram } from "@/helpers/validation";
+import PhoneInput from "@/app/components/common/PhoneInput";
 import { Input, Switch } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 
@@ -72,14 +73,16 @@ export default function FormBlock({
         </div>
 
         <div className="relative">
-          <Input
+          <PhoneInput
             isRequired
             classNames={{ input: "font-thin" }}
             className={`block w-full mb-1 rounded-md custom-input overflow-hidden required-field`}
             placeholder={t("phonePlaceholder")}
             name="phone"
             value={phone}
-            onChange={handleChange}
+            onValueChange={(v) =>
+              setFormData((prev) => ({ ...prev, phone: v }))
+            }
             onBlur={() => handleBlur("phone")}
           />
           {formErrors.phone && touchedFields.phone && (

@@ -1,5 +1,6 @@
 "use client";
 import GradientButton from "@/app/components/common/GradientButton";
+import PhoneInput from "@/app/components/common/PhoneInput";
 import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 import { Input } from "@nextui-org/react";
@@ -125,7 +126,7 @@ export default function Form() {
           onChange={handleChange}
         />
         <div className="relative">
-          <Input
+          <PhoneInput
             classNames={{
               input: "font-thin",
               inputWrapper:
@@ -138,7 +139,7 @@ export default function Form() {
             placeholder={t("phonePlaceholder")}
             name="phone"
             value={phone}
-            onChange={handleChange}
+            onValueChange={(v) => handleFormDataChange("phone", v)}
             onBlur={() => handleBlur("phone")}
           />
           {formErrors.phone && touchedFields.phone && (
