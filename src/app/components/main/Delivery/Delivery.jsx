@@ -5,7 +5,12 @@ import { useTranslations } from "next-intl";
 import Container from "@/utils/Container";
 import Order from "./Order";
 import FormBlock from "./FormBlock";
-import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
+import {
+  validateField,
+  validateTelegram,
+  telegramLink,
+  phoneLink,
+} from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 import useProductStore from "@/zustand/store/productStore";
 import { withLoader } from "@/helpers/withLoader";
@@ -92,7 +97,7 @@ function Delivery() {
       const message = `
       🧊 Замовлення:
       - Ім'я: ${formData.name}
-      - Телефон: ${formData.phone}
+      - Телефон: ${phoneLink(formData.phone)}
       ${tgLink ? `- Telegram: ${tgLink}` : ""}
       ${formData.email ? `- Email: ${formData.email}` : ""}
      ${

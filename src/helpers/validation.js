@@ -62,3 +62,11 @@ export const telegramLink = (value) => {
   const nick = normalizeTelegram(value);
   return nick ? `https://t.me/${nick}` : "";
 };
+
+// Телефон у чистому вигляді +380XXXXXXXXX (без пробілів і дужок) — саме такий формат
+// Telegram робить тапабельним у чаті. На вхід приймає масковане значення
+// "+38 (098) 998 25 25" → "+380989982525".
+export const phoneLink = (value) => {
+  const digits = String(value).replace(/\D/g, "");
+  return digits ? `+${digits}` : "";
+};

@@ -4,7 +4,12 @@ import { Modal, ModalContent, ModalBody, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import GradientButton from "@/app/components/common/GradientButton";
 import PhoneInput from "@/app/components/common/PhoneInput";
-import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
+import {
+  validateField,
+  validateTelegram,
+  telegramLink,
+  phoneLink,
+} from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 
 // Перевикористовувана модалка заявки (ім'я / телефон / повідомлення → Telegram).
@@ -40,7 +45,7 @@ export default function RequestModal({
     const message = `
 💬 Заявка / консультація:${context ? `\n- ${context}` : ""}
 - Ім'я: ${form.name || "—"}
-- Телефон: ${form.phone}${tgLink ? `\n- Telegram: ${tgLink}` : ""}
+- Телефон: ${phoneLink(form.phone)}${tgLink ? `\n- Telegram: ${tgLink}` : ""}
 - Повідомлення: ${form.comment || "—"}
 `;
     const res = await sendMessage(message);

@@ -1,7 +1,12 @@
 "use client";
 import GradientButton from "@/app/components/common/GradientButton";
 import PhoneInput from "@/app/components/common/PhoneInput";
-import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
+import {
+  validateField,
+  validateTelegram,
+  telegramLink,
+  phoneLink,
+} from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 import { Input } from "@nextui-org/react";
 import { useState } from "react";
@@ -45,7 +50,7 @@ export default function Form() {
       const message = `
         ❓ Заявка:
         - Ім'я: ${formData.name}
-        - Телефон: ${formData.phone}${tgLink ? `\n        - Telegram: ${tgLink}` : ""}
+        - Телефон: ${phoneLink(formData.phone)}${tgLink ? `\n        - Telegram: ${tgLink}` : ""}
         - Повідомлення: ${formData.comment}
       `;
       console.log(message);
