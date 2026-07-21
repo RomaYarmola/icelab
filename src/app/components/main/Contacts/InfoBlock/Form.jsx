@@ -1,6 +1,6 @@
 "use client";
 import GradientButton from "@/app/components/common/GradientButton";
-import { validateField } from "@/helpers/validation";
+import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 import { Input } from "@nextui-org/react";
 import { useState } from "react";
@@ -12,15 +12,18 @@ export default function Form() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    telegram: "",
     comment: "",
   });
 
   const [formErrors, setFormErrors] = useState({
     phone: "",
+    telegram: "",
   });
 
   const [touchedFields, setTouchedFields] = useState({
     phone: false,
+    telegram: false,
   });
 
   const [buttonText, setButtonText] = useState(t("submit"));
@@ -28,15 +31,20 @@ export default function Form() {
   const handleSubmit = async () => {
     const errors = {
       phone: validateField("phone", formData.phone, tv),
+      telegram: validateTelegram(formData.telegram, tv),
     };
 
     setFormErrors(errors);
+    // Показуємо помилки навіть якщо поле ще не «торкали» — інакше при сабміті
+    // з невалідним телефоном користувач не бачить причини.
+    setTouchedFields({ phone: true, telegram: true });
 
-    if (!errors.name && !errors.phone) {
+    if (!errors.name && !errors.phone && !errors.telegram) {
+      const tgLink = telegramLink(formData.telegram);
       const message = `
         ❓ Заявка:
         - Ім'я: ${formData.name}
-        - Телефон: ${formData.phone}
+        - Телефон: ${formData.phone}${tgLink ? `\n        - Telegram: ${tgLink}` : ""}
         - Повідомлення: ${formData.comment}
       `;
       console.log(message);
@@ -50,13 +58,16 @@ export default function Form() {
       setFormData({
         name: "",
         phone: "",
+        telegram: "",
         comment: "",
       });
       setFormErrors({
         phone: "",
+        telegram: "",
       });
       setTouchedFields({
         phone: false,
+        telegram: false,
       });
     } else {
       console.log("Помилки валідації:", errors);
@@ -65,7 +76,10 @@ export default function Form() {
 
   const handleBlur = (field) => {
     setTouchedFields((prev) => ({ ...prev, [field]: true }));
-    const error = validateField(field, formData[field], tv);
+    const error =
+      field === "telegram"
+        ? validateTelegram(formData[field], tv)
+        : validateField(field, formData[field], tv);
     setFormErrors((prevErrors) => ({ ...prevErrors, [field]: error }));
   };
 
@@ -83,7 +97,7 @@ export default function Form() {
     handleFormDataChange(name, value);
   };
 
-  const { name, phone, comment } = formData;
+  const { name, phone, telegram, comment } = formData;
 
   return (
     <div className="">
@@ -130,6 +144,26 @@ export default function Form() {
           {formErrors.phone && touchedFields.phone && (
             <p className="text-[#F31260] text-[10px] absolute top-[100%]">
               {formErrors.phone}
+            </p>
+          )}
+        </div>
+        <div className="relative">
+          <Input
+            classNames={{
+              input: "font-thin",
+              inputWrapper:
+                "group-data-[focus-visible=true]:ring-0 group-data-[focus-visible=true]:ring-offset-0 xl:h-full xl:min-h-full",
+            }}
+            className="block w-full mb-1 rounded-md contactInput overflow-hidden xl:!h-[54px]"
+            placeholder={t("telegramPlaceholder")}
+            name="telegram"
+            value={telegram}
+            onChange={handleChange}
+            onBlur={() => handleBlur("telegram")}
+          />
+          {formErrors.telegram && touchedFields.telegram && (
+            <p className="text-[#F31260] text-[10px] absolute top-[100%]">
+              {formErrors.telegram}
             </p>
           )}
         </div>

@@ -31,3 +31,34 @@ export const validateField = (name, value, t) => {
   }
   return "";
 };
+
+// Правила Telegram-ніка: 5–32 символи, лише латиниця, цифри та підкреслення.
+const TELEGRAM_REGEX = /^[A-Za-z0-9_]{5,32}$/;
+
+// Нормалізує введений телеграм-нік: прибирає пробіли, @ та домен t.me / повне
+// посилання, лишаючи лише сам нік (напр. "@user", "t.me/user",
+// "https://t.me/user" → "user").
+export const normalizeTelegram = (value = "") => {
+  let v = String(value).trim();
+  if (!v) return "";
+  v = v.replace(/^https?:\/\//i, "").replace(/^(?:www\.)?t(?:elegram)?\.me\//i, "");
+  v = v.replace(/^@/, "");
+  return v.trim();
+};
+
+// Опціональне поле: порожнє значення валідне. Якщо заповнене — перевіряємо формат.
+export const validateTelegram = (value, t) => {
+  const nick = normalizeTelegram(value);
+  if (!nick) return "";
+  if (!TELEGRAM_REGEX.test(nick)) {
+    return t ? t("telegram") : "Невірний формат Telegram-ніка";
+  }
+  return "";
+};
+
+// Клікабельне посилання для повідомлення менеджеру. Telegram автоматично робить
+// звичайні URL у тексті клікабельними, тому parse_mode не потрібен.
+export const telegramLink = (value) => {
+  const nick = normalizeTelegram(value);
+  return nick ? `https://t.me/${nick}` : "";
+};

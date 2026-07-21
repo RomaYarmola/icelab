@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Modal, ModalContent, ModalBody, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import GradientButton from "@/app/components/common/GradientButton";
-import { validateField } from "@/helpers/validation";
+import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 
 // Перевикористовувана модалка заявки (ім'я / телефон / повідомлення → Telegram).
@@ -18,25 +18,34 @@ export default function RequestModal({
   const t = useTranslations("Modal");
   const tv = useTranslations("Validation");
 
-  const [form, setForm] = useState({ name: "", phone: "", comment: "" });
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    telegram: "",
+    comment: "",
+  });
   const [phoneError, setPhoneError] = useState("");
+  const [telegramError, setTelegramError] = useState("");
   const [sent, setSent] = useState(false);
 
   const submit = async () => {
     const err = validateField("phone", form.phone, tv);
+    const tgErr = validateTelegram(form.telegram, tv);
     setPhoneError(err);
-    if (err) return;
+    setTelegramError(tgErr);
+    if (err || tgErr) return;
 
+    const tgLink = telegramLink(form.telegram);
     const message = `
 💬 Заявка / консультація:${context ? `\n- ${context}` : ""}
 - Ім'я: ${form.name || "—"}
-- Телефон: ${form.phone}
+- Телефон: ${form.phone}${tgLink ? `\n- Telegram: ${tgLink}` : ""}
 - Повідомлення: ${form.comment || "—"}
 `;
     const res = await sendMessage(message);
     if (res?.success) {
       setSent(true);
-      setForm({ name: "", phone: "", comment: "" });
+      setForm({ name: "", phone: "", telegram: "", comment: "" });
     }
   };
 
@@ -48,6 +57,7 @@ export default function RequestModal({
         if (!v) {
           setSent(false);
           setPhoneError("");
+          setTelegramError("");
         }
       }}
       placement="center"
@@ -104,6 +114,9 @@ export default function RequestModal({
                     onChange={(e) =>
                       setForm((f) => ({ ...f, phone: e.target.value }))
                     }
+                    onBlur={() =>
+                      setPhoneError(validateField("phone", form.phone, tv))
+                    }
                     className="rounded-md contactInput overflow-hidden"
                     classNames={{
                       input:
@@ -113,6 +126,29 @@ export default function RequestModal({
                   {phoneError && (
                     <p className="text-[#F31260] text-[11px] mt-1">
                       {phoneError}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <Input
+                    placeholder={t("telegramPlaceholder")}
+                    value={form.telegram}
+                    onChange={(e) =>
+                      setForm((f) => ({ ...f, telegram: e.target.value }))
+                    }
+                    onBlur={() =>
+                      setTelegramError(validateTelegram(form.telegram, tv))
+                    }
+                    className="rounded-md contactInput overflow-hidden"
+                    classNames={{
+                      input:
+                        "font-e-ukraine font-thin not-italic placeholder:font-e-ukraine placeholder:not-italic placeholder:font-thin placeholder:text-commonBlue/50",
+                    }}
+                  />
+                  {telegramError && (
+                    <p className="text-[#F31260] text-[11px] mt-1">
+                      {telegramError}
                     </p>
                   )}
                 </div>

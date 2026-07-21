@@ -409,6 +409,7 @@
     "headingLine2": "консультацию",
     "companyPlaceholder": "Имя или название компании",
     "phonePlaceholder": "Номер телефона",
+    "telegramPlaceholder": "Telegram-ник (необязательно)",
     "messagePlaceholder": "Ваше сообщение",
     "submit": "Отправить",
     "success": "Спасибо"
@@ -449,6 +450,7 @@
     "pickup": "Самовывоз",
     "namePlaceholder": "Имя",
     "phonePlaceholder": "Номер телефона",
+    "telegramPlaceholder": "Telegram-ник (необязательно)",
     "emailPlaceholder": "Email",
     "cityPlaceholder": "Город",
     "addressPlaceholder": "Отделение Новой почты"
@@ -466,6 +468,7 @@
     "leaveRequest": "Оставить заявку",
     "namePlaceholder": "Имя",
     "phonePlaceholder": "Телефон",
+    "telegramPlaceholder": "Telegram-ник (необязательно)",
     "messagePlaceholder": "Ваше сообщение",
     "submit": "Отправить",
     "order": "Заказать",
@@ -488,6 +491,7 @@
     "empty": "это поле не может быть пустым",
     "name": "Имя должно содержать не менее двух букв",
     "phone": "Неверный формат номера телефона",
+    "telegram": "Неверный формат Telegram-ника (5–32 символа: латиница, цифры, _)",
     "city": "Город должен содержать только буквы, пробелы и дефисы",
     "address": "Адрес должен содержать только буквы, цифры, пробелы, запятые, дефисы и косые черты"
   }

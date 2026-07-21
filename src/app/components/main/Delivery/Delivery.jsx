@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import Container from "@/utils/Container";
 import Order from "./Order";
 import FormBlock from "./FormBlock";
-import { validateField } from "@/helpers/validation";
+import { validateField, validateTelegram, telegramLink } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
 import useProductStore from "@/zustand/store/productStore";
 import { withLoader } from "@/helpers/withLoader";
@@ -23,6 +23,7 @@ function Delivery() {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    telegram: "",
     email: "",
     city: "",
     address: "",
@@ -31,6 +32,7 @@ function Delivery() {
   const [formErrors, setFormErrors] = useState({
     phone: "",
     name: "",
+    telegram: "",
     email: "",
     city: "",
     address: "",
@@ -39,6 +41,7 @@ function Delivery() {
   const [touchedFields, setTouchedFields] = useState({
     phone: false,
     name: false,
+    telegram: false,
     city: false,
     address: false,
   });
@@ -51,15 +54,25 @@ function Delivery() {
     const errors = {
       phone: validateField("phone", formData.phone, tv),
       name: validateField("name", formData.name, tv),
+      telegram: validateTelegram(formData.telegram, tv),
       city: !isPickup ? validateField("city", formData.city, tv) : "",
       address: !isPickup ? validateField("address", formData.address, tv) : "",
     };
 
     setFormErrors(errors);
+    // Показуємо помилки навіть для «неторкнутих» полів при спробі сабміту.
+    setTouchedFields({
+      phone: true,
+      name: true,
+      telegram: true,
+      city: !isPickup,
+      address: !isPickup,
+    });
 
     if (
       !errors.name &&
       !errors.phone &&
+      !errors.telegram &&
       (isPickup || (!errors.city && !errors.address))
     ) {
       let productsMessage = products
@@ -75,10 +88,12 @@ function Delivery() {
       `;
         })
         .join("\n");
+      const tgLink = telegramLink(formData.telegram);
       const message = `
       🧊 Замовлення:
       - Ім'я: ${formData.name}
       - Телефон: ${formData.phone}
+      ${tgLink ? `- Telegram: ${tgLink}` : ""}
       ${formData.email ? `- Email: ${formData.email}` : ""}
      ${
        isPickup
@@ -99,6 +114,7 @@ function Delivery() {
       setFormData({
         phone: "",
         name: "",
+        telegram: "",
         email: "",
         city: "",
         address: "",
@@ -106,12 +122,14 @@ function Delivery() {
       setFormErrors({
         phone: "",
         name: "",
+        telegram: "",
         city: "",
         address: "",
       });
       setTouchedFields({
         phone: false,
         name: false,
+        telegram: false,
         city: false,
         address: false,
       });

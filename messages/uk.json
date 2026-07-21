@@ -409,6 +409,7 @@
     "headingLine2": "консультацію",
     "companyPlaceholder": "Імʼя або назва компанії",
     "phonePlaceholder": "Номер телефону",
+    "telegramPlaceholder": "Telegram-нік (необов'язково)",
     "messagePlaceholder": "Ваше повідомлення",
     "submit": "Відправити",
     "success": "Дякуємо"
@@ -449,6 +450,7 @@
     "pickup": "Самовивіз",
     "namePlaceholder": "Імʼя",
     "phonePlaceholder": "Номер телефону",
+    "telegramPlaceholder": "Telegram-нік (необов'язково)",
     "emailPlaceholder": "Email",
     "cityPlaceholder": "Місто",
     "addressPlaceholder": "Відділення Нової пошти"
@@ -466,6 +468,7 @@
     "leaveRequest": "Залишити заявку",
     "namePlaceholder": "Імʼя",
     "phonePlaceholder": "Телефон",
+    "telegramPlaceholder": "Telegram-нік (необов'язково)",
     "messagePlaceholder": "Ваше повідомлення",
     "submit": "Відправити",
     "order": "Замовити",
@@ -488,6 +491,7 @@
     "empty": "це поле не може бути порожнім",
     "name": "Ім'я повинно містити принаймні дві літери",
     "phone": "Невірний формат номера телефону",
+    "telegram": "Невірний формат Telegram-ніка (5–32 символи: латиниця, цифри, _)",
     "city": "Місто повинно містити лише літери, пробіли та дефіси",
     "address": "Адреса повинна містити лише літери, цифри, пробіли, коми, дефіси та косі риски"
   }
