@@ -11,6 +11,7 @@ import Image from "next/image";
 import BurgerMenu from "./BurgerMenu";
 import Navigation from "./Navigation";
 import useProductStore from "@/zustand/store/productStore";
+import useUiStore from "@/zustand/store/uiStore";
 import BasketModal from "./BasketModal";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -18,7 +19,8 @@ import { useTranslations } from "next-intl";
 export default function Header() {
   const t = useTranslations("Header");
   const [isBasketModalOpen, setIsBasketModalOpen] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMenuOpen = useUiStore((state) => state.isMenuOpen);
+  const setIsMenuOpen = useUiStore((state) => state.setMenuOpen);
   const modalRef = useRef(null);
   const router = useRouter();
   const products = useProductStore((state) => state.products);

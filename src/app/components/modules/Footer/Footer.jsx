@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import SocLinks from "../../common/SocLinks";
+import Messengers from "../../common/Messengers";
 import FooterNav from "./FooterNav";
 
 function CreatedBy({ align = "left" }) {
@@ -119,6 +120,8 @@ export default function Footer() {
 
           <SocLinks variant="footer" />
 
+          <Messengers className="mb-12 -mt-6" />
+
           <div className="flex flex-col gap-6">
             <p className="base-text text-white font-[200]">
               © {new Date().getFullYear()} ICELAB
@@ -141,6 +144,7 @@ export default function Footer() {
                 />
               </Link>
               <SocLinks variant="footer" />
+              <Messengers className="mt-6" />
             </div>
 
             <div className="text-right">

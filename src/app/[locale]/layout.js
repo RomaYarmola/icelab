@@ -15,6 +15,7 @@ import TrackingProvider from "../components/common/TrackingProvider";
 import { PriceSettingsProvider } from "../components/providers/PriceSettingsProvider";
 import Footer from "../components/modules/Footer/Footer";
 import Header from "../components/modules/Header/Header";
+import QuickContact from "../components/common/QuickContact";
 import "../globals.css";
 
 const eUkraine = localFont({
@@ -207,6 +208,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <Header />
             <main>{children}</main>
             <Footer />
+            <QuickContact />
           </PriceSettingsProvider>
         </NextIntlClientProvider>
       </body>

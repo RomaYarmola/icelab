@@ -1,4 +1,10 @@
-import { FaFacebook, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTelegramPlane,
+  FaWhatsapp,
+  FaViber,
+} from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 // Основные ссылки для хедера, бургера и других общих компонентов.
@@ -48,4 +54,30 @@ export const socialContactsLinks = [
   },
   // { name: "Twitter", url: "https://twitter.com", icon: FaXTwitter },
   // { name: "Facebook", url: "https://facebook.com", icon: FaFacebook },
+];
+
+// Єдине джерело контактного номера (без пробілів/дужок — для tel:/wa.me/viber).
+export const CONTACT_PHONE = "+380951606881";
+
+// Месенджери для звʼязку (контакти, футер, плаваюча кнопка). color — фірмовий
+// колір месенджера для кружечків у плаваючій кнопці.
+export const messengers = [
+  {
+    name: "Telegram",
+    url: "https://t.me/romanyarmola",
+    icon: FaTelegramPlane,
+    color: "#229ED9",
+  },
+  {
+    name: "WhatsApp",
+    url: `https://wa.me/${CONTACT_PHONE.replace(/\D/g, "")}`,
+    icon: FaWhatsapp,
+    color: "#25D366",
+  },
+  {
+    name: "Viber",
+    url: `viber://chat?number=${encodeURIComponent(CONTACT_PHONE)}`,
+    icon: FaViber,
+    color: "#7360F2",
+  },
 ];

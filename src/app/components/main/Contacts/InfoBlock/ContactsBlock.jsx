@@ -1,5 +1,6 @@
 "use client";
 import SocLinks from "@/app/components/common/SocLinks";
+import Messengers from "@/app/components/common/Messengers";
 import Link from "next/link";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
@@ -97,6 +98,7 @@ export default function ContactsBlock() {
             </Link>
           ))}
         </div>
+        <Messengers className="mt-5 justify-center" />
       </div>
       <div>
         <h3 className="text-[20px] l:text-[32px] font-medium mb-5">
