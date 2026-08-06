@@ -47,6 +47,13 @@ export default function HeroClouds() {
     });
   }, []);
 
+  // Хмари 1–4 потрапляють у перший екран (top 115/300/348/427 при висоті
+  // в'юпорта ~812), і саме одну з них Chrome обирає LCP-елементом — вона
+  // більша за все інше, що встигає намалюватись. Поки вони були lazy, LCP
+  // тримався на 5,4 с: браузер дізнавався про картинку лише після розбору
+  // всього документа. Тому їм — priority (eager + fetchpriority=high +
+  // preload). Решта хмар нижче згину лишаються lazy.
+  // quality 60 — м'які білі форми, різниці на око немає, а ваги менше.
   return (
     <>
       {/* Cloud 1 */}
@@ -54,6 +61,8 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
+          priority
           width={1012}
           height={289}
           className="h-full w-full object-cover"
@@ -68,6 +77,8 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
+          priority
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -78,6 +89,8 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-left.png"
           alt=""
+          quality={60}
+          priority
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -88,6 +101,8 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-left.png"
           alt=""
+          quality={60}
+          priority
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -102,6 +117,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -112,6 +128,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -122,6 +139,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-left.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -136,6 +154,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -150,6 +169,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -160,6 +180,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -170,6 +191,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-left.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -184,6 +206,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -194,6 +217,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-right.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -204,6 +228,7 @@ export default function HeroClouds() {
         <Image
           src="/images/hero/cloud-left.png"
           alt=""
+          quality={60}
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
