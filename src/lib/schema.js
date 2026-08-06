@@ -212,6 +212,38 @@ export function productSchema(product, path) {
   };
 }
 
+// Список товарів каталогу/категорії. Дає пошуковикам і AI структурований
+// перелік позицій із цінами й картинками одним вузлом.
+// products — нормалізовані об'єкти з lib/products; basePath — "/catalog".
+export function itemListSchema({ name, products = [], basePath = "/catalog" }) {
+  if (!products.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    ...(name ? { name } : {}),
+    numberOfItems: products.length,
+    itemListElement: products.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Product",
+        name: p.title,
+        url: abs(`${basePath}/${p.slug}`),
+        ...(p.mainImage ? { image: abs(p.mainImage) } : {}),
+        offers: {
+          "@type": "Offer",
+          price: String(p.price),
+          priceCurrency: "UAH",
+          availability:
+            p.availability === "in-stock"
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+        },
+      },
+    })),
+  };
+}
+
 // items: [{ name, href }] — останній елемент без item (поточна сторінка).
 export function breadcrumbSchema(items = []) {
   return {

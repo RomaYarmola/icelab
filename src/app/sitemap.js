@@ -2,14 +2,26 @@
 // Статичні сторінки — у коді; товари й статті блогу — автоматично з Sanity
 // (з окремими slug на кожну мову). Новий товар/стаття в CMS з'являється тут
 // без змін у коді.
+//
+// Два свідомі рішення:
+//  • <image:image> — у записів товарів, статей і категорій перелічені абсолютні
+//    URL картинок, щоб вони індексувались у Google Картинках (поле images
+//    підтримується Next з 14.2);
+//  • lastModified — реальна дата з Sanity (_updatedAt), а не new Date().
+//    Якщо всім URL щогодини проставляти «сьогодні», Google перестає довіряти
+//    lastmod взагалі. Для статичних сторінок — дата останньої правки контенту.
 
-import { getAllProductSlugs } from "@/lib/products";
-import { getAllBlogSlugs } from "@/lib/blog";
-import { CATEGORY_SLUGS } from "@/lib/categories";
+import { getProductsForSitemap } from "@/lib/products";
+import { getBlogPostsForSitemap } from "@/lib/blog";
+import { CATEGORIES } from "@/lib/categories";
 import { CITY_SLUGS } from "@/lib/cities";
 
-// ISR: новий товар/стаття потрапляє в sitemap без ребілду. (P2-1)
+// ISR: новий товар/стаття потрапляє в sitemap без ребілду.
 export const revalidate = 3600;
+
+// Дата останньої змістовної правки статичних сторінок. Оновлювати вручну,
+// коли реально міняється контент сторінки, — це і є сенс lastmod.
+const STATIC_LASTMOD = "2026-08-06";
 
 // Статичні сторінки (спільний шлях для обох мов).
 const staticPaths = [
@@ -18,52 +30,105 @@ const staticPaths = [
   "/payment-and-delivery",
   "/blog",
   "/contacts",
-  // Юридичні/сервісні сторінки (P0-3).
+  // Юридичні/сервісні сторінки.
   "/privacy-policy",
   "/terms",
   "/payment",
   "/returns",
-  // Контентні сторінки (P1-5, P1-8).
+  // Контентні сторінки.
   "/faq",
   "/zastosuvannia-suhogo-lodu",
   "/about",
   "/production",
-  // Гео-лендинги по містах (P2-2) — з lib/cities.js.
+  // Опт / B2B.
+  "/opt",
+  // Гео-лендинги по містах — з lib/cities.js.
   ...CITY_SLUGS.map((s) => `/${s}`),
-  // Категорійні посадкові (P1-3).
-  ...CATEGORY_SLUGS.map((slug) => `/catalog/c/${slug}`),
 ];
+
+// Як часто реально змінюється контент — за типом сторінки.
+function changeFreqFor(path) {
+  if (path === "" || path === "/catalog" || path === "/blog") return "weekly";
+  if (path === "/privacy-policy" || path === "/terms") return "yearly";
+  return "monthly";
+}
 
 export default async function sitemap() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const lastModified = new Date();
 
-  const entry = (ukPath, ruPath, priority) => ({
-    url: `${base}${ukPath}`,
-    lastModified,
-    changeFrequency: "monthly",
+  const abs = (u) => (/^https?:\/\//.test(u) ? u : `${base}${u}`);
+
+  const entry = ({
+    ukPath,
+    ruPath,
     priority,
+    lastModified,
+    changeFrequency = "monthly",
+    images = [],
+  }) => ({
+    url: `${base}${ukPath}`,
+    lastModified: lastModified || STATIC_LASTMOD,
+    changeFrequency,
+    priority,
+    ...(images.length ? { images: images.map(abs) } : {}),
     alternates: {
-      languages: { uk: `${base}${ukPath}`, ru: `${base}${ruPath}` },
+      languages: {
+        uk: `${base}${ukPath}`,
+        ru: `${base}${ruPath}`,
+        "x-default": `${base}${ukPath}`,
+      },
     },
   });
 
   // Статичні сторінки (однаковий slug для uk/ru).
   const staticEntries = staticPaths.map((path) =>
-    entry(path === "" ? "/" : path, `/ru${path}`, path === "" ? 1 : 0.8)
+    entry({
+      ukPath: path === "" ? "/" : path,
+      ruPath: `/ru${path}`,
+      priority: path === "" ? 1 : 0.8,
+      changeFrequency: changeFreqFor(path),
+    })
   );
 
-  // Товари (єдиний slug для обох мов).
-  const productSlugs = await getAllProductSlugs();
-  const productEntries = productSlugs.map((slug) =>
-    entry(`/catalog/${slug}`, `/ru/catalog/${slug}`, 0.7)
+  // Категорійні посадкові — з ілюстрацією категорії.
+  const categoryEntries = CATEGORIES.map((c) =>
+    entry({
+      ukPath: `/catalog/c/${c.slug}`,
+      ruPath: `/ru/catalog/c/${c.slug}`,
+      priority: 0.9,
+      changeFrequency: "weekly",
+      images: c.image ? [c.image] : [],
+    })
   );
 
-  // Статті блогу (єдиний slug для обох мов).
-  const blogSlugs = await getAllBlogSlugs();
-  const blogEntries = blogSlugs.map((slug) =>
-    entry(`/blog/${slug}`, `/ru/blog/${slug}`, 0.6)
+  // Товари (єдиний slug для обох мов) — з усіма фото галереї.
+  const products = await getProductsForSitemap();
+  const productEntries = products.map((p) =>
+    entry({
+      ukPath: `/catalog/${p.slug}`,
+      ruPath: `/ru/catalog/${p.slug}`,
+      priority: 0.7,
+      lastModified: p.updatedAt,
+      images: p.images,
+    })
   );
 
-  return [...staticEntries, ...productEntries, ...blogEntries];
+  // Статті блогу (єдиний slug для обох мов) — з обкладинкою.
+  const posts = await getBlogPostsForSitemap();
+  const blogEntries = posts.map((p) =>
+    entry({
+      ukPath: `/blog/${p.slug}`,
+      ruPath: `/ru/blog/${p.slug}`,
+      priority: 0.6,
+      lastModified: p.updatedAt,
+      images: p.images,
+    })
+  );
+
+  return [
+    ...staticEntries,
+    ...categoryEntries,
+    ...productEntries,
+    ...blogEntries,
+  ];
 }

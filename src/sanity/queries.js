@@ -27,6 +27,15 @@ export const PRODUCT_BY_SLUG_QUERY = `*[_type == "product" && slug.current == $s
 // Slug кожного товару — для generateStaticParams та sitemap.
 export const PRODUCT_SLUGS_QUERY = `*[_type == "product" && defined(slug.current)].slug.current`;
 
+// Slug + зображення + дата зміни — для sitemap з <image:image> (Google Images)
+// та чесним <lastmod>. Легша за PRODUCTS_QUERY: без описів і характеристик.
+export const PRODUCT_SITEMAP_QUERY = `*[_type == "product" && defined(slug.current)]{
+  "slug": slug.current,
+  mainImage,
+  gallery,
+  _updatedAt
+}`;
+
 export const PRICE_SETTINGS_QUERY = `*[_type == "priceSettings"][0]{
   dryIceTiers[]{min, max, price},
   dryIceRange,
@@ -67,3 +76,11 @@ export const BLOG_POST_BY_SLUG_QUERY = `*[_type == "blogPost" && slug.current ==
 }`;
 
 export const BLOG_SLUGS_QUERY = `*[_type == "blogPost" && defined(slug.current)].slug.current`;
+
+// Slug + обкладинка + дата зміни — для sitemap з <image:image> та <lastmod>.
+export const BLOG_SITEMAP_QUERY = `*[_type == "blogPost" && defined(slug.current)]{
+  "slug": slug.current,
+  coverImage,
+  publishedAt,
+  _updatedAt
+}`;

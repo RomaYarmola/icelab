@@ -1,15 +1,15 @@
-"use client";
 import Container from "@/utils/Container";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import RelatedLinks from "@/app/components/common/RelatedLinks";
 import { CATEGORIES } from "@/lib/categories";
 
 // SEO-блок «Каталог за категоріями» — окрема секція з власним темним фоном,
 // щоб заголовок і картки завжди читалися (раніше залежав від градієнта Products
 // і на мобільному «губився» на світлому).
-export default function CatalogCategories() {
-  const t = useTranslations("Products");
-  const tcat = useTranslations("Categories");
+export default async function CatalogCategories({ locale }) {
+  const t = await getTranslations({ locale, namespace: "Products" });
+  const tcat = await getTranslations({ locale, namespace: "Categories" });
 
   return (
     <section className="relative z-10 bg-dark-gradient">
@@ -60,6 +60,18 @@ export default function CatalogCategories() {
               </li>
             ))}
           </ul>
+
+          {/* Перелінковка з головної: опт, застосування, FAQ і гео-лендинги.
+              Головна — найсильніша сторінка сайту, тож саме звідси є сенс
+              віддавати вагу комерційним посадковим, які інакше доступні
+              лише з футера. */}
+          <div className="mt-12 md:mt-16 max-w-[1000px] mx-auto">
+            <RelatedLinks
+              locale={locale}
+              withCategories={false}
+              variant="dark"
+            />
+          </div>
         </div>
       </Container>
     </section>

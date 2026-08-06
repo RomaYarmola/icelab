@@ -3,6 +3,9 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getProducts } from "@/lib/products";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
+import RelatedLinks from "@/app/components/common/RelatedLinks";
+import JsonLd from "@/app/components/common/JsonLd";
+import { itemListSchema } from "@/lib/schema";
 import { CATEGORIES } from "@/lib/categories";
 import { Link } from "@/i18n/navigation";
 import { pageMeta } from "@/lib/seo";
@@ -33,6 +36,8 @@ export default async function CatalogPage({ params }) {
 
   return (
     <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[140px]">
+      {/* ItemList: структурований перелік товарів із цінами й фото */}
+      <JsonLd data={itemListSchema({ name: t("title"), products })} />
       <Breadcrumbs items={[{ name: t("title") }]} />
 
       <h1 className="text-3xl main-title-gradient text-center mb-10 md:mb-14">
@@ -64,6 +69,11 @@ export default async function CatalogPage({ params }) {
       </ul>
 
       <CatalogList products={products} />
+
+      {/* Перелінковка: категорії, опт, застосування, гео */}
+      <div className="mt-16 md:mt-24">
+        <RelatedLinks locale={locale} />
+      </div>
     </Container>
   );
 }

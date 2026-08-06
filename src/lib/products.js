@@ -19,6 +19,7 @@ import {
   PRODUCTS_QUERY,
   PRODUCT_BY_SLUG_QUERY,
   PRODUCT_SLUGS_QUERY,
+  PRODUCT_SITEMAP_QUERY,
 } from "@/sanity/queries";
 import { urlForImage, urlForImageSquare } from "@/sanity/image";
 import { calculateTotalPrice } from "@/utils/pricing";
@@ -183,9 +184,11 @@ export async function getProducts(locale) {
     .map((p) => normalizeProduct(p, locale, pricing, t));
 }
 
-// Товари однієї категорії (для категорійних посадкових сторінок P1-3).
-// Увесь наш лід — харчовий (виготовлений із сертифікованої харчової CO₂),
-// тому категорія «харчовий лід» показує ті самі товари, що й «сухий лід».
+// Товари однієї категорії (для категорійних посадкових сторінок).
+// «Харчовий лід» — окремий пошуковий інтент, а не окремий склад: увесь наш лід
+// зроблений із сертифікованої харчової CO₂, тому категорія показує ті самі
+// гранули, що й «Сухий лід». Унікальність сторінки тримається на власному
+// тексті під HoReCa/кейтеринг (див. lib/categories.js).
 export async function getProductsByCategory(locale, categoryKey) {
   const all = await getProducts(locale);
   const key = categoryKey === "food-ice" ? "dry-ice" : categoryKey;
@@ -206,4 +209,20 @@ export async function getProductBySlug(slug, locale) {
 export async function getAllProductSlugs() {
   const raw = await sanityFetch(PRODUCT_SLUGS_QUERY, {}, []);
   return (raw || []).filter(Boolean);
+}
+
+// Дані товарів для sitemap: slug, абсолютні URL зображень (для <image:image> —
+// щоб фото товарів індексувались у Google Картинках) і реальна дата зміни.
+// Не залежить від локалі й перекладів — лише Sanity.
+export async function getProductsForSitemap() {
+  const raw = await sanityFetch(PRODUCT_SITEMAP_QUERY, {}, []);
+  return (raw || [])
+    .filter((p) => p.slug)
+    .map((p) => ({
+      slug: p.slug,
+      updatedAt: p._updatedAt || null,
+      images: [p.mainImage, ...(p.gallery || [])]
+        .map((img) => urlForImage(img))
+        .filter(Boolean),
+    }));
 }

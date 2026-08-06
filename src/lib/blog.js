@@ -6,6 +6,7 @@ import {
   BLOG_POSTS_QUERY,
   BLOG_POST_BY_SLUG_QUERY,
   BLOG_SLUGS_QUERY,
+  BLOG_SITEMAP_QUERY,
 } from "@/sanity/queries";
 import { urlForImage, urlForImageSquare } from "@/sanity/image";
 
@@ -78,4 +79,17 @@ export async function getBlogPostBySlug(slug, locale) {
 export async function getAllBlogSlugs() {
   const raw = await sanityFetch(BLOG_SLUGS_QUERY, {}, []);
   return (raw || []).filter(Boolean);
+}
+
+// Дані статей для sitemap: slug, обкладинка (<image:image> → Google Картинки)
+// і реальна дата останньої зміни для <lastmod>.
+export async function getBlogPostsForSitemap() {
+  const raw = await sanityFetch(BLOG_SITEMAP_QUERY, {}, []);
+  return (raw || [])
+    .filter((p) => p.slug)
+    .map((p) => ({
+      slug: p.slug,
+      updatedAt: p._updatedAt || p.publishedAt || null,
+      images: [urlForImage(p.coverImage)].filter(Boolean),
+    }));
 }

@@ -5,17 +5,13 @@
 export default function robots() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
-  // Службові сторінки та шляхи, закриті від індексації (обидві локалі).
-  const disallow = [
-    "/api/",
-    "/_next/image",
-    "/basket",
-    "/thanks",
-    "/delivery",
-    "/ru/basket",
-    "/ru/thanks",
-    "/ru/delivery",
-  ];
+  // Закриваємо лише API. Службові сторінки (/basket, /thanks, /delivery)
+  // НЕ блокуємо тут: у них стоїть meta robots noindex, а краулер побачить її
+  // тільки якщо йому дозволено зайти. Disallow + noindex — конфлікт, після
+  // якого URL потрапляє в індекс «голим», без сніпета.
+  // /_next/image теж не закриваємо: через нього віддаються ВСІ картинки сайту
+  // (товари з Sanity CDN, обкладинки блогу) — блокування вимикає Google Images.
+  const disallow = ["/api/"];
 
   // AI-краулери, яким явно дозволяємо повний доступ.
   const aiBots = [
@@ -29,10 +25,13 @@ export default function robots() {
     "Bingbot",
   ];
 
+  // Кожна група має власний disallow: за стандартом robots.txt краулер виконує
+  // ЛИШЕ найбільш специфічну групу, що збіглася, і правила "*" при цьому
+  // ігноруються повністю. Без цього AI-боти ходили б у /api/.
   return {
     rules: [
       { userAgent: "*", allow: "/", disallow },
-      ...aiBots.map((userAgent) => ({ userAgent, allow: "/" })),
+      ...aiBots.map((userAgent) => ({ userAgent, allow: "/", disallow })),
     ],
     sitemap: `${base}/sitemap.xml`,
   };
