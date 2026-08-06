@@ -47,13 +47,15 @@ export default function HeroClouds() {
     });
   }, []);
 
-  // Хмари 1–4 потрапляють у перший екран (top 115/300/348/427 при висоті
-  // в'юпорта ~812), і саме одну з них Chrome обирає LCP-елементом — вона
-  // більша за все інше, що встигає намалюватись. Поки вони були lazy, LCP
-  // тримався на 5,4 с: браузер дізнавався про картинку лише після розбору
-  // всього документа. Тому їм — priority (eager + fetchpriority=high +
-  // preload). Решта хмар нижче згину лишаються lazy.
-  // quality 60 — м'які білі форми, різниці на око немає, а ваги менше.
+  // ⚠️ Хмарам НЕ можна ставити priority — перевірено на PageSpeed.
+  // LCP-елементом Chrome обирає одну з хмар першого екрана, і спроба
+  // «допомогти» їй через priority дала зворотний результат: LCP 5,4 → 9,4 с.
+  // Причина у вазі: фон Hero після оптимізації важить 9 КБ, а одна хмара —
+  // 52–96 КБ. Три preload-и хмар (185 КБ) на Slow 4G забивають канал раніше,
+  // ніж встигає намалюватись хоч щось. Хмари лишаються lazy.
+  // Реальний важіль тут — полегшити самі ассети cloud-left/right.png
+  // (зараз 97 КБ кожен), а не міняти пріоритети завантаження.
+  // quality 60 — м'які білі форми, різниці на око немає.
   return (
     <>
       {/* Cloud 1 */}
@@ -62,7 +64,6 @@ export default function HeroClouds() {
           src="/images/hero/cloud-right.png"
           alt=""
           quality={60}
-          priority
           width={1012}
           height={289}
           className="h-full w-full object-cover"
@@ -78,7 +79,6 @@ export default function HeroClouds() {
           src="/images/hero/cloud-right.png"
           alt=""
           quality={60}
-          priority
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -90,7 +90,6 @@ export default function HeroClouds() {
           src="/images/hero/cloud-left.png"
           alt=""
           quality={60}
-          priority
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -102,7 +101,6 @@ export default function HeroClouds() {
           src="/images/hero/cloud-left.png"
           alt=""
           quality={60}
-          priority
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
