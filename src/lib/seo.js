@@ -6,6 +6,35 @@
 const DEFAULT_OG_IMAGE = "/og-icelab.jpg";
 const OG_SIZE = 600;
 
+// Дефолтні robots-директиви.
+//
+// `max-snippet:-1`, `max-image-preview:large`, `max-video-preview:-1` — це не
+// косметика: саме ці директиви керують тим, скільки тексту й яку картинку
+// Google має право показати в розширених сніпетах, AI Overviews та AI Mode.
+// Окремого «opt-in для AI» не існує — Google керує появою в AI-відповідях
+// звичайними preview-директивами. Без max-snippet сніпет обрізається за
+// дефолтною довжиною, і сторінка гірше цитується.
+// Джерело: developers.google.com/search/docs/appearance/ai-features
+export const ROBOTS_INDEXABLE = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    "max-snippet": -1,
+    "max-image-preview": "large",
+    "max-video-preview": -1,
+  },
+};
+
+// Нормалізує robots із CMS: рядок "noindex..." лишаємо як є (це свідома
+// заборона), усе інше — повний індексований набір із preview-директивами.
+function resolveRobots(value) {
+  if (typeof value === "string" && /noindex/i.test(value)) return value;
+  if (value && typeof value === "object") return value;
+  return ROBOTS_INDEXABLE;
+}
+
 // Квадратне 600×600 прев'ю для картки summary → у Telegram/соцмережах невелике
 // фото праворуч, а не величезний банер. Картинки товарів/статей приходять уже
 // квадратно обрізаними (urlForImageSquare), тож 600×600 тут коректні.
@@ -28,7 +57,7 @@ export function toNextMetadata({ seo, locale, ukPath, ruPath }) {
   const metadata = {
     title: seo?.title,
     description: seo?.description,
-    robots: seo?.robots || "index,follow",
+    robots: resolveRobots(seo?.robots),
     alternates: {
       canonical,
       languages: { uk: ukPath, ru: ruPath, "x-default": ukPath },
@@ -67,6 +96,7 @@ export function pageMeta({ title, description, path, locale, image }) {
   return {
     title,
     description,
+    robots: ROBOTS_INDEXABLE,
     alternates: { canonical, languages: { uk, ru, "x-default": uk } },
     openGraph: {
       type: "website",

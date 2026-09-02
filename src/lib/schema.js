@@ -139,6 +139,8 @@ export function organizationRatingSchema({ rating, total, reviews = [] } = {}) {
 export function localBusinessSchema({
   name,
   address,
+  addressLocality,
+  addressRegion,
   url,
   telephone,
   id,
@@ -155,12 +157,33 @@ export function localBusinessSchema({
           address: {
             "@type": "PostalAddress",
             streetAddress: address,
+            // Локалітет і область окремими полями: Google зіставляє адресу
+            // з профілем компанії на картах, і розібрана адреса зіставляється
+            // надійніше за один рядок.
+            ...(addressLocality ? { addressLocality } : {}),
+            ...(addressRegion ? { addressRegion } : {}),
             addressCountry: "UA",
           },
         }
       : {}),
     telephone: telephone || CONTACT_PHONES[0],
+    // Рядковий openingHours лишаємо для сумісності, поруч — структурована
+    // специфікація: саме її читають картки локального бізнесу.
     openingHours: "Mo-Fr 09:00-17:00",
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "17:00",
+      },
+    ],
+    // Ціновий діапазон і валюта — те, що показується в картці й підхоплюється
+    // AI-відповідями на запити «скільки коштує ... у <місті>».
+    priceRange: "55–75 UAH/kg",
+    currenciesAccepted: "UAH",
+    paymentAccepted: "Cash, Credit Card, Bank transfer",
+    image: abs("/og-icelab.jpg"),
     areaServed: areaServed || "UA",
     url: abs(url),
   };

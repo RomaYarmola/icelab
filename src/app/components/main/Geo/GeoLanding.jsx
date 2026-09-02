@@ -21,6 +21,9 @@ export default function GeoLanding({ slug, locale }) {
   const pickup = city.pickupAddress
     ? city.pickupAddress[locale] || city.pickupAddress.uk
     : null;
+  const pickupParts = city.pickupLocality
+    ? city.pickupLocality[locale] || city.pickupLocality.uk
+    : null;
   const others = CITIES.filter((x) => x.slug !== slug);
 
   const pill =
@@ -43,6 +46,8 @@ export default function GeoLanding({ slug, locale }) {
           data={localBusinessSchema({
             name: `IceLab — ${c.city}`,
             address: pickup,
+            addressLocality: pickupParts?.locality,
+            addressRegion: pickupParts?.region,
             url: path,
             id: `localbusiness-${city.key}`,
             areaServed: c.city,
@@ -88,6 +93,23 @@ export default function GeoLanding({ slug, locale }) {
             <p className="not-italic font-e-ukraine font-thin text-black/80 leading-relaxed">
               {c.deliveryNote}
             </p>
+
+            {/* Видимий NAP там, де є фізичний склад (Київ, Львів). Та сама
+                адреса йде в LocalBusiness — розмітка й видимий текст мають
+                збігатися, інакше локальні сигнали не зараховуються. */}
+            {pickup && (
+              <div className="mt-5 pt-5 border-t border-commonBlue/15 flex flex-col gap-1.5">
+                <p className="not-italic font-e-ukraine text-[13px] uppercase tracking-wide text-commonBlue/60">
+                  {L.pickupTitle}
+                </p>
+                <address className="not-italic font-e-ukraine font-thin text-black/85 leading-relaxed">
+                  {pickup}
+                </address>
+                <p className="not-italic font-e-ukraine font-thin text-black/60 text-[15px]">
+                  {L.hoursLabel}: {L.hours}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

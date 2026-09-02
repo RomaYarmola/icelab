@@ -14,15 +14,38 @@ export default function robots() {
   const disallow = ["/api/"];
 
   // AI-краулери, яким явно дозволяємо повний доступ.
+  // Це не «оптимізація під ШІ» окремою дисципліною: поява сайту в AI Overviews
+  // та AI Mode керується звичайними index/preview-директивами (див. lib/seo.js).
+  // Тут ми лише не заважаємо ботам, які формують відповіді поза Google —
+  // ChatGPT, Perplexity, Copilot, Siri, Meta AI, Mistral.
+  //
+  // ChatGPT-User, Perplexity-User і Google-Agent за специфікацією ігнорують
+  // robots.txt (це користувацькі, а не пошукові фетчери) — тримаємо їх у списку
+  // лише для явності наміру.
   const aiBots = [
+    // OpenAI
     "GPTBot",
     "ChatGPT-User",
     "OAI-SearchBot",
+    // Perplexity
     "PerplexityBot",
+    "Perplexity-User",
+    // Anthropic
     "ClaudeBot",
     "anthropic-ai",
+    // Google (Gemini / Vertex)
     "Google-Extended",
+    "Google-CloudVertexBot",
+    // Microsoft Copilot
     "Bingbot",
+    // Apple Intelligence / Siri
+    "Applebot",
+    // Інші відповідні рушії
+    "Amazonbot",
+    "DuckAssistBot",
+    "meta-externalagent",
+    "MistralAI-User",
+    "cohere-ai",
   ];
 
   // Кожна група має власний disallow: за стандартом robots.txt краулер виконує

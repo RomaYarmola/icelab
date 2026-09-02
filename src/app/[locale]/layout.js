@@ -10,6 +10,7 @@ import {
 import { routing } from "@/i18n/routing";
 import { getPriceSettings } from "@/lib/priceSettings";
 import { siteGraph } from "@/lib/schema";
+import { ROBOTS_INDEXABLE } from "@/lib/seo";
 import JsonLd from "../components/common/JsonLd";
 import TrackingProvider from "../components/common/TrackingProvider";
 import { PriceSettingsProvider } from "../components/providers/PriceSettingsProvider";
@@ -93,6 +94,10 @@ export async function generateMetadata({ params }) {
     ),
     title: t("title"),
     description: t("description"),
+    // Дефолтні preview-директиви для всього сайту (див. lib/seo.js).
+    // Сторінки з власним noindex (кошик, /thanks, /delivery) перекривають це
+    // на своєму рівні.
+    robots: ROBOTS_INDEXABLE,
     // Дефолтні OG/Twitter на рівні сайту — сторінки без власних успадковують.
     // Квадратна картинка 600×600 + card "summary" → у Telegram компактне
     // прев'ю (текст ліворуч, невелике фото праворуч), а не величезний банер.

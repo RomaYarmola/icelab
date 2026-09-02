@@ -95,11 +95,51 @@ function image(source, fallbackAlt, locale) {
   return { url, alt: loc(source?.alt, locale) || fallbackAlt };
 }
 
-// SEO з ланцюжком fallback: og/twitter → seo → назва/опис товару.
-function buildSeo(raw, locale, title, shortDescription, mainImageUrl) {
+// Автоматичні title/description для товарів, у яких SEO-поля в Sanity порожні.
+//
+// НАВІЩО. Без цього 12 фасувань сухого льоду віддавали в <title> голу назву
+// («Сухий лід, 3 мм, 50 кг» — 22 символи, без бренду й без комерційного
+// модифікатора), а в description — той самий shortDescription на всі 12 карток
+// («Сухий лід з високоякісної вуглекислоти», 39 символів). 24 сторінки з
+// однаковим описом Google просто переписує сніпетом на свій розсуд, а однакові
+// описи ще й читаються як дублі. Тепер опис збирається з фактів картки —
+// ціни, гранули, фасування — і виходить унікальним для кожного SKU.
+//
+// Ціна в описі — свідоме рішення: у прямих конкурентів цін на сайті немає,
+// тому число в сніпеті працює на CTR. Оновлюється разом з ISR.
+function autoSeoText(t, { title, price, variant, granuleSize }) {
+  const autoTitle = t("Catalog.seoTitleFallback", { title });
+
+  if (!(price > 0)) {
+    return { autoTitle, autoDescription: t("Catalog.seoDescNoPrice", { title }) };
+  }
+
+  const key =
+    variant === "dryIce" && granuleSize
+      ? "Catalog.seoDescDryIce"
+      : variant === "iceBox"
+      ? "Catalog.seoDescIceBox"
+      : "Catalog.seoDescOther";
+
+  return {
+    autoTitle,
+    autoDescription: t(key, { title, price, granule: granuleSize || "" }),
+  };
+}
+
+// SEO з ланцюжком fallback: og/twitter → seo (Sanity) → автогенерація з фактів
+// картки. На назву/короткий опис товару більше не падаємо: вони дають надто
+// короткі та неунікальні мета-теги (див. autoSeoText).
+function buildSeo(raw, locale, { title, mainImageUrl, t, price, variant }) {
   const s = raw.seo || {};
-  const seoTitle = loc(s.title, locale) || title;
-  const seoDescription = loc(s.description, locale) || shortDescription;
+  const { autoTitle, autoDescription } = autoSeoText(t, {
+    title,
+    price,
+    variant,
+    granuleSize: raw.granuleSize,
+  });
+  const seoTitle = loc(s.title, locale) || autoTitle;
+  const seoDescription = loc(s.description, locale) || autoDescription;
   const ogTitle = loc(s.ogTitle, locale) || seoTitle;
   const ogDescription = loc(s.ogDescription, locale) || seoDescription;
   // Квадратний кроп для компактної OG-картки (маленьке фото праворуч).
@@ -152,6 +192,9 @@ function normalizeProduct(raw, locale, pricing, t) {
         ]
       : []; // не-льодові категорії (обладнання) — характеристики в описі
 
+  // Ціна потрібна не лише картці, а й автогенерації мета-опису (див. buildSeo).
+  const price = resolvePrice(raw, pricing);
+
   return {
     id: raw._id,
     slug: raw.slug,
@@ -159,7 +202,7 @@ function normalizeProduct(raw, locale, pricing, t) {
     variant,
     badge: loc(raw.badge, locale),
     availability: raw.availability ?? "in-stock",
-    price: resolvePrice(raw, pricing),
+    price,
     unit: t("Catalog.currency"),
     mainImage: mainUrl,
     mainImageAlt: main?.alt ?? title,
@@ -168,7 +211,13 @@ function normalizeProduct(raw, locale, pricing, t) {
     shortDescription,
     description,
     specs,
-    seo: buildSeo(raw, locale, title, shortDescription, mainUrl),
+    seo: buildSeo(raw, locale, {
+      title,
+      mainImageUrl: mainUrl,
+      t,
+      price,
+      variant,
+    }),
   };
 }
 
