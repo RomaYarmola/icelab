@@ -1,6 +1,10 @@
 import { getClientContext } from "./tracking";
 
-export async function sendMessage(message) {
+// message — текст для Telegram (з контекстом сесії);
+// lead    — необов'язкові структуровані поля заявки для Google Таблиці.
+//           Контекст сесії (джерело, UTM, маршрут) у lead НЕ входить: у таблиці
+//           потрібні тільки товар, кількість, сума й контакти.
+export async function sendMessage(message, lead) {
   if (!message) {
     return { success: false, error: "Введите сообщение!" };
   }
@@ -14,7 +18,7 @@ export async function sendMessage(message) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: fullMessage }),
+      body: JSON.stringify(lead ? { message: fullMessage, lead } : { message: fullMessage }),
     });
 
     const data = await response.json();

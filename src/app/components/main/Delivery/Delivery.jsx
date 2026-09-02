@@ -111,8 +111,24 @@ function Delivery() {
       Загальна сума: ${totalValue || "не розрахована"} грн
   
     `;
-      console.log(message);
-      sendMessage(message);
+      // Структуровані позиції для Google Таблиці: назва, кількість, одиниця,
+      // сума. Маршрут по сайту й UTM у таблицю не йдуть — тільки в Telegram.
+      sendMessage(message, {
+        type: "order",
+        name: formData.name,
+        phone: phoneLink(formData.phone),
+        telegram: tgLink,
+        delivery: isPickup
+          ? "Самовивіз"
+          : [formData.city, formData.address].filter(Boolean).join(", "),
+        total: totalValue,
+        items: products.map((product) => ({
+          title: [product.iceVariant, product.size].filter(Boolean).join(", "),
+          quantity: product.quantity,
+          unit: product.iceVariantEnglish === "dryIce" ? "кг" : "шт",
+          price: product.totalPrice,
+        })),
+      });
       clearProducts();
       router.push("/thanks");
 

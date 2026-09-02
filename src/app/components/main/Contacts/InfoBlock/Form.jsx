@@ -53,8 +53,13 @@ export default function Form() {
         - Телефон: ${phoneLink(formData.phone)}${tgLink ? `\n        - Telegram: ${tgLink}` : ""}
         - Повідомлення: ${formData.comment}
       `;
-      console.log(message);
-      const result = await sendMessage(message);
+      const result = await sendMessage(message, {
+        type: "request",
+        name: formData.name,
+        phone: phoneLink(formData.phone),
+        telegram: tgLink,
+        comment: formData.comment,
+      });
 
       if (result.success) {
         setButtonText(t("success"));

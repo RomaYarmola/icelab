@@ -48,7 +48,16 @@ export default function RequestModal({
 - Телефон: ${phoneLink(form.phone)}${tgLink ? `\n- Telegram: ${tgLink}` : ""}
 - Повідомлення: ${form.comment || "—"}
 `;
-    const res = await sendMessage(message);
+    // Структуровані поля для Google Таблиці (див. lib/leadRow.js).
+    // Текст для Telegram лишається тим самим — таблиця його не замінює.
+    const res = await sendMessage(message, {
+      type: "consult",
+      context,
+      name: form.name,
+      phone: phoneLink(form.phone),
+      telegram: tgLink,
+      comment: form.comment,
+    });
     if (res?.success) {
       setSent(true);
       setForm({ name: "", phone: "", telegram: "", comment: "" });
