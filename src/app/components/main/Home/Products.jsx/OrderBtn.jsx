@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 
 export default function OrderBtn({ variant, sizes }) {
   const t = useTranslations("Products");
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => {
@@ -14,7 +14,15 @@ export default function OrderBtn({ variant, sizes }) {
 
   const resetModal = () => {
     setCurrentStep(1);
-    onOpenChange(false);
+    onClose();
+  };
+
+  // `onOpenChange` з useDisclosure — це ПЕРЕМИКАЧ, який ігнорує аргумент.
+  // Якщо віддати його модалці напряму, вона при закритті повідомляє
+  // onOpenChange(false), перемикач бачить isOpen === false і відкриває вікно
+  // назад. Тому передаємо власний обробник у стилі сеттера.
+  const handleOpenChange = (open) => {
+    if (!open) resetModal();
   };
   return (
     <>
@@ -31,7 +39,7 @@ export default function OrderBtn({ variant, sizes }) {
         resetModal={resetModal}
         currentStep={currentStep}
         nextStep={nextStep}
-        onOpenChange={onOpenChange}
+        onOpenChange={handleOpenChange}
         variant={variant}
         sizes={sizes}
       />

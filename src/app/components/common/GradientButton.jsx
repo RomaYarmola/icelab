@@ -8,8 +8,10 @@ export default function GradientButton({
   isDisabled,
   type,
 }) {
-  const isSmall = variant === "small";
-  const isOutline = variant === "outline";
+  // Розмір і стиль — незалежні осі: "smallOutline" = невисока кнопка з обведенням
+  // (вторинна дія поруч із основною, напр. «У кошик» біля «Замовити»).
+  const isSmall = variant === "small" || variant === "smallOutline";
+  const isOutline = variant === "outline" || variant === "smallOutline";
 
   return (
     <Button

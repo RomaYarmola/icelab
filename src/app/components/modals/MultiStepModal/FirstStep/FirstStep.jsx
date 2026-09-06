@@ -4,9 +4,10 @@ import GradientButton from "@/app/components/common/GradientButton";
 import FirstStepHeader from "./FirsStepHeader";
 import TextPart from "./TextPart";
 import BtnsBlock from "./BtnsBlock";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePriceSettings } from "@/app/components/providers/PriceSettingsProvider";
+import { formatPrice } from "@/utils/pricing";
 
 export default function FirstStep({
   onSubmit,
@@ -38,22 +39,41 @@ export default function FirstStep({
     }
   }, [variant, selectedOption, sizes, handleFormDataChange]);
 
-  const handleOrderClick = () => {
-    // Відправка події в Google Tag Manager
-    if (typeof window !== "undefined" && window.dataLayer) {
-      window.dataLayer.push({
-        event: "order_button_click",
-        eventCategory: "engagement",
-        eventAction: "click",
-        eventLabel: "Замовити",
-        variant: variant,
-        quantity: quantity,
-        totalPrice: totalPrice,
-        selectedOption: selectedOption,
-      });
-    }
-    // Виклик оригінальної функції onSubmit
-    onSubmit();
+  // Раніше кнопка була одна («Замовити»), і вона мовчки клала товар у кошик та
+  // закривала модалку — користувач не розумів, що сталося. Тепер дії розведені:
+  // «У кошик» додає й показує підтвердження, «Замовити» додає й одразу веде на
+  // оформлення.
+  const [added, setAdded] = useState(false);
+
+  const track = (label) => {
+    if (typeof window === "undefined" || !window.dataLayer) return;
+    window.dataLayer.push({
+      event: "order_button_click",
+      eventCategory: "engagement",
+      eventAction: "click",
+      eventLabel: label,
+      variant,
+      quantity,
+      totalPrice,
+      selectedOption,
+    });
+  };
+
+  const handleAddToCart = () => {
+    if (added) return;
+    track("У кошик");
+    // Коротка пауза з написом «Додано ✓» — щоб дія була видимою, а вже потім
+    // модалка закривається і в шапці оновлюється лічильник.
+    setAdded(true);
+    setTimeout(() => {
+      onSubmit();
+      setAdded(false);
+    }, 900);
+  };
+
+  const handleCheckout = () => {
+    track("Замовити");
+    onSubmit({ goToCheckout: true });
   };
   return (
     <>
@@ -66,31 +86,44 @@ export default function FirstStep({
           selectedOption={selectedOption}
           handleFormDataChange={handleFormDataChange}
         />
-        <div className="px-[14px] py-[22px] rounded-xl flex items-center justify-center flex-col md:flex-row md:justify-between gap-[14px] md:gap-[44px] modal-bg">
-          <div className="w-[238px]">
-            <RangeInput
-              value={quantity}
-              handleFormDataChange={handleFormDataChange}
-              isDisabled={!selectedOption}
-              variant={variant}
-              minValue={dryRange?.min}
-              maxValue={dryRange?.max}
-              step={dryRange?.step}
-            />
+        <div className="px-[14px] py-[22px] rounded-xl flex flex-col gap-4 modal-bg">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[14px] md:gap-6">
+            <div className="w-full md:w-[238px]">
+              <RangeInput
+                value={quantity}
+                handleFormDataChange={handleFormDataChange}
+                isDisabled={!selectedOption}
+                variant={variant}
+                minValue={dryRange?.min}
+                maxValue={dryRange?.max}
+                step={dryRange?.step}
+              />
+            </div>
+
+            {selectedOption && (
+              <p className="main-title-gradient text-base font-medium whitespace-nowrap">
+                {formatPrice(totalPrice)}&nbsp;грн
+              </p>
+            )}
           </div>
 
-          {selectedOption && (
-            <p className="main-title-gradient text-base font-medium">
-              {totalPrice}&nbsp;грн
-            </p>
-          )}
-          <div className="w-[240px] md:w-[128px]">
-            <GradientButton
-              variant="small"
-              onPress={handleOrderClick}
-              isDisabled={!selectedOption}
-              text={t("order")}
-            />
+          <div className="flex flex-col sm:flex-row gap-3">
+            <div className="w-full sm:flex-1">
+              <GradientButton
+                variant="smallOutline"
+                onPress={handleAddToCart}
+                isDisabled={!selectedOption}
+                text={added ? t("added") : t("addToCart")}
+              />
+            </div>
+            <div className="w-full sm:flex-1">
+              <GradientButton
+                variant="small"
+                onPress={handleCheckout}
+                isDisabled={!selectedOption}
+                text={t("order")}
+              />
+            </div>
           </div>
         </div>
       </ModalBody>

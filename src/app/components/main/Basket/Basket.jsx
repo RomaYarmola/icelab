@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import BasketCard from "../../common/BasketCard";
+import BoxUpsell from "./BoxUpsell";
 import GradientButton from "../../common/GradientButton";
 import { withLoader } from "@/helpers/withLoader";
 import { formatPrice } from "@/utils/pricing";
@@ -62,35 +63,21 @@ function Basket() {
           </ul>
         )}
       </div>
+      {products.length !== 0 && <BoxUpsell />}
       {products.length !== 0 && (
-        <div className="mb-10 px-5 l:px-16 py-4 l:py-8 rounded-xl basket-bg w-full bg-white text-commonBlue">
-          <h3 className="text-[16px] md:text-[24px] font-bold mb-3">
-            {t("crossSellTitle")}
-          </h3>
-          <div className="flex flex-wrap items-center gap-4">
-            <Link
-              href="/catalog/c/termoboksy"
-              className="inline-block rounded-full border border-commonBlue/40 px-5 py-2 not-italic font-e-ukraine hover:bg-commonBlue/10 transition-colors"
-            >
-              {t("crossSellBox")}
-            </Link>
-            <span className="not-italic font-e-ukraine font-thin text-commonBlue/70 text-sm">
-              {t("crossSellHint")}
-            </span>
-          </div>
-        </div>
-      )}
-      {products.length !== 0 && (
-        <div className="mb-20 md:mb-[147px] px-5 l:px-16 py-4 l:py-12 rounded-xl basket-bg w-full  flex flex-col md:flex-row justify-between gap-10 items-center">
-          <div className="flex gap-4 md:gap-[35px] items-center">
-            <p className="text-[16px] md:text-[24px] font-bold">
-              {t("total")}
-            </p>
-            <p className="text-[16px] md:text-[24px] font-bold text-[#F31260]">
+        <div className="mb-20 md:mb-[147px] px-5 l:px-16 py-6 l:py-12 rounded-xl basket-bg w-full flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-10">
+          {/* Підпис може переноситись, сума — ніколи: раніше «6 300 грн»
+              розривалося на «6» і «300 грн» у два рядки. */}
+          <div className="flex flex-wrap items-baseline gap-x-4 md:gap-x-[35px] gap-y-1">
+            <p className="text-[16px] md:text-[24px] font-bold">{t("total")}</p>
+            <p className="text-[16px] md:text-[24px] font-bold text-[#F31260] whitespace-nowrap">
               {formatPrice(totalValue)}&nbsp;грн
             </p>
           </div>
-          <Link href="/delivery" className="w-[220px] md:w-[258px]">
+          <Link
+            href="/delivery"
+            className="w-full sm:w-[258px] md:shrink-0"
+          >
             <GradientButton text={t("submit")} />
           </Link>
         </div>

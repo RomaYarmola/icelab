@@ -2,6 +2,7 @@
 
 import { Modal, ModalContent } from "@nextui-org/react";
 import { useState } from "react";
+import { useRouter } from "@/i18n/navigation";
 import FirstStep from "./FirstStep/FirstStep";
 import useProductStore from "@/zustand/store/productStore";
 import { calculateTotalPrice } from "@/utils/pricing";
@@ -18,6 +19,7 @@ export default function MultiStepModal({
   // Тарифи/ціни з Price Settings (Sanity → fallback константи). Джерело одне.
   const settings = usePriceSettings();
   const pricing = buildPricing(settings);
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     iceVariant: "",
@@ -72,7 +74,9 @@ export default function MultiStepModal({
     });
   };
 
-  const handleSubmit = () => {
+  // Обидві кнопки модалки кладуть товар у кошик — різниця тільки в тому, що
+  // далі. «У кошик» лишає користувача на сторінці, «Замовити» веде на оформлення.
+  const handleSubmit = ({ goToCheckout = false } = {}) => {
     const product = {
       iceVariant: formData.iceVariant,
       iceVariantEnglish: mapVariantToEnglish(formData.iceVariant),
@@ -86,6 +90,7 @@ export default function MultiStepModal({
 
     addProductToCart(product);
     handleClose();
+    if (goToCheckout) router.push("/delivery");
   };
 
   return (

@@ -83,7 +83,7 @@ export default function BasketCard({
               />
             </div>
             {!basket && (
-              <p className="text-[12px] l:text-[16px] font-medium">
+              <p className="text-[12px] l:text-[16px] font-medium whitespace-nowrap">
                 {formatPrice(totalPrice)}&nbsp;ГРН
               </p>
             )}
@@ -92,7 +92,7 @@ export default function BasketCard({
       </div>
       <div className="flex gap-5 md:gap-9 items-center ">
         {basket && (
-          <p className="text-[12px] sm:text-[16px] md:text-[24px] font-medium">
+          <p className="text-[12px] sm:text-[16px] md:text-[24px] font-medium whitespace-nowrap">
             {formatPrice(totalPrice)}&nbsp;ГРН
           </p>
         )}
