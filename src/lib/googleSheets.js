@@ -22,10 +22,26 @@ import { createSign } from "node:crypto";
 const TOKEN_URI = "https://oauth2.googleapis.com/token";
 const SCOPE = "https://www.googleapis.com/auth/spreadsheets";
 
+// Приватний ключ доводиться нормалізувати, бо він приїжджає в різних формах:
+//  • у .env — одним рядком із літеральними \n і в лапках (dotenv лапки зніме);
+//  • у полі Vercel — значення береться ДОСЛІВНО, тож лапки, якщо їх скопіювали
+//    разом зі значенням, залишаться всередині ключа й PEM стане невалідним;
+//  • при вставці багаторядкового ключа переноси вже справжні.
+// Без цієї нормалізації підпис JWT падає з невиразним «error:1E08010C».
+function normalizePrivateKey(raw) {
+  let key = String(raw || "").trim();
+  if (
+    (key.startsWith('"') && key.endsWith('"')) ||
+    (key.startsWith("'") && key.endsWith("'"))
+  ) {
+    key = key.slice(1, -1);
+  }
+  return key.replace(/\\n/g, "\n").trim();
+}
+
 const SHEET_ID = process.env.GOOGLE_SHEETS_ID;
 const SA_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-// У .env приватний ключ зберігається одним рядком із літеральними \n.
-const SA_KEY = (process.env.GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+const SA_KEY = normalizePrivateKey(process.env.GOOGLE_PRIVATE_KEY);
 const SHEET_NAME = process.env.GOOGLE_SHEETS_TAB || "Аркуш1";
 const TIMEOUT_MS = 6000;
 
@@ -44,6 +60,20 @@ export const HEADER = [
 
 export function isSheetsConfigured() {
   return Boolean(SHEET_ID && SA_EMAIL && SA_KEY);
+}
+
+// Пояснює, чого саме бракує, — щоб у логах Vercel було видно причину,
+// а не мовчазне «not-configured». Секрети не друкує.
+export function sheetsConfigStatus() {
+  const missing = [];
+  if (!SHEET_ID) missing.push("GOOGLE_SHEETS_ID");
+  if (!SA_EMAIL) missing.push("GOOGLE_SERVICE_ACCOUNT_EMAIL");
+  if (!SA_KEY) missing.push("GOOGLE_PRIVATE_KEY");
+  if (missing.length) return `немає змінних: ${missing.join(", ")}`;
+  if (!SA_KEY.startsWith("-----BEGIN")) {
+    return "GOOGLE_PRIVATE_KEY не схожий на PEM (перевірте лапки та переноси)";
+  }
+  return "ok";
 }
 
 const b64url = (input) =>
@@ -143,7 +173,7 @@ async function ensureHeader(token) {
 
 export async function appendLeadRow(row) {
   if (!isSheetsConfigured()) {
-    return { ok: false, reason: "not-configured" };
+    return { ok: false, reason: sheetsConfigStatus() };
   }
   try {
     const token = await getAccessToken();

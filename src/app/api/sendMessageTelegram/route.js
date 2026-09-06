@@ -50,7 +50,9 @@ export async function POST(req) {
       try {
         const result = await appendLeadRow(buildLeadRow(lead));
         sheetOk = result.ok;
-        if (!result.ok && result.reason !== "not-configured") {
+        // Логуємо будь-яку невдачу разом із причиною: у логах Vercel одразу
+        // видно, це відсутні змінні, битий ключ чи відмова Google.
+        if (!result.ok) {
           console.error("[sheets] заявка не записана:", result.reason);
         }
       } catch (sheetError) {

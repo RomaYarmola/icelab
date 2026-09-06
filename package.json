@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check:sitemap": "node scripts/check-sitemap.mjs"
+    "check:sitemap": "node scripts/check-sitemap.mjs",
+    "check:sheets": "node --env-file=.env.local scripts/check-sheets.mjs"
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.8",
