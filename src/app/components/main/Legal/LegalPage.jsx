@@ -3,8 +3,9 @@ import Container from "@/utils/Container";
 
 // Спільний макет для юридичних/сервісних та EEAT-сторінок.
 // Один <h1>, прямий (не курсивний) шрифт для читабельності довгих текстів.
-// breadcrumbs — крошки (P1-4); image — опційне герой-фото { src, alt }.
-export default function LegalPage({ title, body, breadcrumbs, image }) {
+// breadcrumbs — крошки (P1-4); image — опційне герой-фото { src, alt };
+// footnote — довільний блок під текстом (напр. посилання на суміжний ресурс).
+export default function LegalPage({ title, body, breadcrumbs, image, footnote }) {
   return (
     <div className="bg-white">
       <Container>
@@ -27,6 +28,7 @@ export default function LegalPage({ title, body, breadcrumbs, image }) {
           <div className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/80 whitespace-pre-line">
             {body}
           </div>
+          {footnote}
         </div>
       </Container>
     </div>

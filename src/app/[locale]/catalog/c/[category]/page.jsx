@@ -6,6 +6,7 @@ import { getProductsByCategory } from "@/lib/products";
 import { CATEGORIES, categoryBySlug } from "@/lib/categories";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
+import RawMaterialNote from "@/app/components/common/RawMaterialNote";
 import RelatedLinks from "@/app/components/common/RelatedLinks";
 import JsonLd from "@/app/components/common/JsonLd";
 import { itemListSchema } from "@/lib/schema";
@@ -105,6 +106,14 @@ export default async function CategoryPage({ params }) {
           </div>
         )}
       </div>
+
+      {/* Харчовий лід: пояснюємо, звідки береться марка сировини, і ведемо
+          читача на матеріал, який розбирає різницю харчової й технічної CO₂. */}
+      {cat.slug === "harchovyi-lid" && (
+        <div className="mb-12">
+          <RawMaterialNote locale={locale} variant="foodIce" />
+        </div>
+      )}
 
       {products.length > 0 ? (
         <CatalogList products={products} />

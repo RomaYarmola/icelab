@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { pageMeta } from "@/lib/seo";
 import LegalPage from "../../components/main/Legal/LegalPage";
 import Breadcrumbs from "../../components/common/Breadcrumbs";
+import RawMaterialNote from "../../components/common/RawMaterialNote";
 
 const NS = "Pages.production";
 
@@ -27,6 +28,7 @@ export default async function ProductionPage({ params }) {
       body={t("intro")}
       breadcrumbs={<Breadcrumbs items={[{ name: tb("production") }]} />}
       image={{ src: "/images/pages/production.webp", alt: t("h1") }}
+      footnote={<RawMaterialNote locale={locale} variant="production" />}
     />
   );
 }
