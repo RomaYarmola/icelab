@@ -88,7 +88,17 @@ export default async function CategoryPage({ params }) {
 
       <h1 className="text-3xl main-title-gradient mb-6">{t(`${cat.msgKey}.h1`)}</h1>
 
-      <div className="flex flex-col lg:flex-row gap-8 mb-12 items-start">
+      {products.length > 0 ? (
+        <CatalogList products={products} />
+      ) : (
+        <p className="not-italic font-e-ukraine text-black/60">
+          {t("emptyList")}
+        </p>
+      )}
+
+      {/* SEO-текст категорії — під списком товарів: користувач бачить
+          спочатку сам каталог, а розгорнутий опис читає нижче. */}
+      <div className="flex flex-col lg:flex-row gap-8 mt-16 mb-12 items-start">
         {/* SEO-текст категорії. whitespace-pre-line — щоб абзаци з \n\n
             залишались абзацами, а не злипались у суцільне полотно. */}
         <div className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75 lg:flex-1 whitespace-pre-line">
@@ -113,14 +123,6 @@ export default async function CategoryPage({ params }) {
         <div className="mb-12">
           <RawMaterialNote locale={locale} variant="foodIce" />
         </div>
-      )}
-
-      {products.length > 0 ? (
-        <CatalogList products={products} />
-      ) : (
-        <p className="not-italic font-e-ukraine text-black/60">
-          {t("emptyList")}
-        </p>
       )}
 
       {/* Перелінковка: інші категорії, опт, застосування, гео */}

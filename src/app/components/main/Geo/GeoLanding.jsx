@@ -4,6 +4,7 @@ import Breadcrumbs from "../../common/Breadcrumbs";
 import JsonLd from "../../common/JsonLd";
 import FaqSection from "@/app/components/common/FaqSection";
 import GeoCta from "./GeoCta";
+import GradientButton from "../../common/GradientButton";
 import { GEO_LABELS, CITIES, cityBySlug } from "@/lib/cities";
 import { localBusinessSchema, serviceSchema } from "@/lib/schema";
 
@@ -71,18 +72,17 @@ export default function GeoLanding({ slug, locale }) {
                 {p}
               </p>
             ))}
-            <div className="flex flex-col sm:flex-row gap-3 mt-3">
-              <Link
-                href="/catalog"
-                className="inline-flex justify-center items-center rounded-full bg-commonBlue text-white px-7 py-3 not-italic font-e-ukraine hover:opacity-90 transition-opacity"
-              >
-                {L.catalogCta}
-              </Link>
+            {/* Пара кнопок як на головній: основна — залита градієнтом,
+                вторинна — прозора з обведенням (той самий GradientButton). */}
+            <div className="flex flex-col sm:flex-row gap-4 mt-3">
               <GeoCta
                 label={L.ctaButton}
                 title={L.ctaModalTitle}
                 context={c.h1}
               />
+              <Link href="/catalog" className="flex w-full sm:w-[300px]">
+                <GradientButton variant="outline" text={L.catalogCta} />
+              </Link>
             </div>
           </div>
 
