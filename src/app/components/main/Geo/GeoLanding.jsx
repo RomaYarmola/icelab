@@ -1,5 +1,4 @@
 import Container from "@/utils/Container";
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import Breadcrumbs from "../../common/Breadcrumbs";
 import JsonLd from "../../common/JsonLd";
@@ -25,7 +24,12 @@ import { featuredDryIce } from "@/lib/featured";
 //  • розмітка: ItemList із Product/Offer (сторінка ПРОДАЖУ товару) +
 //    LocalBusiness з координатами і карткою GBP там, де є склад +
 //    FAQPage + BreadcrumbList. Service прибрано.
-const PICKUP_IMAGE = "/images/pages/facility.webp";
+//
+// ФОТО СКЛАДУ. Блок «як доїхати» свідомо БЕЗ фотографії: у репозиторії немає
+// жодного власного знімка складів у Вишгороді та Годовиці. Ставити сюди
+// будь-яке інше фото не можна — сторінка й LocalBusiness стверджують, що це
+// наш склад за конкретною адресою. Коли клієнт надішле реальні фото заїзду,
+// додати їх сюди і в images[] у localBusinessSchema.
 
 function fill(s, vars) {
   return String(s || "").replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
@@ -101,7 +105,6 @@ export default async function GeoLanding({ slug, locale }) {
             geo: city.geo,
             hasMap: city.mapsUrl,
             sameAs: city.mapsUrl ? [city.mapsUrl] : undefined,
-            images: [PICKUP_IMAGE, "/og-icelab.jpg"],
           })}
         />
       )}
@@ -226,15 +229,6 @@ export default async function GeoLanding({ slug, locale }) {
                       {t}
                     </p>
                   ))}
-                  <div className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden mt-2">
-                    <Image
-                      src={PICKUP_IMAGE}
-                      alt={`${L.pickupTitle} — ${pickup}`}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                  </div>
                 </div>
                 {mapEmbed && (
                   <div className="rounded-2xl overflow-hidden border border-commonBlue/15 aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-[420px]">
