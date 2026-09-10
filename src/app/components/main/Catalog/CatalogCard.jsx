@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import AddToCartControl from "./AddToCartControl";
+import QuickOrderButton from "./QuickOrderButton";
 import { formatPrice } from "@/utils/pricing";
 
 // Категорії, товари яких — рендери/предмети на світлі (вписуємо, не обрізаємо).
@@ -72,9 +73,16 @@ export default function CatalogCard({ product }) {
         </p>
       </div>
 
-      {/* Купівля — над розтягнутим посиланням */}
-      <div className="relative z-[2]">
-        <AddToCartControl product={product} variant="card" />
+      {/* Купівля — над розтягнутим посиланням.
+          Дві дії поруч: «У кошик» для тих, хто збирає замовлення сам, і
+          «Швидке замовлення» для тих, кому простіше лишити телефон. */}
+      <div className="relative z-[2] flex items-center gap-2">
+        <div className="flex-1 min-w-0">
+          <AddToCartControl product={product} variant="card" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <QuickOrderButton product={product} tone="dark" />
+        </div>
       </div>
     </li>
   );

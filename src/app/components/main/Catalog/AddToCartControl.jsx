@@ -7,6 +7,39 @@ import useProductStore from "@/zustand/store/productStore";
 
 const MAX_QTY = 99;
 
+// Іконки лічильника. SVG замість текстових «−»/«+»: гліфи в різних шрифтах
+// мають різну ширину й оптичний центр, через що кнопки виглядали кривими.
+const Minus = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path d="M3 7h8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
+
+const Plus = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path
+      d="M7 3v8M3 7h8"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+// На кількості 1 «мінус» перетворюється на кошик: інакше незрозуміло, що
+// наступний клік не зменшить кількість, а прибере товар із замовлення.
+const Trash = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <path
+      d="M2.5 4h9M5.5 4V2.8h3V4M3.6 4l.5 7.2h5.8L10.4 4M6 6.2v3.4M8 6.2v3.4"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 // Кнопка «Додати в кошик» з миттєвим зворотним зв'язком: після додавання
 // вона замінюється на лічильник кількості (−/+). Стан читається з наявного
 // zustand-стора, тож лічильник у Header та сума корзини оновлюються реактивно.
@@ -81,11 +114,24 @@ export default function AddToCartControl({ product, variant = "card" }) {
     if (quantity < MAX_QTY) updateProductQuantity(index, quantity + 1);
   };
 
+  // Картка стоїть на темному градієнті, сторінка товару — на білому, тож
+  // лічильник має два набори кольорів. Раніше він був білою «цеглинкою» з
+  // синьою рамкою і на картці читався як чужорідний елемент.
+  const onDark = variant === "card";
+  const isLast = quantity <= 1;
+
+  const stepper = onDark
+    ? "border-white/30 bg-white/10 text-white"
+    : "border-commonBlue/30 bg-white text-commonBlue";
+  const stepBtn = `h-full aspect-square flex items-center justify-center rounded-full transition-colors duration-150 active:scale-95 disabled:opacity-35 disabled:pointer-events-none ${
+    onDark ? "hover:bg-white/20" : "hover:bg-commonBlue/10"
+  }`;
+
   return (
     // Фіксована висота, щоб при зміні кнопка↔лічильник контент не «скакав».
     <div
       ref={wrapRef}
-      className={`min-h-[54px] flex items-center ${
+      className={`${onDark ? "min-h-[40px]" : "min-h-[54px]"} flex items-center ${
         variant === "page" ? "" : "w-full"
       }`}
     >
@@ -95,39 +141,46 @@ export default function AddToCartControl({ product, variant = "card" }) {
             text={t("addToCart")}
             onPress={handleAdd}
             isDisabled={!isAvailable}
+            variant={onDark ? "small" : "normal"}
           />
         </div>
       ) : (
-        <div className="flex items-center gap-3">
-          <div className="flex items-center rounded-md border border-commonBlue overflow-hidden bg-white">
+        <div className={`flex items-center gap-3 ${onDark ? "w-full" : ""}`}>
+          <div
+            className={`flex items-center justify-between rounded-full border p-[3px] ${
+              onDark ? "h-[40px] w-full max-w-[150px]" : "h-[48px] w-[150px]"
+            } ${stepper}`}
+          >
             <button
               type="button"
-              aria-label={t("decrease")}
+              aria-label={isLast ? t("remove") : t("decrease")}
+              title={isLast ? t("remove") : t("decrease")}
               onClick={decrease}
-              className="w-10 h-10 flex items-center justify-center text-commonBlue text-xl leading-none hover:bg-commonBlue/5 transition-colors"
+              className={stepBtn}
             >
-              −
+              {isLast ? <Trash /> : <Minus />}
             </button>
-            <span className="w-12 h-10 flex items-center justify-center font-e-ukraine not-italic text-commonBlue border-x border-commonBlue">
+            <span className="flex-1 text-center font-e-ukraine not-italic font-medium text-[15px] tabular-nums select-none">
               {quantity}
             </span>
             <button
               type="button"
               aria-label={t("increase")}
+              title={t("increase")}
               onClick={increase}
               disabled={quantity >= MAX_QTY}
-              className="w-10 h-10 flex items-center justify-center text-commonBlue text-xl leading-none hover:bg-commonBlue/5 transition-colors disabled:opacity-40"
+              className={stepBtn}
             >
-              +
+              <Plus />
             </button>
           </div>
-          <span
-            className={`font-e-ukraine not-italic text-sm whitespace-nowrap ${
-              variant === "card" ? "text-white" : "text-commonBlue"
-            }`}
-          >
-            {t("added")}
-          </span>
+          {/* На картці поруч стоїть друга кнопка — підпис «Додано» там зайвий:
+              зворотний зв'язок дає анімація польоту фото і лічильник кошика. */}
+          {!onDark && (
+            <span className="font-e-ukraine not-italic text-sm whitespace-nowrap text-commonBlue">
+              {t("added")}
+            </span>
+          )}
         </div>
       )}
 
