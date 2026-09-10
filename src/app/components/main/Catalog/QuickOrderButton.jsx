@@ -13,11 +13,12 @@ import { formatPrice } from "@/utils/pricing";
 //
 // Назва товару й ціна йдуть у контекст заявки, тож менеджер одразу бачить,
 // що саме замовляють (Telegram + Google Таблиця, див. RequestModal).
-export default function QuickOrderButton({ product, tone = "dark" }) {
+export default function QuickOrderButton({ product, tone = "dark", size = "sm" }) {
   const t = useTranslations("ProductPage");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const onDark = tone === "dark";
+  const isLarge = size === "lg";
   const context = `${product.title} — ${formatPrice(product.price)} ${product.unit}`;
 
   return (
@@ -28,7 +29,9 @@ export default function QuickOrderButton({ product, tone = "dark" }) {
           e.stopPropagation();
           onOpen();
         }}
-        className={`w-full h-[40px] rounded-md border-[1.5px] px-2 not-italic font-e-ukraine text-[11px] font-medium transition-colors ${
+        className={`w-full rounded-md border-[1.5px] px-2 not-italic font-e-ukraine font-medium transition-colors ${
+          isLarge ? "h-[54px] text-base" : "h-[40px] text-[11px]"
+        } ${
           onDark
             ? "border-white/40 text-white hover:bg-white/10 active:bg-white/15"
             : "border-commonBlue text-commonBlue hover:bg-commonBlue/[0.06]"

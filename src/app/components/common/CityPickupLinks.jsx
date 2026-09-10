@@ -5,16 +5,36 @@ import { CITIES, GEO_LABELS } from "@/lib/cities";
 // Контекстний блок «Доставка та самовивіз по містах» для головної, категорій,
 // карток товарів, опту й сторінки доставки.
 //
-// НАВІЩО. До вересня 2026 гео-лендинги отримували посилання ЛИШЕ з футера
-// з однослівним анкором («Київ»). Google практично не передає вагу через
-// футерні списки, тому лендинги Києва і Львова не ранжувались, а міський
+// НАВІЩО ВІН ІСНУЄ. До вересня 2026 гео-лендинги отримували посилання ЛИШЕ
+// з футера з однослівним анкором («Київ»). Google практично не передає вагу
+// через футерні списки, тому лендинги Києва і Львова не ранжувались, а міський
 // інтент забирала головна. Цей блок дає кожному лендингу контекстне посилання
 // з тіла сторінки і повним анкором («Сухий лід у Києві»), а користувачу —
 // адресу й графік складу там, де він обирає товар.
 //
-// variant: "cards" — дві картки складів + рядок інших міст (головна,
-// категорії, опт); "inline" — компактний рядок для картки товару.
+// ЧОМУ ТАКИЙ ВИГЛЯД. Напрям — «midnight command center» (референс Authkit):
+// темне навігаційне полотно, напівпрозорі матові поверхні, світло згори через
+// inset-підсвітку, делікатні бордюри, пігулкові кнопки. Розмиття скла й великий
+// радіус — з Dimension; радіальне синє сяйво під склом, щоб було що заломлювати,
+// — з Idle Finance. Акцент лишається брендовим (#1E73D7), фіолетовий Authkit
+// НЕ переноситься. Блок — самодостатня темна плита: він стоїть і на світлих
+// сторінках каталогу, і на головній, не залежачи від фону секції.
+//
+// variant: "cards" — плита з двома скляними картками складів (головна,
+// категорії, опт, доставка); "inline" — компактний світлий блок для колонки
+// з характеристиками товару.
 // excludeSlug — не показувати поточне місто (на самих лендингах).
+
+// Скляна поверхня: напівпрозорий фон + розмиття + бордюр + inset-відблиск
+// згори (світло над сценою) і глибока зовнішня тінь. Не використовувати цей
+// набір для дрібних елементів — лише для карток рівня секції.
+const GLASS =
+  "rounded-[20px] border border-[rgba(186,215,247,0.16)] bg-[rgba(255,255,255,0.06)] backdrop-blur-[14px] shadow-[inset_0_1px_1px_0_rgba(199,211,234,0.22),inset_0_24px_48px_0_rgba(199,211,234,0.05),0_20px_32px_0_rgba(5,9,20,0.45)] transition-colors duration-300 hover:bg-[rgba(255,255,255,0.09)] hover:border-[rgba(186,215,247,0.28)]";
+
+// Роль — лише роздільник усередині скляної картки (сигнатурний прийом Authkit).
+const HAIRLINE =
+  "h-px w-full bg-[linear-gradient(90deg,transparent,rgba(186,215,247,0.22),transparent)]";
+
 export default async function CityPickupLinks({
   locale,
   variant = "cards",
@@ -72,62 +92,89 @@ export default async function CityPickupLinks({
   }
 
   return (
-    <section>
-      <h2 className="not-italic font-e-ukraine font-medium text-[22px] md:text-[28px] mb-2 text-black">
-        {heading}
-      </h2>
-      <p className="not-italic font-e-ukraine font-thin text-black/70 mb-6 max-w-[760px]">
-        {t("subtitle")}
-      </p>
-      <ul className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-6">
-        {pickup.map((c) => {
-          const tc = text(c);
-          return (
-            <li
-              key={c.slug}
-              className="rounded-[14px] border border-commonBlue/15 bg-commonBlue/[0.02] p-6 flex flex-col gap-2"
-            >
-              <Link
-                href={`/${c.slug}`}
-                className="not-italic font-e-ukraine font-medium text-[18px] md:text-[20px] text-commonBlue hover:underline underline-offset-4"
-              >
-                {tc.h1}
-              </Link>
-              <p className="not-italic font-e-ukraine font-thin text-black/75 text-[15px] leading-relaxed">
-                {tc.deliveryNote}
-              </p>
-              <address className="not-italic font-e-ukraine font-thin text-black/85 text-[15px] mt-1">
-                {t("pickupLabel")}: {c.pickupAddress[locale] || c.pickupAddress.uk}
-              </address>
-              <p className="not-italic font-e-ukraine font-thin text-black/60 text-[14px]">
-                {L.hoursLabel}: {L.hours}
-              </p>
-              <Link
-                href={`/${c.slug}`}
-                className="mt-2 self-start rounded-full border border-commonBlue/30 px-5 py-2 not-italic font-e-ukraine text-[14px] text-commonBlue hover:bg-commonBlue/10 transition-colors"
-              >
-                {t("cityCta", { city: tc.city })}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      {others.length > 0 && (
-        <p className="not-italic font-e-ukraine font-thin text-black/70 text-[15px] leading-relaxed">
-          {t("otherInline")}{" "}
-          {others.map((c, i) => (
-            <span key={c.slug}>
-              <Link
-                href={`/${c.slug}`}
-                className="text-commonBlue underline decoration-commonBlue/30 underline-offset-4 hover:decoration-commonBlue"
-              >
-                {text(c).h1}
-              </Link>
-              {i < others.length - 1 ? ", " : "."}
-            </span>
-          ))}
+    <section className="relative overflow-hidden rounded-[28px] md:rounded-[32px] bg-[linear-gradient(160deg,#0B1526_0%,#0E1B33_55%,#0A1424_100%)] px-6 py-10 md:px-12 md:py-14 shadow-[inset_0_1px_0_0_rgba(186,215,247,0.16)]">
+      {/* Атмосферне сяйво: дає склу що заломлювати — без нього напівпрозорі
+          картки виглядають просто сірими. Суто декоративне: ці градієнти не
+          можна використовувати як фон контенту. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-[180px] -left-[120px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(30,115,215,0.55)_0%,rgba(30,115,215,0.18)_42%,rgba(30,115,215,0)_70%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-[220px] -right-[100px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(86,168,255,0.34)_0%,rgba(86,168,255,0.1)_45%,rgba(86,168,255,0)_72%)]"
+      />
+
+      <div className="relative">
+        <h2 className="not-italic font-e-ukraine font-medium text-[24px] md:text-[32px] leading-tight text-white mb-3 text-balance">
+          {heading}
+        </h2>
+        <p className="not-italic font-e-ukraine font-thin text-[15px] md:text-[17px] leading-relaxed text-[rgba(216,236,248,0.7)] mb-8 max-w-[720px]">
+          {t("subtitle")}
         </p>
-      )}
+
+        <ul className="grid sm:grid-cols-2 gap-4 md:gap-6">
+          {pickup.map((c) => {
+            const tc = text(c);
+            return (
+              // isolate: у Chrome дочірній елемент із власним transition
+              // усередині backdrop-filter отримує окремий шар композитора,
+              // і розмиття перемальовується світлішою плямою рівно по його
+              // боксу. Ізоляція шару прибирає цю смугу біля заголовка.
+              <li
+                key={c.slug}
+                className={`${GLASS} isolate p-6 md:p-7 flex flex-col`}
+              >
+                <Link
+                  href={`/${c.slug}`}
+                  className="self-start not-italic font-e-ukraine font-medium text-[19px] md:text-[21px] text-white hover:text-[#b6d9fc]"
+                >
+                  {tc.h1}
+                </Link>
+                <p className="mt-2 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-[rgba(216,236,248,0.72)]">
+                  {tc.deliveryNote}
+                </p>
+
+                <div className={`${HAIRLINE} my-5`} />
+
+                <address className="not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-[rgba(255,255,255,0.92)]">
+                  <span className="text-[rgba(216,236,248,0.5)]">
+                    {t("pickupLabel")}:{" "}
+                  </span>
+                  {c.pickupAddress[locale] || c.pickupAddress.uk}
+                </address>
+                <p className="mt-1 not-italic font-e-ukraine font-thin text-[14px] text-[rgba(216,236,248,0.5)]">
+                  {L.hoursLabel}: {L.hours}
+                </p>
+
+                <Link
+                  href={`/${c.slug}`}
+                  className="mt-6 self-start rounded-full border border-[rgba(255,255,255,0.34)] bg-[rgba(186,214,247,0.08)] px-6 py-2.5 not-italic font-e-ukraine text-[14px] font-medium text-white transition-colors hover:bg-[rgba(186,214,247,0.18)] hover:border-[rgba(255,255,255,0.5)]"
+                >
+                  {t("cityCta", { city: tc.city })}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+
+        {others.length > 0 && (
+          <p className="mt-8 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-[rgba(216,236,248,0.6)]">
+            {t("otherInline")}{" "}
+            {others.map((c, i) => (
+              <span key={c.slug}>
+                <Link
+                  href={`/${c.slug}`}
+                  className="text-[rgba(255,255,255,0.92)] underline decoration-[rgba(186,215,247,0.35)] underline-offset-4 transition-colors hover:decoration-[rgba(186,215,247,0.9)]"
+                >
+                  {text(c).h1}
+                </Link>
+                {i < others.length - 1 ? ", " : "."}
+              </span>
+            ))}
+          </p>
+        )}
+      </div>
     </section>
   );
 }

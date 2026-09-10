@@ -11,6 +11,7 @@ import ProductGallery from "@/app/components/main/Catalog/ProductGallery";
 import AddToCartControl from "@/app/components/main/Catalog/AddToCartControl";
 import ProductInfoBlocks from "@/app/components/main/Catalog/ProductInfoBlocks";
 import RequestPriceButton from "@/app/components/main/Catalog/RequestPriceButton";
+import QuickOrderButton from "@/app/components/main/Catalog/QuickOrderButton";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
@@ -174,9 +175,16 @@ export default async function ProductPage({ params }) {
             </div>
           )}
 
-          <div className="pt-2 flex flex-col sm:flex-row gap-3">
-            <AddToCartControl product={product} variant="page" />
-            {/* Другий CTA для B2B — відкриває модалку заявки (без переходу) */}
+          {/* Дві рівноцінні дії: зібрати замовлення самому або замовити
+              одразу, лишивши телефон. Оптовий прайс — третій, тихіший CTA
+              для B2B, щоб не конкурував із роздрібним сценарієм. */}
+          <div className="pt-2 flex flex-col gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+              <AddToCartControl product={product} variant="page" />
+              <div className="sm:w-[240px]">
+                <QuickOrderButton product={product} tone="light" size="lg" />
+              </div>
+            </div>
             <RequestPriceButton
               label={t("getPrice")}
               productTitle={product.title}
