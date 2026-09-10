@@ -1,6 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { CITIES, GEO_LABELS } from "@/lib/cities";
+import {
+  PLATE,
+  GLASS,
+  HAIRLINE,
+  GLASS_PILL,
+  GLOW_PRIMARY,
+  GLOW_SECONDARY,
+} from "./glass";
 
 // Контекстний блок «Доставка та самовивіз по містах» для головної, категорій,
 // карток товарів, опту й сторінки доставки.
@@ -24,16 +32,6 @@ import { CITIES, GEO_LABELS } from "@/lib/cities";
 // категорії, опт, доставка); "inline" — компактний світлий блок для колонки
 // з характеристиками товару.
 // excludeSlug — не показувати поточне місто (на самих лендингах).
-
-// Скляна поверхня: напівпрозорий фон + розмиття + бордюр + inset-відблиск
-// згори (світло над сценою) і глибока зовнішня тінь. Не використовувати цей
-// набір для дрібних елементів — лише для карток рівня секції.
-const GLASS =
-  "rounded-[20px] border border-[rgba(186,215,247,0.16)] bg-[rgba(255,255,255,0.06)] backdrop-blur-[14px] shadow-[inset_0_1px_1px_0_rgba(199,211,234,0.22),inset_0_24px_48px_0_rgba(199,211,234,0.05),0_20px_32px_0_rgba(5,9,20,0.45)] transition-colors duration-300 hover:bg-[rgba(255,255,255,0.09)] hover:border-[rgba(186,215,247,0.28)]";
-
-// Роль — лише роздільник усередині скляної картки (сигнатурний прийом Authkit).
-const HAIRLINE =
-  "h-px w-full bg-[linear-gradient(90deg,transparent,rgba(186,215,247,0.22),transparent)]";
 
 export default async function CityPickupLinks({
   locale,
@@ -92,17 +90,17 @@ export default async function CityPickupLinks({
   }
 
   return (
-    <section className="relative overflow-hidden rounded-[28px] md:rounded-[32px] bg-[linear-gradient(160deg,#0B1526_0%,#0E1B33_55%,#0A1424_100%)] px-6 py-10 md:px-12 md:py-14 shadow-[inset_0_1px_0_0_rgba(186,215,247,0.16)]">
+    <section className={`${PLATE} px-6 py-10 md:px-12 md:py-14`}>
       {/* Атмосферне сяйво: дає склу що заломлювати — без нього напівпрозорі
           картки виглядають просто сірими. Суто декоративне: ці градієнти не
           можна використовувати як фон контенту. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-[180px] -left-[120px] h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(30,115,215,0.55)_0%,rgba(30,115,215,0.18)_42%,rgba(30,115,215,0)_70%)]"
+        className={GLOW_PRIMARY}
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-[220px] -right-[100px] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(86,168,255,0.34)_0%,rgba(86,168,255,0.1)_45%,rgba(86,168,255,0)_72%)]"
+        className={GLOW_SECONDARY}
       />
 
       <div className="relative">
@@ -123,7 +121,7 @@ export default async function CityPickupLinks({
               // боксу. Ізоляція шару прибирає цю смугу біля заголовка.
               <li
                 key={c.slug}
-                className={`${GLASS} isolate p-6 md:p-7 flex flex-col`}
+                className={`${GLASS} transition-colors duration-300 hover:bg-[rgba(255,255,255,0.09)] hover:border-[rgba(186,215,247,0.28)] isolate p-6 md:p-7 flex flex-col`}
               >
                 <Link
                   href={`/${c.slug}`}
@@ -149,7 +147,7 @@ export default async function CityPickupLinks({
 
                 <Link
                   href={`/${c.slug}`}
-                  className="mt-6 self-start rounded-full border border-[rgba(255,255,255,0.34)] bg-[rgba(186,214,247,0.08)] px-6 py-2.5 not-italic font-e-ukraine text-[14px] font-medium text-white transition-colors hover:bg-[rgba(186,214,247,0.18)] hover:border-[rgba(255,255,255,0.5)]"
+                  className={`${GLASS_PILL} mt-6 self-start`}
                 >
                   {t("cityCta", { city: tc.city })}
                 </Link>

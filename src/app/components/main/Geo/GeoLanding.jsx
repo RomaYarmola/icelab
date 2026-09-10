@@ -6,12 +6,20 @@ import FaqSection from "@/app/components/common/FaqSection";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import PriceTiersTable from "@/app/components/common/PriceTiersTable";
 import GeoCta from "./GeoCta";
-import GradientButton from "../../common/GradientButton";
 import { GEO_LABELS, CITIES, cityBySlug } from "@/lib/cities";
 import { localBusinessSchema, itemListSchema } from "@/lib/schema";
 import { getProductsByCategory } from "@/lib/products";
 import { getPriceSettings } from "@/lib/priceSettings";
-import { featuredDryIce } from "@/lib/featured";
+import { featuredDryIce, mergeTiers } from "@/lib/featured";
+import {
+  PLATE,
+  GLASS,
+  HAIRLINE,
+  GLASS_PILL,
+  GLASS_CHIP,
+  GLOW_PRIMARY,
+  GLOW_SECONDARY,
+} from "@/app/components/common/glass";
 
 // Гео-лендинг міста «сухий лід у <місті>». Дані — з lib/cities.js.
 //
@@ -30,10 +38,6 @@ import { featuredDryIce } from "@/lib/featured";
 // будь-яке інше фото не можна — сторінка й LocalBusiness стверджують, що це
 // наш склад за конкретною адресою. Коли клієнт надішле реальні фото заїзду,
 // додати їх сюди і в images[] у localBusinessSchema.
-
-function fill(s, vars) {
-  return String(s || "").replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
-}
 
 export default async function GeoLanding({ slug, locale }) {
   const city = cityBySlug(slug);
@@ -67,6 +71,28 @@ export default async function GeoLanding({ slug, locale }) {
     boxUnit: L.pricesBoxUnit,
     kgUnit: L.pricesKgUnit,
   };
+
+  // Чипи-факти першого екрана. Усі значення виводяться з наявних даних
+  // (Price Settings + місто), тож нове місто чи зміна тарифу не потребують
+  // ручного редагування контенту.
+  const minPrice = Math.min(
+    ...mergeTiers(settings.dryIceTiers).map((t) => t.price)
+  );
+  const granules = (settings.granuleSizes || [])
+    .map((s) => String(s).replace(/\s*мм\s*/i, ""))
+    .filter(Boolean)
+    .sort((a, b) => Number(a) - Number(b))
+    .join(", ");
+  const fill = (s, vars) =>
+    String(s || "").replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? "");
+  const facts = [
+    Number.isFinite(minPrice) ? fill(L.factPrice, { price: minPrice }) : null,
+    granules ? fill(L.factGranules, { sizes: granules }) : null,
+    pickupParts?.locality
+      ? fill(L.factPickup, { locality: pickupParts.locality })
+      : L.factDelivery,
+    L.factNoMin,
+  ].filter(Boolean);
 
   const pill =
     "inline-block rounded-full border border-commonBlue/30 px-5 py-2 not-italic font-e-ukraine text-commonBlue hover:bg-commonBlue/10 transition-colors";
@@ -109,71 +135,113 @@ export default async function GeoLanding({ slug, locale }) {
         />
       )}
 
-      <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[140px]">
+      <Container className="pt-[120px] md:pt-[150px] pb-[100px] md:pb-[140px]">
         <Breadcrumbs items={[{ name: c.h1 }]} />
 
-        <h1 className="text-3xl md:text-4xl main-title-gradient mb-6">{c.h1}</h1>
+        {/* ПЕРШИЙ ЕКРАН. Свідомо компактний: заголовок, самодостатня відповідь
+            (ціна, гранула, адреса, мінімум), факти-чипи, дві дії й картка
+            складу — усе в межах одного екрана. Копіювати висоту головної
+            (864 px з важким фоном) сюди не можна: це виштовхнуло б ціну й
+            адресу за перший екран, а саме перший абзац цитують AI-відповіді. */}
+        <section className={`${PLATE} px-6 py-9 md:px-12 md:py-12 mb-14`}>
+          <div aria-hidden="true" className={GLOW_PRIMARY} />
+          <div aria-hidden="true" className={GLOW_SECONDARY} />
 
-        {/* Інтро + картка доставки */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-14">
-          <div className="lg:flex-1 flex flex-col gap-4">
-            {c.intro.map((t, i) => (
+          <div className="relative grid lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-12 items-start">
+            {/* Порядок у DOM: H1 → відповідь-абзац → факти → дії. Саме така
+                послідовність потрібна пошуку та AI-відповідям (абзац одразу
+                під заголовком). На мобільному абзац займає ~10 рядків і
+                виштовхує кнопки за екран, тому там факти й дії піднімаються
+                вище через order — розмітка при цьому не змінюється. */}
+            <div className="flex flex-col gap-6 md:gap-7">
+              <h1 className="order-1 not-italic font-e-ukraine font-medium text-[28px] md:text-[42px] leading-[1.1] text-white text-balance">
+                {c.h1}
+              </h1>
+
+              <p className="order-4 lg:order-2 not-italic font-e-ukraine font-thin text-[15px] md:text-[18px] leading-relaxed text-[rgba(216,236,248,0.82)] max-w-[640px]">
+                {c.intro[0]}
+              </p>
+
+              <ul className="order-2 lg:order-3 flex flex-wrap gap-2.5">
+                {facts.map((f) => (
+                  <li key={f} className={GLASS_CHIP}>
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full bg-[#6aa6ff]"
+                    />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="order-3 lg:order-4 flex flex-col sm:flex-row gap-3">
+                <GeoCta
+                  label={L.ctaButton}
+                  title={L.ctaModalTitle}
+                  context={c.h1}
+                />
+                <a
+                  href="#tovary"
+                  className={`${GLASS_PILL} h-[54px] w-full sm:w-[260px]`}
+                >
+                  {L.heroProductsCta}
+                </a>
+              </div>
+            </div>
+
+            {/* Картка доставки й видимий NAP. Адреса тут і в LocalBusiness —
+                одна й та сама: Google звіряє розмітку з тим, що бачить
+                користувач, інакше локальні сигнали не зараховуються. */}
+            <aside className={`${GLASS} isolate p-6 md:p-7`}>
+              <h2 className="not-italic font-e-ukraine font-medium text-[17px] md:text-[18px] text-white">
+                {pickup ? L.deliveryTitle : L.deliveryOnlyTitle}
+              </h2>
+              <p className="mt-3 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-[rgba(216,236,248,0.75)]">
+                {c.deliveryNote}
+              </p>
+
+              {pickup && (
+                <>
+                  <div className={`${HAIRLINE} my-5`} />
+                  <p className="not-italic font-e-ukraine text-[12px] uppercase tracking-wide text-[rgba(216,236,248,0.5)]">
+                    {L.pickupTitle}
+                  </p>
+                  <address className="mt-1.5 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-[rgba(255,255,255,0.92)]">
+                    {pickup}
+                  </address>
+                  <p className="mt-1 not-italic font-e-ukraine font-thin text-[14px] text-[rgba(216,236,248,0.5)]">
+                    {L.hoursLabel}: {L.hours}
+                  </p>
+                  {city.mapsUrl && (
+                    <a
+                      href={city.mapsUrl}
+                      target="_blank"
+                      rel="noopener"
+                      className={`${GLASS_PILL} mt-5`}
+                    >
+                      {L.routeCta}
+                    </a>
+                  )}
+                </>
+              )}
+            </aside>
+          </div>
+        </section>
+
+        {/* Решта вступу — під першим екраном, щоб не розтягувати його. */}
+        {c.intro.length > 1 && (
+          <div className="flex flex-col gap-4 mb-16 max-w-[900px]">
+            {c.intro.slice(1).map((t, i) => (
               <p key={i} className={p}>
                 {t}
               </p>
             ))}
-            <div className="flex flex-col sm:flex-row gap-4 mt-3">
-              <GeoCta
-                label={L.ctaButton}
-                title={L.ctaModalTitle}
-                context={c.h1}
-              />
-              <Link href="/catalog/c/suhyi-lid" className="flex w-full sm:w-[300px]">
-                <GradientButton variant="outline" text={L.catalogCta} />
-              </Link>
-            </div>
           </div>
-
-          <div className="lg:w-[36%] rounded-[14px] border border-commonBlue/15 bg-commonBlue/[0.02] p-6 self-start">
-            <h2 className="text-lg font-medium text-commonBlue mb-3 not-italic font-e-ukraine">
-              {L.deliveryTitle}
-            </h2>
-            <p className="not-italic font-e-ukraine font-thin text-black/80 leading-relaxed">
-              {c.deliveryNote}
-            </p>
-
-            {/* Видимий NAP там, де є фізичний склад (Київ, Львів). Та сама
-                адреса йде в LocalBusiness — розмітка й видимий текст мають
-                збігатися, інакше локальні сигнали не зараховуються. */}
-            {pickup && (
-              <div className="mt-5 pt-5 border-t border-commonBlue/15 flex flex-col gap-1.5">
-                <p className="not-italic font-e-ukraine text-[13px] uppercase tracking-wide text-commonBlue/60">
-                  {L.pickupTitle}
-                </p>
-                <address className="not-italic font-e-ukraine font-thin text-black/85 leading-relaxed">
-                  {pickup}
-                </address>
-                <p className="not-italic font-e-ukraine font-thin text-black/60 text-[15px]">
-                  {L.hoursLabel}: {L.hours}
-                </p>
-                {city.mapsUrl && (
-                  <a
-                    href={city.mapsUrl}
-                    target="_blank"
-                    rel="noopener"
-                    className="mt-2 self-start text-[14px] not-italic font-e-ukraine text-commonBlue underline decoration-commonBlue/30 underline-offset-4 hover:decoration-commonBlue"
-                  >
-                    {L.routeCta}
-                  </a>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+        )}
 
         {/* Товари з цінами — те, за чим прийшли з пошуку */}
         {featured.length > 0 && (
-          <section className="mb-16">
+          <section id="tovary" className="mb-16 scroll-mt-[110px]">
             <h2 className={h2}>{fill(L.productsTitle, { cityIn: c.cityIn })}</h2>
             <p className={`${p} mb-6 max-w-[860px]`}>{L.productsText}</p>
             <CatalogList products={featured} />
