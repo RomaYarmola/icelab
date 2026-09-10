@@ -136,16 +136,28 @@ export function organizationRatingSchema({ rating, total, reviews = [] } = {}) {
 // city: { name, address, url, telephone?, id?, areaServed? }.
 // id → стабільний @id (напр. "localbusiness-kyiv"); parentOrganization зв'язує
 // точку з головною сутністю Organization через @id.
+// geo — { lat, lng } складу; hasMap — URL картки в Google Maps (той самий
+// профіль GBP); sameAs — профілі сутності (GBP, соцмережі); areaServed —
+// рядок або масив назв (місто + райони/передмістя, які реально обслуговуємо);
+// images — список фото складу/продукту (перше — головне).
 export function localBusinessSchema({
   name,
   address,
   addressLocality,
   addressRegion,
+  postalCode,
   url,
   telephone,
   id,
   areaServed,
+  geo,
+  hasMap,
+  sameAs,
+  images,
 }) {
+  const served = Array.isArray(areaServed)
+    ? areaServed.map((n) => ({ "@type": "City", name: n }))
+    : areaServed || "UA";
   return {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -162,10 +174,22 @@ export function localBusinessSchema({
             // надійніше за один рядок.
             ...(addressLocality ? { addressLocality } : {}),
             ...(addressRegion ? { addressRegion } : {}),
+            ...(postalCode ? { postalCode } : {}),
             addressCountry: "UA",
           },
         }
       : {}),
+    ...(geo
+      ? {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: geo.lat,
+            longitude: geo.lng,
+          },
+        }
+      : {}),
+    ...(hasMap ? { hasMap } : {}),
+    ...(sameAs?.length ? { sameAs } : {}),
     telephone: telephone || CONTACT_PHONES[0],
     // Рядковий openingHours лишаємо для сумісності, поруч — структурована
     // специфікація: саме її читають картки локального бізнесу.
@@ -183,8 +207,8 @@ export function localBusinessSchema({
     priceRange: "55–75 UAH/kg",
     currenciesAccepted: "UAH",
     paymentAccepted: "Cash, Credit Card, Bank transfer",
-    image: abs("/og-icelab.jpg"),
-    areaServed: areaServed || "UA",
+    image: images?.length ? images.map((u) => abs(u)) : abs("/og-icelab.jpg"),
+    areaServed: served,
     url: abs(url),
   };
 }
@@ -238,12 +262,23 @@ export function productSchema(product, path) {
 // Список товарів каталогу/категорії. Дає пошуковикам і AI структурований
 // перелік позицій із цінами й картинками одним вузлом.
 // products — нормалізовані об'єкти з lib/products; basePath — "/catalog".
-export function itemListSchema({ name, products = [], basePath = "/catalog" }) {
+// areaServed — назва міста для гео-лендингів: кожен Offer отримує
+// areaServed City, а сам список — url сторінки, на якій він показаний. Так
+// сторінка міста розмічена як сторінка ПРОДАЖУ товару (Product/Offer), а не
+// як послуга (Service): саме товарна розмітка дає ціну в сніпеті.
+export function itemListSchema({
+  name,
+  products = [],
+  basePath = "/catalog",
+  areaServed,
+  url,
+}) {
   if (!products.length) return null;
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
     ...(name ? { name } : {}),
+    ...(url ? { url: abs(url) } : {}),
     numberOfItems: products.length,
     itemListElement: products.map((p, i) => ({
       "@type": "ListItem",
@@ -253,6 +288,7 @@ export function itemListSchema({ name, products = [], basePath = "/catalog" }) {
         name: p.title,
         url: abs(`${basePath}/${p.slug}`),
         ...(p.mainImage ? { image: abs(p.mainImage) } : {}),
+        brand: { "@type": "Brand", name: "IceLab" },
         offers: {
           "@type": "Offer",
           price: String(p.price),
@@ -261,6 +297,9 @@ export function itemListSchema({ name, products = [], basePath = "/catalog" }) {
             p.availability === "in-stock"
               ? "https://schema.org/InStock"
               : "https://schema.org/OutOfStock",
+          ...(areaServed
+            ? { areaServed: { "@type": "City", name: areaServed } }
+            : {}),
         },
       },
     })),

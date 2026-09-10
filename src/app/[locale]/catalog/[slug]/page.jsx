@@ -13,9 +13,11 @@ import ProductInfoBlocks from "@/app/components/main/Catalog/ProductInfoBlocks";
 import RequestPriceButton from "@/app/components/main/Catalog/RequestPriceButton";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
+import CityPickupLinks from "@/app/components/common/CityPickupLinks";
 import JsonLd from "@/app/components/common/JsonLd";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
+import { closestByWeight } from "@/lib/featured";
 import { formatPrice } from "@/utils/pricing";
 
 // Категорії, товари яких — рендери/предмети на світлі (вписуємо, не обрізаємо).
@@ -56,18 +58,29 @@ export default async function ProductPage({ params }) {
   const tu = await getTranslations({ locale, namespace: "Usp" });
   const isAvailable = product.availability === "in-stock";
 
-  // Cross-sell «Схожі товари» — та сама категорія, крім поточного (до 3).
+  // «Схожі товари» — та сама категорія, найближчі за вагою (та сама гранула
+  // першою), а не перші три за порядком у CMS.
+  const cat = categoryByKey(product.category);
   const similar = product.category
-    ? (await getProductsByCategory(locale, product.category))
-        .filter((p) => p.slug !== product.slug)
-        .slice(0, 3)
+    ? closestByWeight(
+        await getProductsByCategory(locale, product.category),
+        product,
+        3
+      )
     : [];
+  // «Часто беруть разом» — суміжні категорії (lід ↔ бокси/набори).
+  const together = (
+    await Promise.all(
+      (cat?.crossSell || []).map((key) => getProductsByCategory(locale, key))
+    )
+  )
+    .flatMap((list) => list.slice(0, 2))
+    .slice(0, 3);
   const productPath = `${locale === "uk" ? "" : "/" + locale}/catalog/${
     product.slug
   }`;
 
   // Хлібні крошки: Головна → Каталог → Категорія → Товар.
-  const cat = categoryByKey(product.category);
   const crumbs = [
     { name: tc("title"), href: "/catalog" },
     ...(cat
@@ -179,10 +192,23 @@ export default async function ProductPage({ params }) {
             uspTitle={tu("title")}
             uspItems={tu.raw("items")}
           />
+          {/* Самовивіз у Києві/Львові + інші міста — контекстні посилання
+              на гео-лендинги з кожної картки товару */}
+          <CityPickupLinks locale={locale} variant="inline" />
         </div>
       </div>
 
-      {/* Cross-sell «Схожі товари» (P1-7) */}
+      {/* Часто беруть разом (суміжні категорії) */}
+      {together.length > 0 && (
+        <div className="mt-16 md:mt-24">
+          <h2 className="text-xl md:text-2xl main-title-gradient mb-6">
+            {t("crossSellTitle")}
+          </h2>
+          <CatalogList products={together} />
+        </div>
+      )}
+
+      {/* «Схожі товари» — найближчі фасування тієї ж категорії */}
       {similar.length > 0 && (
         <div className="mt-16 md:mt-24">
           <h2 className="text-xl md:text-2xl main-title-gradient mb-6">

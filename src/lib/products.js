@@ -202,6 +202,10 @@ function normalizeProduct(raw, locale, pricing, t) {
     variant,
     badge: loc(raw.badge, locale),
     availability: raw.availability ?? "in-stock",
+    // Числова вага й гранула — для підбору «схожих» (найближча фасовка) і
+    // вибору популярних позицій на головній/гео-сторінках.
+    weight: Number(raw.weight) || 0,
+    granuleSize: raw.granuleSize || null,
     price,
     unit: t("Catalog.currency"),
     mainImage: mainUrl,

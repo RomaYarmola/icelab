@@ -6,7 +6,12 @@ import Faq from "../components/main/Home/Faq/Faq";
 import Hero from "../components/main/Home/Hero/Hero";
 import Products from "../components/main/Home/Products.jsx/Products";
 import CatalogCategories from "../components/main/Home/CatalogCategories/CatalogCategories";
+import TopProducts from "../components/main/Home/TopProducts/TopProducts";
+import CityPickup from "../components/main/Home/CityPickup/CityPickup";
 import Reviews from "../components/main/Home/Reviews/Reviews";
+
+// ISR: товари на головній оновлюються з CMS без ребілду (як у каталозі).
+export const revalidate = 3600;
 
 // Метадані головної — з неймспейсу Meta (для кожної мови окремо).
 export async function generateMetadata({ params }) {
@@ -35,6 +40,8 @@ export default async function Home({ params }) {
       <Hero />
       <Products />
       <CatalogCategories locale={locale} />
+      <TopProducts locale={locale} />
+      <CityPickup locale={locale} />
       <About />
       <Reviews locale={locale} />
       <Faq />

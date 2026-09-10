@@ -92,8 +92,10 @@ export default async function RelatedLinks({
           <ul className="flex flex-wrap gap-3 md:gap-4">
             {CITIES.map((city) => (
               <li key={city.slug}>
+                {/* Повний анкор («Сухий лід у Києві»), а не назва міста:
+                    анкор — сигнал, за яким лендинг ранжується. */}
                 <Link href={`/${city.slug}`} className={pill}>
-                  {(city[locale] || city.uk).city}
+                  {(city[locale] || city.uk).h1}
                 </Link>
               </li>
             ))}

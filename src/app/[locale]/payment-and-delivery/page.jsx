@@ -1,6 +1,8 @@
 import NoCompromises from "../../components/common/NoCompromises/NoCompromises";
 import Banner from "../../components/main/PaymentAndDelivery/Banner/Banner";
 import DeliveryOptions from "../../components/main/PaymentAndDelivery/DeliveryOptions/DeliveryOptions";
+import CityPickupLinks from "../../components/common/CityPickupLinks";
+import Container from "@/utils/Container";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { pageMeta } from "@/lib/seo";
 
@@ -24,6 +26,14 @@ export default async function PaymentAndDelivery({ params }) {
     <>
       <Banner />
       <DeliveryOptions />
+      {/* Склади й міста доставки — контекстні посилання на гео-лендинги */}
+      <section className="bg-white relative z-10">
+        <Container>
+          <div className="py-16 md:py-20">
+            <CityPickupLinks locale={locale} />
+          </div>
+        </Container>
+      </section>
       <NoCompromises variant="delivery" />
     </>
   );

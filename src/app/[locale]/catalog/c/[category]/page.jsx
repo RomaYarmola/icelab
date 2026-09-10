@@ -8,10 +8,17 @@ import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import RawMaterialNote from "@/app/components/common/RawMaterialNote";
 import RelatedLinks from "@/app/components/common/RelatedLinks";
+import CategoryGuide from "@/app/components/common/CategoryGuide";
+import CityPickupLinks from "@/app/components/common/CityPickupLinks";
+import PriceTiersTable from "@/app/components/common/PriceTiersTable";
 import JsonLd from "@/app/components/common/JsonLd";
 import { itemListSchema } from "@/lib/schema";
+import { getPriceSettings } from "@/lib/priceSettings";
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
+
+// Категорії льоду показують таблицю цін за обсягом (та сама сітка, що й кошик).
+const PRICE_TABLE_CATEGORIES = ["dry-ice", "food-ice"];
 
 // ISR: список товарів категорії оновлюється без ребілду. (P2-1)
 export const revalidate = 3600;
@@ -42,9 +49,31 @@ export default async function CategoryPage({ params }) {
   if (!cat) notFound();
 
   const t = await getTranslations({ locale, namespace: "Categories" });
-  const products = await getProductsByCategory(locale, cat.key);
-
   const tc = await getTranslations({ locale, namespace: "Catalog" });
+  const [products, settings] = await Promise.all([
+    getProductsByCategory(locale, cat.key),
+    getPriceSettings(),
+  ]);
+
+  // Гід покупця (необов'язковий у messages) і «часто беруть разом» —
+  // по 2 позиції з кожної суміжної категорії (lib/categories → crossSell).
+  const guide = t.has(`${cat.msgKey}.guide`) ? t.raw(`${cat.msgKey}.guide`) : [];
+  const crossSell = (
+    await Promise.all(
+      (cat.crossSell || []).map((key) => getProductsByCategory(locale, key))
+    )
+  )
+    .flatMap((list) => list.slice(0, 2))
+    .slice(0, 4);
+  const priceLabels = {
+    headVolume: tc("pricesHeadVolume"),
+    headPrice: tc("pricesHeadPrice"),
+    over: tc("pricesOver"),
+    negotiable: tc("pricesNegotiable"),
+    box: tc("pricesBox"),
+    boxUnit: tc("pricesBoxUnit"),
+    kgUnit: tc("pricesKgUnit"),
+  };
   const crumbs = [
     { name: tc("title"), href: "/catalog" },
     { name: t(`${cat.msgKey}.h1`) },
@@ -125,9 +154,49 @@ export default async function CategoryPage({ params }) {
         </div>
       )}
 
+      {/* Таблиця цін за обсягом — лише для категорій льоду */}
+      {PRICE_TABLE_CATEGORIES.includes(cat.key) && (
+        <section className="mb-16 max-w-[760px]">
+          <h2 className="not-italic font-e-ukraine font-medium text-[22px] md:text-[28px] mb-5 text-black">
+            {tc("pricesTitle")}
+          </h2>
+          <PriceTiersTable
+            tiers={settings.dryIceTiers}
+            boxes={settings.boxPrices}
+            labels={priceLabels}
+            caption={tc("pricesTitle")}
+          />
+          <p className="not-italic font-e-ukraine font-thin text-[15px] md:text-[16px] leading-relaxed text-black/75 mt-4">
+            {tc("pricesNote")}
+          </p>
+        </section>
+      )}
+
+      {/* Гід покупця: яку гранулу, скільки брати, як зберігати */}
+      {guide.length > 0 && (
+        <div className="mb-16">
+          <CategoryGuide sections={guide} />
+        </div>
+      )}
+
+      {/* Часто беруть разом — товари суміжних категорій */}
+      {crossSell.length > 0 && (
+        <section className="mb-16">
+          <h2 className="not-italic font-e-ukraine font-medium text-[22px] md:text-[28px] mb-6 text-black">
+            {tc("boughtTogether")}
+          </h2>
+          <CatalogList products={crossSell} />
+        </section>
+      )}
+
+      {/* Доставка та самовивіз по містах — контекстні посилання на гео */}
+      <div className="mb-16">
+        <CityPickupLinks locale={locale} />
+      </div>
+
       {/* Перелінковка: інші категорії, опт, застосування, гео */}
       <div className="mt-16 md:mt-24">
-        <RelatedLinks locale={locale} excludeSlug={cat.slug} />
+        <RelatedLinks locale={locale} excludeSlug={cat.slug} withCities={false} />
       </div>
     </Container>
   );

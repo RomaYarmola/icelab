@@ -6,6 +6,7 @@ import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import FaqSection from "@/app/components/common/FaqSection";
 import JsonLd from "@/app/components/common/JsonLd";
 import GeoCta from "@/app/components/main/Geo/GeoCta";
+import CityPickupLinks from "@/app/components/common/CityPickupLinks";
 import { serviceSchema } from "@/lib/schema";
 import { CATEGORIES } from "@/lib/categories";
 
@@ -176,6 +177,11 @@ export default async function WholesalePage({ params }) {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* Склади відвантаження — контекстні посилання на лендинги міст */}
+        <section className="mb-16">
+          <CityPickupLinks locale={locale} />
         </section>
 
         {/* FAQ + FAQPage schema */}
