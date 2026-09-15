@@ -7,6 +7,8 @@
 //    від цього залежить тип розмітки (LocalBusiness чи лише Service).
 // Новий місто = один об'єкт тут + один тонкий page.jsx (див. suhyi-lid-*).
 
+import { WEST_CITIES } from "./citiesWest";
+
 export const GEO_LABELS = {
   uk: {
     deliveryTitle: "Доставка та самовивіз",
@@ -71,6 +73,8 @@ export const GEO_LABELS = {
       "Залиште заявку — підкажемо, скільки льоду потрібно, і підготуємо доставку.",
     ctaButton: "Отримати консультацію",
     ctaModalTitle: "Отримати консультацію",
+    // {cityTo} — напрямок («в Мукачево»); без нього — нейтральний заголовок.
+    photosTitle: "Як ми готуємо сухий лід до відправки {cityTo}",
     otherCitiesTitle: "Сухий лід в інших містах",
     linksTitle: "Корисне",
     links: [
@@ -133,6 +137,7 @@ export const GEO_LABELS = {
       "Оставьте заявку — подскажем, сколько льда нужно, и подготовим доставку.",
     ctaButton: "Получить консультацию",
     ctaModalTitle: "Получить консультацию",
+    photosTitle: "Как мы готовим сухой лёд к отправке {cityTo}",
     otherCitiesTitle: "Сухой лёд в других городах",
     linksTitle: "Полезное",
     links: [
@@ -375,6 +380,7 @@ export const CITIES = [
   {
     slug: "suhyi-lid-lviv",
     key: "lviv",
+    region: "west",
     // Адреса — як у профілі Google Business «Icelab [сухий лід, dry ice]»:
     // вул. Успішна, Годовиця (Львів), 81117. Збіг із карткою — базова умова
     // локальної видачі.
@@ -1030,6 +1036,7 @@ export const CITIES = [
   {
     slug: "suhyi-lid-ivano-frankivsk",
     key: "ivanoFrankivsk",
+    region: "west",
     pickupAddress: null,
     uk: {
       city: "Івано-Франківськ",
@@ -1190,6 +1197,9 @@ export const CITIES = [
     },
   },
 ];
+
+// Західна Україна — окремий файл (citiesWest.js), щоб cities.js не розростався.
+CITIES.push(...WEST_CITIES);
 
 export const CITY_SLUGS = CITIES.map((c) => c.slug);
 

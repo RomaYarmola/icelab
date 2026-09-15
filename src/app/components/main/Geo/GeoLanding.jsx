@@ -1,4 +1,5 @@
 import Container from "@/utils/Container";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import Breadcrumbs from "../../common/Breadcrumbs";
 import JsonLd from "../../common/JsonLd";
@@ -57,7 +58,13 @@ export default async function GeoLanding({ slug, locale }) {
   const served = city.areaServed
     ? city.areaServed[locale] || city.areaServed.uk
     : c.city;
-  const others = CITIES.filter((x) => x.slug !== slug);
+  // Інші міста: спершу того ж регіону (для Мукачева — Ужгород, Львів…),
+  // бо саме їх шукає людина поруч; далі решта в порядку CITIES.
+  const others = CITIES.filter((x) => x.slug !== slug).sort(
+    (a, b) =>
+      Number(Boolean(city.region) && b.region === city.region) -
+      Number(Boolean(city.region) && a.region === city.region)
+  );
 
   const [dryIce, settings] = await Promise.all([
     getProductsByCategory(locale, "dry-ice"),
@@ -270,7 +277,9 @@ export default async function GeoLanding({ slug, locale }) {
         {/* Райони доставки + як доїхати + карта (лише міста зі складом) */}
         {c.zones?.length > 0 && (
           <section className="mb-16">
-            <h2 className={h2}>{fill(L.zonesTitle, { cityIn: c.cityIn })}</h2>
+            <h2 className={h2}>
+              {c.zonesTitle || fill(L.zonesTitle, { cityIn: c.cityIn })}
+            </h2>
             <ul className="grid sm:grid-cols-3 gap-4 md:gap-6 mb-5">
               {c.zones.map((z, i) => (
                 <li
@@ -329,6 +338,35 @@ export default async function GeoLanding({ slug, locale }) {
                   {t}
                 </p>
               ))}
+            </div>
+          </section>
+        )}
+
+        {/* Власні фото відвантаження (лише знімки IceLab; alt і підпис — свої
+            для кожного міста, див. lib/citiesWest.js) */}
+        {city.photos?.length > 0 && (
+          <section className="mb-16">
+            <h2 className={h2}>{fill(L.photosTitle, { cityTo: c.cityTo || "" }).trim()}</h2>
+            <div className="grid sm:grid-cols-3 gap-4 md:gap-6">
+              {city.photos.map((ph, i) => {
+                const t = ph[locale] || ph.uk;
+                return (
+                  <figure key={ph.src + i} className="flex flex-col gap-3">
+                    <div className="relative w-full aspect-[4/5] rounded-2xl overflow-hidden bg-commonBlue/5">
+                      <Image
+                        src={ph.src}
+                        alt={t.alt}
+                        fill
+                        sizes="(max-width: 660px) 100vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <figcaption className="not-italic font-e-ukraine font-thin text-[14px] md:text-[15px] leading-relaxed text-black/70">
+                      {t.caption}
+                    </figcaption>
+                  </figure>
+                );
+              })}
             </div>
           </section>
         )}
