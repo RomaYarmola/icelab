@@ -11,6 +11,7 @@ import RelatedLinks from "@/app/components/common/RelatedLinks";
 import CategoryGuide from "@/app/components/common/CategoryGuide";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
 import PriceTiersTable from "@/app/components/common/PriceTiersTable";
+import CryoRentBlock from "@/app/components/main/Catalog/CryoRentBlock";
 import JsonLd from "@/app/components/common/JsonLd";
 import { itemListSchema } from "@/lib/schema";
 import { getPriceSettings } from "@/lib/priceSettings";
@@ -170,6 +171,13 @@ export default async function CategoryPage({ params }) {
             {tc("pricesNote")}
           </p>
         </section>
+      )}
+
+      {/* Кріобластинг: купівля або оренда через партнерів (послуг IceLab не надає) */}
+      {cat.key === "krioblasting" && (
+        <div className="mb-16">
+          <CryoRentBlock locale={locale} />
+        </div>
       )}
 
       {/* Гід покупця: яку гранулу, скільки брати, як зберігати */}

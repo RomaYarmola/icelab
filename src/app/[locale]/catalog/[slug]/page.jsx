@@ -15,6 +15,7 @@ import QuickOrderButton from "@/app/components/main/Catalog/QuickOrderButton";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
+import CryoRentBlock from "@/app/components/main/Catalog/CryoRentBlock";
 import JsonLd from "@/app/components/common/JsonLd";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
@@ -207,6 +208,9 @@ export default async function ProductPage({ params }) {
           />
           {/* Самовивіз у Києві/Львові + інші міста — контекстні посилання
               на гео-лендинги з кожної картки товару */}
+          {product.category === "krioblasting" && (
+            <CryoRentBlock locale={locale} compact />
+          )}
           <CityPickupLinks locale={locale} variant="inline" />
           {/* Зворотні посилання на нішеві посадкові, до яких підходить товар:
               товар підсилює нішу, ніша — товар. Список рахується правилами
