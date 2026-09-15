@@ -19,6 +19,9 @@ import JsonLd from "@/app/components/common/JsonLd";
 import { productSchema } from "@/lib/schema";
 import { categoryByKey } from "@/lib/categories";
 import { closestByWeight } from "@/lib/featured";
+import { NICHES, NICHE_LABELS } from "@/lib/niches";
+import { nichesForProduct, nichePath } from "@/lib/nicheEngine";
+import { Link } from "@/i18n/navigation";
 import { formatPrice } from "@/utils/pricing";
 
 // Категорії, товари яких — рендери/предмети на світлі (вписуємо, не обрізаємо).
@@ -77,6 +80,8 @@ export default async function ProductPage({ params }) {
   )
     .flatMap((list) => list.slice(0, 2))
     .slice(0, 3);
+  const productNiches = nichesForProduct(product, NICHES);
+  const nicheLabels = NICHE_LABELS[locale] || NICHE_LABELS.uk;
   const productPath = `${locale === "uk" ? "" : "/" + locale}/catalog/${
     product.slug
   }`;
@@ -203,6 +208,28 @@ export default async function ProductPage({ params }) {
           {/* Самовивіз у Києві/Львові + інші міста — контекстні посилання
               на гео-лендинги з кожної картки товару */}
           <CityPickupLinks locale={locale} variant="inline" />
+          {/* Зворотні посилання на нішеві посадкові, до яких підходить товар:
+              товар підсилює нішу, ніша — товар. Список рахується правилами
+              з lib/nicheEngine.js, тож нова ніша з'являється тут сама. */}
+          {productNiches.length > 0 && (
+            <div className="rounded-[14px] border border-commonBlue/15 p-5">
+              <h2 className="text-base font-medium text-commonBlue mb-3 not-italic font-e-ukraine">
+                {nicheLabels.productNichesTitle}
+              </h2>
+              <ul className="flex flex-wrap gap-2">
+                {productNiches.map((n) => (
+                  <li key={n.slug}>
+                    <Link
+                      href={nichePath(n.slug)}
+                      className="inline-block rounded-full border border-commonBlue/30 px-4 py-1.5 not-italic font-e-ukraine text-[14px] text-commonBlue hover:bg-commonBlue/10 transition-colors"
+                    >
+                      {(n[locale] || n.uk).title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 

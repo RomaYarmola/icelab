@@ -24,6 +24,8 @@ import { getProductsForSitemap } from "@/lib/products";
 import { getBlogPostsForSitemap } from "@/lib/blog";
 import { CATEGORIES } from "@/lib/categories";
 import { CITY_SLUGS } from "@/lib/cities";
+import { liveNiches } from "@/lib/niches";
+import { nichePath } from "@/lib/nicheEngine";
 
 // Дата останньої змістовної правки статичних сторінок. Оновлювати вручну,
 // коли реально міняється контент сторінки, — це і є сенс lastmod.
@@ -51,6 +53,8 @@ const staticPaths = [
   "/opt",
   // Гео-лендинги по містах — з lib/cities.js.
   ...CITY_SLUGS.map((s) => `/${s}`),
+  // Нішеві посадкові — лише live (чернетки noindex і в sitemap не йдуть).
+  ...liveNiches().map((n) => nichePath(n.slug)),
 ];
 
 // Як часто реально змінюється контент — за типом сторінки.

@@ -1,11 +1,18 @@
 // llms.txt — гід для AI-краулерів (ChatGPT, Perplexity, Claude тощо).
 // Абсолютні URL будуються від NEXT_PUBLIC_SITE_URL (як sitemap/robots),
 // тому бойовий домен додається без правок цього файлу.
+import { liveNiches } from "@/lib/niches";
+import { nichePath } from "@/lib/nicheEngine";
+
 export const dynamic = "force-static";
 
 export function GET() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const u = (path) => `${base}${path}`;
+  // Нішеві посадкові — автоматично з lib/niches.js (лише live).
+  const niches = liveNiches()
+    .map((n) => `- [${n.uk.h1}](${u(nichePath(n.slug))}): ${n.uk.cardText}`)
+    .join("\n");
 
   const body = `# IceLab
 
@@ -24,6 +31,11 @@ export function GET() {
 - [Термобокси](${u("/catalog/c/termoboksy")}): термобокси для зберігання і транспортування сухого льоду (15 та 30 кг).
 - [Коробки з сухим льодом](${u("/catalog/c/korobka-z-suhym-lodom")}): готові набори «бокс + лід» на 15 і 30 кг.
 - [Чистка сухим льодом](${u("/catalog/c/chystka-suhym-lodom")}): обладнання для кріобластингу.
+
+## Застосування під задачу
+
+- [Застосування сухого льоду](${u("/zastosuvannia-suhogo-lodu")}): хаб задач — свята, HoReCa, логістика, промисловість, побут.
+${niches}
 
 ## Опт і B2B
 
