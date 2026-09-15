@@ -8,6 +8,7 @@ import Products from "../components/main/Home/Products.jsx/Products";
 import CatalogCategories from "../components/main/Home/CatalogCategories/CatalogCategories";
 import TopProducts from "../components/main/Home/TopProducts/TopProducts";
 import CityPickup from "../components/main/Home/CityPickup/CityPickup";
+import HomeNiches from "../components/main/Home/HomeNiches/HomeNiches";
 import Reviews from "../components/main/Home/Reviews/Reviews";
 
 // ISR: товари на головній оновлюються з CMS без ребілду (як у каталозі).
@@ -41,6 +42,7 @@ export default async function Home({ params }) {
       <Products />
       <CatalogCategories locale={locale} />
       <TopProducts locale={locale} />
+      <HomeNiches locale={locale} />
       <CityPickup locale={locale} />
       <About />
       <Reviews locale={locale} />

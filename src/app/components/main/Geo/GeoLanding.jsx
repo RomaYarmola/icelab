@@ -6,6 +6,8 @@ import FaqSection from "@/app/components/common/FaqSection";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import PriceTiersTable from "@/app/components/common/PriceTiersTable";
 import GeoCta from "./GeoCta";
+import NicheLinks from "@/app/components/common/NicheLinks";
+import { NICHE_LABELS } from "@/lib/niches";
 import { GEO_LABELS, CITIES, cityBySlug } from "@/lib/cities";
 import { localBusinessSchema, itemListSchema } from "@/lib/schema";
 import { getProductsByCategory } from "@/lib/products";
@@ -346,6 +348,15 @@ export default async function GeoLanding({ slug, locale }) {
             ))}
           </ul>
         </section>
+
+        {/* Задачі: посилання на нішеві посадкові з повним анкором */}
+        <div className="mb-16">
+          <NicheLinks
+            locale={locale}
+            variant="pills"
+            title={(NICHE_LABELS[locale] || NICHE_LABELS.uk).geoTitle}
+          />
+        </div>
 
         {/* Локальний FAQ (+ FAQPage schema всередині FaqSection) */}
         {c.faq?.length > 0 && (

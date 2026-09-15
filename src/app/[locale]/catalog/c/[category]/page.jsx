@@ -12,6 +12,9 @@ import CategoryGuide from "@/app/components/common/CategoryGuide";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
 import PriceTiersTable from "@/app/components/common/PriceTiersTable";
 import CryoRentBlock from "@/app/components/main/Catalog/CryoRentBlock";
+import NicheLinks from "@/app/components/common/NicheLinks";
+import { NICHES, NICHE_LABELS } from "@/lib/niches";
+import { nichesForProducts } from "@/lib/nicheEngine";
 import JsonLd from "@/app/components/common/JsonLd";
 import { itemListSchema } from "@/lib/schema";
 import { getPriceSettings } from "@/lib/priceSettings";
@@ -66,6 +69,7 @@ export default async function CategoryPage({ params }) {
   )
     .flatMap((list) => list.slice(0, 2))
     .slice(0, 4);
+  const categoryNiches = nichesForProducts(products, NICHES);
   const priceLabels = {
     headVolume: tc("pricesHeadVolume"),
     headPrice: tc("pricesHeadPrice"),
@@ -177,6 +181,17 @@ export default async function CategoryPage({ params }) {
       {cat.key === "krioblasting" && (
         <div className="mb-16">
           <CryoRentBlock locale={locale} />
+        </div>
+      )}
+
+      {/* Застосування: нішеві посадкові, до яких підходять товари категорії */}
+      {categoryNiches.length > 0 && (
+        <div className="mb-16">
+          <NicheLinks
+            locale={locale}
+            niches={categoryNiches}
+            title={(NICHE_LABELS[locale] || NICHE_LABELS.uk).categoryTitle}
+          />
         </div>
       )}
 

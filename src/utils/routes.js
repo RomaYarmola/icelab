@@ -12,6 +12,7 @@ import { FaXTwitter } from "react-icons/fa6";
 export const routes = [
   { key: "home", path: "/" },
   { key: "catalog", path: "/catalog" },
+  { key: "applications", path: "/zastosuvannia-suhogo-lodu" },
   { key: "paymentAndDelivery", path: "/payment-and-delivery" },
   { key: "blog", path: "/blog" },
   { key: "contacts", path: "/contacts" },

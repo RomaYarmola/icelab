@@ -61,6 +61,15 @@ export function productsForNiche(niche, allProducts = [], limit = 9) {
 }
 
 // Зворотний бік: для картки товару — живі ніші, куди він підходить.
+// Ніші, до яких підходить хоча б один товар зі списку (сторінка категорії).
+export function nichesForProducts(products = [], niches = []) {
+  return niches.filter(
+    (n) =>
+      n.status === "live" &&
+      products.some((p) => (n.products || []).some((r) => matchesRule(p, r)))
+  );
+}
+
 export function nichesForProduct(product, niches = []) {
   return niches.filter(
     (n) => n.status === "live" && (n.products || []).some((r) => matchesRule(product, r))

@@ -82,7 +82,7 @@ export default function Header() {
 
         <NavbarMenuToggle
           aria-label={isMenuOpen ? t("closeMenu") : t("openMenu")}
-          className="sm:hidden w-9 h-9"
+          className="l:hidden w-9 h-9"
         />
 
         {/* Бургер-меню */}

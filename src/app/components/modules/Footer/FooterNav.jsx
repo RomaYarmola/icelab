@@ -1,6 +1,8 @@
 import { routes, footerLinks, infoLinks } from "@/utils/routes";
 import { CATEGORIES } from "@/lib/categories";
 import { CITIES } from "@/lib/cities";
+import { NICHE_LABELS, liveNiches } from "@/lib/niches";
+import { nichePath } from "@/lib/nicheEngine";
 import { Link } from "@/i18n/navigation";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -45,6 +47,13 @@ export default function FooterNav({ variant = "column" }) {
       })),
     },
     {
+      title: (NICHE_LABELS[locale] || NICHE_LABELS.uk).footerTitle,
+      items: liveNiches().map((n) => ({
+        href: nichePath(n.slug),
+        label: (n[locale] || n.uk).title,
+      })),
+    },
+    {
       title: t("Footer.legalTitle"),
       items: infoLinks.map((l) => ({
         href: l.path,
@@ -82,7 +91,7 @@ export default function FooterNav({ variant = "column" }) {
   // + окремий ряд гео-перелінковки «сухий лід по містах».
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 lg:gap-x-10 gap-y-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 lg:gap-x-10 gap-y-10">
         {groups.map((g) => (
           <FooterGroup key={g.title} title={g.title} items={g.items} />
         ))}
