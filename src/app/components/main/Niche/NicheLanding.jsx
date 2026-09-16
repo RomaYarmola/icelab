@@ -5,6 +5,8 @@ import JsonLd from "@/app/components/common/JsonLd";
 import FaqSection from "@/app/components/common/FaqSection";
 import CatalogList from "@/app/components/main/Catalog/CatalogList";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
+import CryoRentBlock from "@/app/components/main/Catalog/CryoRentBlock";
+import EmergencySupplyBlock from "./EmergencySupplyBlock";
 import GeoCta from "@/app/components/main/Geo/GeoCta";
 import { itemListSchema } from "@/lib/schema";
 import { getProducts } from "@/lib/products";
@@ -53,10 +55,17 @@ export default async function NicheLanding({ slug, locale }) {
 
   // Схожі задачі: спершу з тієї ж групи, потім інші — щоб ніші підсилювали
   // одна одну, а не висіли окремими URL.
+  // niche.related — ручний пріоритет (напр. аварійне охолодження ↔ доставка
+  // ↔ лабораторії), щоб сусідні сторінки ділили запити, а не конкурували.
   const live = liveNiches().filter((n) => n.slug !== niche.slug);
+  const pinned = (niche.related || [])
+    .map((s) => live.find((n) => n.slug === s))
+    .filter(Boolean);
+  const rest = live.filter((n) => !pinned.includes(n));
   const related = [
-    ...live.filter((n) => n.group === niche.group),
-    ...live.filter((n) => n.group !== niche.group),
+    ...pinned,
+    ...rest.filter((n) => n.group === niche.group),
+    ...rest.filter((n) => n.group !== niche.group),
   ].slice(0, 6);
 
   const h2 =
@@ -165,6 +174,39 @@ export default async function NicheLanding({ slug, locale }) {
             {c.productsText && <p className={`${p} mb-6 max-w-[860px]`}>{c.productsText}</p>}
             <CatalogList products={products} />
           </section>
+        )}
+
+        {/* Аварійна поставка — B2B-ніші, де лід потрібен терміново й багато */}
+        {niche.emergency && (
+          <div className="mb-16">
+            <EmergencySupplyBlock locale={locale} context={c.h1} />
+          </div>
+        )}
+
+        {/* Сценарії: коли саме бізнес шукає це рішення */}
+        {c.scenarios?.length > 0 && (
+          <section className="mb-16">
+            <h2 className={h2}>{c.scenariosTitle || L.scenariosTitle}</h2>
+            <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {c.scenarios.map((s) => (
+                <li key={s.title} className="rounded-[14px] border border-commonBlue/15 p-5 md:p-6">
+                  <h3 className="not-italic font-e-ukraine font-medium text-[17px] text-black mb-1.5">
+                    {s.title}
+                  </h3>
+                  <p className="not-italic font-e-ukraine font-thin text-[15px] md:text-[16px] leading-relaxed text-black/75">
+                    {s.text}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {/* Кріобластинг: апарат не у всіх — оренда через партнерів */}
+        {niche.rent && (
+          <div className="mb-16">
+            <CryoRentBlock locale={locale} />
+          </div>
         )}
 
         {/* Як це працює */}

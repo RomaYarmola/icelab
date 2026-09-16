@@ -9,6 +9,8 @@ import GeoCta from "@/app/components/main/Geo/GeoCta";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
 import { serviceSchema } from "@/lib/schema";
 import { CATEGORIES } from "@/lib/categories";
+import NicheLinks from "@/app/components/common/NicheLinks";
+import { NICHE_LABELS, liveNiches } from "@/lib/niches";
 
 const PATH = "/opt";
 
@@ -203,6 +205,16 @@ export default async function WholesalePage({ params }) {
             context={t("h1")}
           />
         </section>
+
+        {/* B2B-ніші: аварійне охолодження, фарма, кріобластинг, очищення після пожежі */}
+        <div className="mb-16">
+          <NicheLinks
+            locale={locale}
+            variant="pills"
+            niches={liveNiches().filter((n) => ["logistics", "industry"].includes(n.group))}
+            title={(NICHE_LABELS[locale] || NICHE_LABELS.uk).b2bTitle}
+          />
+        </div>
 
         {/* Перелінковка */}
         <section>
