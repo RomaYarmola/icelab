@@ -11,6 +11,8 @@ import { serviceSchema } from "@/lib/schema";
 import { CATEGORIES } from "@/lib/categories";
 import NicheLinks from "@/app/components/common/NicheLinks";
 import { NICHE_LABELS, liveNiches } from "@/lib/niches";
+import WholesaleHero from "@/app/components/main/Catalog/WholesaleHero";
+import { getPriceSettings } from "@/lib/priceSettings";
 
 const PATH = "/opt";
 
@@ -40,7 +42,22 @@ export default async function WholesalePage({ params }) {
   const tb = await getTranslations({ locale, namespace: "Breadcrumbs" });
 
   const intro = t.raw("intro");
-  const prices = t.raw("prices");
+  const settings = await getPriceSettings();
+  const schedule = t.raw("schedule");
+  const heroT = {
+    heroH1: t("heroH1"),
+    heroLead: t.raw("heroLead"),
+    heroRow: t.raw("heroRow"),
+    heroFacts: t.raw("heroFacts"),
+    heroPriceTitle: t("heroPriceTitle"),
+    heroOver: t.raw("heroOver"),
+    heroNegotiable: t("heroNegotiable"),
+    kg: t("kg"),
+    kgUnit: t("kgUnit"),
+    pricesFootnote: t("pricesFootnote"),
+    ctaButton: t("ctaButton"),
+    ctaModalTitle: t("ctaModalTitle"),
+  };
   const terms = t.raw("terms");
   const segments = t.raw("segments");
   const faq = t.raw("faq");
@@ -62,67 +79,18 @@ export default async function WholesalePage({ params }) {
       <Container className="pt-[130px] md:pt-[180px] pb-[100px] md:pb-[140px]">
         <Breadcrumbs items={[{ name: tb("wholesale") }]} />
 
-        <h1 className="text-3xl md:text-4xl main-title-gradient mb-6">
-          {t("h1")}
-        </h1>
+        <WholesaleHero t={heroT} settings={settings} context={t("h1")} />
 
-        {/* Інтро + прайс-таблиця */}
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-16 items-start">
-          <div className="lg:flex-1 flex flex-col gap-4">
-            {intro.map((p, i) => (
-              <p
-                key={i}
-                className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75"
-              >
-                {p}
-              </p>
-            ))}
-            <div className="mt-3 w-full sm:w-auto">
-              <GeoCta
-                label={t("ctaButton")}
-                title={t("ctaModalTitle")}
-                context={t("h1")}
-              />
-            </div>
-          </div>
-
-          <div className="w-full lg:w-[42%] rounded-[14px] border border-commonBlue/15 bg-commonBlue/[0.02] p-6 shrink-0">
-            <h2 className="text-lg font-medium text-commonBlue mb-2 not-italic font-e-ukraine">
-              {t("pricesTitle")}
-            </h2>
-            <p className="not-italic font-e-ukraine font-thin text-black/65 text-[14px] leading-relaxed mb-4">
-              {t("pricesNote")}
+        {/* Чому виробник: виробництво й запас сировини (решта інтро) */}
+        <div className="flex flex-col gap-4 mb-16 max-w-[900px]">
+          {intro.map((p, i) => (
+            <p
+              key={i}
+              className="not-italic font-e-ukraine font-thin text-[16px] md:text-[18px] leading-relaxed text-black/75"
+            >
+              {p}
             </p>
-
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse not-italic font-e-ukraine text-[15px]">
-                <thead>
-                  <tr className="text-left text-commonBlue/60 text-[13px]">
-                    <th className="pb-2 font-normal">{t("pricesHeadVolume")}</th>
-                    <th className="pb-2 font-normal text-right">
-                      {t("pricesHeadPrice")}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {prices.map((row, i) => (
-                    <tr key={i} className="border-t border-commonBlue/15">
-                      <td className="py-2.5 pr-4 font-thin text-black/80">
-                        {row.volume}
-                      </td>
-                      <td className="py-2.5 text-right font-medium text-commonBlue">
-                        {row.price}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            <p className="mt-4 not-italic font-e-ukraine font-thin text-black/60 text-[14px] leading-relaxed">
-              {t("pricesFootnote")}
-            </p>
-          </div>
+          ))}
         </div>
 
         {/* Умови роботи з бізнесом */}
@@ -140,6 +108,28 @@ export default async function WholesalePage({ params }) {
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* Як налаштовуємо регулярні поставки */}
+        <section className="mb-16">
+          <h2 className="not-italic font-e-ukraine font-medium text-[22px] md:text-[28px] mb-6 text-black">
+            {t("scheduleTitle")}
+          </h2>
+          <ol className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {schedule.map((s, i) => (
+              <li key={s.title} className="rounded-[14px] border border-commonBlue/15 p-5 flex flex-col gap-2">
+                <span className="grid place-items-center h-9 w-9 rounded-full bg-commonBlue/10 text-commonBlue not-italic font-e-ukraine font-medium tabular-nums">
+                  {i + 1}
+                </span>
+                <h3 className="not-italic font-e-ukraine font-medium text-[17px] text-black">
+                  {s.title}
+                </h3>
+                <p className="not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-black/75">
+                  {s.text}
+                </p>
+              </li>
+            ))}
+          </ol>
         </section>
 
         {/* Сегменти */}

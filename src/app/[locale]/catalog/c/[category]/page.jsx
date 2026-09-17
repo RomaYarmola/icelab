@@ -12,6 +12,7 @@ import CategoryGuide from "@/app/components/common/CategoryGuide";
 import CityPickupLinks from "@/app/components/common/CityPickupLinks";
 import PriceTiersTable from "@/app/components/common/PriceTiersTable";
 import CryoRentBlock from "@/app/components/main/Catalog/CryoRentBlock";
+import CategoryHero, { WhereToBuy } from "@/app/components/main/Catalog/CategoryHero";
 import NicheLinks from "@/app/components/common/NicheLinks";
 import { NICHES, NICHE_LABELS } from "@/lib/niches";
 import { nichesForProducts } from "@/lib/nicheEngine";
@@ -62,6 +63,8 @@ export default async function CategoryPage({ params }) {
   // Гід покупця (необов'язковий у messages) і «часто беруть разом» —
   // по 2 позиції з кожної суміжної категорії (lib/categories → crossSell).
   const guide = t.has(`${cat.msgKey}.guide`) ? t.raw(`${cat.msgKey}.guide`) : [];
+  // Перший екран з ціною й відповіддю «де купити» — поки лише «Сухий лід».
+  const hero = t.has(`${cat.msgKey}.hero`) ? t.raw(`${cat.msgKey}.hero`) : null;
   const crossSell = (
     await Promise.all(
       (cat.crossSell || []).map((key) => getProductsByCategory(locale, key))
@@ -98,6 +101,20 @@ export default async function CategoryPage({ params }) {
       />
       <Breadcrumbs items={crumbs} />
 
+      {hero && (
+        <CategoryHero
+          hero={hero}
+          settings={settings}
+          context={hero.h1}
+          labels={{
+            kg: "кг",
+            kgUnit: tc("pricesKgUnit"),
+            over: tc("pricesOver"),
+            negotiable: tc("pricesNegotiable"),
+          }}
+        />
+      )}
+
       {/* Фільтр за категоріями (активна — поточна) */}
       <ul className="flex flex-wrap gap-3 md:gap-4 mb-8">
         <li>
@@ -120,14 +137,24 @@ export default async function CategoryPage({ params }) {
         ))}
       </ul>
 
-      <h1 className="text-3xl main-title-gradient mb-6">{t(`${cat.msgKey}.h1`)}</h1>
+      {!hero && (
+        <h1 className="text-3xl main-title-gradient mb-6">{t(`${cat.msgKey}.h1`)}</h1>
+      )}
 
-      {products.length > 0 ? (
-        <CatalogList products={products} />
-      ) : (
-        <p className="not-italic font-e-ukraine text-black/60">
-          {t("emptyList")}
-        </p>
+      <div id="tovary" className="scroll-mt-[110px]">
+        {products.length > 0 ? (
+          <CatalogList products={products} />
+        ) : (
+          <p className="not-italic font-e-ukraine text-black/60">
+            {t("emptyList")}
+          </p>
+        )}
+      </div>
+
+      {hero && (
+        <div className="mt-16">
+          <WhereToBuy hero={hero} />
+        </div>
       )}
 
       {/* SEO-текст категорії — під списком товарів: користувач бачить
