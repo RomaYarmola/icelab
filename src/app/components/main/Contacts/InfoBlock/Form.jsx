@@ -7,6 +7,7 @@ import {
   telegramLink,
   phoneLink,
 } from "@/helpers/validation";
+import { trackLead } from "@/utils/analytics";
 import { sendMessage } from "@/utils/sendMessage";
 import { Input } from "@nextui-org/react";
 import { useState } from "react";
@@ -62,6 +63,7 @@ export default function Form() {
       });
 
       if (result.success) {
+        trackLead("contacts", { form: "contacts" });
         setButtonText(t("success"));
         setTimeout(() => setButtonText(t("submit")), 2000);
       }

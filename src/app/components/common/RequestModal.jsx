@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal, ModalContent, ModalBody, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import GradientButton from "@/app/components/common/GradientButton";
@@ -11,6 +11,7 @@ import {
   phoneLink,
 } from "@/helpers/validation";
 import { sendMessage } from "@/utils/sendMessage";
+import { track, trackLead } from "@/utils/analytics";
 
 // Перевикористовувана модалка заявки (ім'я / телефон / повідомлення → Telegram).
 // title — заголовок; context — необов'язковий рядок-контекст (напр. назва
@@ -33,6 +34,12 @@ export default function RequestModal({
   const [phoneError, setPhoneError] = useState("");
   const [telegramError, setTelegramError] = useState("");
   const [sent, setSent] = useState(false);
+
+  // Відкриття форми — окремий крок воронки: видно, скільки людей відкрили
+  // заявку й не відправили її.
+  useEffect(() => {
+    if (isOpen) track("lead_form_open", { lead_form: title }, { tags: { lead_form_opened: title } });
+  }, [isOpen, title]);
 
   const submit = async () => {
     const err = validateField("phone", form.phone, tv);
@@ -59,6 +66,7 @@ export default function RequestModal({
       comment: form.comment,
     });
     if (res?.success) {
+      trackLead("request", { form: title });
       setSent(true);
       setForm({ name: "", phone: "", telegram: "", comment: "" });
     }

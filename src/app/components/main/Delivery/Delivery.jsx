@@ -11,6 +11,7 @@ import {
   telegramLink,
   phoneLink,
 } from "@/helpers/validation";
+import { track, trackLead } from "@/utils/analytics";
 import { sendMessage } from "@/utils/sendMessage";
 import useProductStore from "@/zustand/store/productStore";
 import { withLoader } from "@/helpers/withLoader";
@@ -129,6 +130,9 @@ function Delivery() {
           price: product.totalPrice,
         })),
       });
+      // Замовлення з кошика: і «покупка», і заявка — з сумою.
+      track("purchase", { currency: "UAH", value: Number(totalValue) || undefined });
+      trackLead("order", { form: "checkout", value: Number(totalValue) || undefined });
       clearProducts();
       router.push("/thanks");
 

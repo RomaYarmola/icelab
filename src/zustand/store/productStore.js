@@ -1,14 +1,28 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { calculateTotalPrice } from "@/utils/pricing";
+import { track } from "@/utils/analytics";
 
 const useProductStore = create(
   persist(
     (set) => ({
       products: [],
 
-      addProductToCart: (product) =>
-        set((state) => ({ products: [...state.products, product] })),
+      addProductToCart: (product) => {
+        // Конверсія «додав у кошик» — тут, а не в кожній кнопці: так її не
+        // пропустить жодне джерело (каталог, модалка головної, допродаж).
+        track(
+          "add_to_cart",
+          {
+            currency: "UAH",
+            value: Number(product.totalPrice) || undefined,
+            item_name: product.name || product.iceVariant,
+            item_variant: product.size || undefined,
+          },
+          { tags: { cart_item: product.slug || product.iceVariantEnglish } }
+        );
+        set((state) => ({ products: [...state.products, product] }));
+      },
 
       clearProducts: () => set({ products: [] }),
 
