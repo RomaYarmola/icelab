@@ -22,6 +22,7 @@ import {
   GLOW_PRIMARY,
   GLOW_SECONDARY,
 } from "@/app/components/common/glass";
+import MessengerButtons from "@/app/components/common/MessengerButtons";
 
 // Шаблон нішевої посадкової «сухий лід для <задачі>». Дані — lib/niches.js,
 // товари підбираються правилами з lib/nicheEngine.js.
@@ -128,6 +129,7 @@ export default async function NicheLanding({ slug, locale }) {
                   </a>
                 )}
               </div>
+              <MessengerButtons align="start" className="order-3 lg:order-5" />
             </div>
 
             {/* Готовий набір під задачу — те, що людина може назвати менеджеру. */}

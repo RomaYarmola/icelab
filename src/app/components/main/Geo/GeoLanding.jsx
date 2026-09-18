@@ -23,6 +23,7 @@ import {
   GLOW_PRIMARY,
   GLOW_SECONDARY,
 } from "@/app/components/common/glass";
+import MessengerButtons from "@/app/components/common/MessengerButtons";
 
 // Гео-лендинг міста «сухий лід у <місті>». Дані — з lib/cities.js.
 //
@@ -196,6 +197,7 @@ export default async function GeoLanding({ slug, locale }) {
                   {L.heroProductsCta}
                 </a>
               </div>
+              <MessengerButtons align="start" className="order-3 lg:order-5" />
             </div>
 
             {/* Картка доставки й видимий NAP. Адреса тут і в LocalBusiness —
@@ -413,8 +415,9 @@ export default async function GeoLanding({ slug, locale }) {
               {L.ctaText}
             </p>
           </div>
-          <div className="shrink-0">
+          <div className="shrink-0 flex flex-col gap-4">
             <GeoCta label={L.ctaButton} title={L.ctaModalTitle} context={c.h1} />
+            <MessengerButtons label={null} align="start" />
           </div>
         </section>
 

@@ -10,6 +10,7 @@ import {
   GLOW_PRIMARY,
   GLOW_SECONDARY,
 } from "@/app/components/common/glass";
+import MessengerButtons from "@/app/components/common/MessengerButtons";
 
 // Перший екран категорії (зараз — «Сухий лід», messages → Categories.<key>.hero).
 //
@@ -69,6 +70,7 @@ export default function CategoryHero({ hero, settings, labels, context }) {
               <GeoCta label={hero.ctaQuote} title={hero.modalTitle} context={context} />
             </div>
           </div>
+          <MessengerButtons align="start" className="order-3 lg:order-5" />
         </div>
 
         {tiers.length > 0 && (

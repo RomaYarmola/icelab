@@ -24,6 +24,7 @@ import { NICHES, NICHE_LABELS } from "@/lib/niches";
 import { nichesForProduct, nichePath } from "@/lib/nicheEngine";
 import { Link } from "@/i18n/navigation";
 import { formatPrice } from "@/utils/pricing";
+import MessengerButtons from "@/app/components/common/MessengerButtons";
 
 // Категорії, товари яких — рендери/предмети на світлі (вписуємо, не обрізаємо).
 const CONTAIN_CATEGORIES = ["ice-box", "krioblasting"];
@@ -195,6 +196,7 @@ export default async function ProductPage({ params }) {
               label={t("getPrice")}
               productTitle={product.title}
             />
+            <MessengerButtons tone="light" align="start" />
           </div>
 
           {/* Комерційні блоки: доставка/оплата, способи оплати, УТП (P1-7) */}
