@@ -40,6 +40,9 @@ export default function TrackingProvider() {
         { contact_channel: channel, page_type: pageType(window.location.pathname) },
         { tags: { contact_channel: channel }, upgrade: "contact" }
       );
+      // Окрема подія на кожен канал (contact_phone, contact_telegram…) — у
+      // Clarity тег не можна зробити smart event чи кроком воронки, а подію можна.
+      track(`contact_${channel}`);
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
