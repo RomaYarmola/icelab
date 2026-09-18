@@ -417,7 +417,7 @@ export default async function GeoLanding({ slug, locale }) {
           </div>
           <div className="shrink-0 flex flex-col gap-4">
             <GeoCta label={L.ctaButton} title={L.ctaModalTitle} context={c.h1} />
-            <MessengerButtons label={null} align="start" />
+            <MessengerButtons align="start" />
           </div>
         </section>
 

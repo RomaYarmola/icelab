@@ -16,7 +16,7 @@ import { mergeTiers } from "@/lib/featured";
 // нижче тапали як на посилання. Тому в першому екрані тепер:
 //  • ціна «від N грн/кг» — посилання на категорію з таблицею цін (N — мінімальна
 //    ціна з Price Settings, та сама, що рахує кошик);
-//  • кнопки месенджерів — новий відвідувач частіше пише, ніж оформлює кошик;
+//  • іконки месенджерів — новий відвідувач частіше пише, ніж оформлює кошик;
 //  • менший верхній відступ на мобільному; довгий опис — лише з md (текст
 //    лишається в HTML для пошуку).
 export default async function Hero() {
@@ -64,13 +64,17 @@ export default async function Hero() {
             <div className="flex justify-center mb-6 md:mb-8 relative z-10">
               <LocaleLink
                 href="/catalog/c/suhyi-lid"
-                className="inline-flex items-center gap-2 h-10 px-5 rounded-full border border-commonBlue/30 bg-white/70 backdrop-blur-sm not-italic font-e-ukraine font-medium text-[14px] hover:bg-white transition-colors"
+                aria-label={t("priceLink")}
+                className="group inline-flex items-center gap-3"
               >
-                <span className="text-blue-gradient font-michelin">
+                <span className="text-blue-gradient font-michelin text-[18px] md:text-[22px] leading-none">
                   {t("priceFrom", { price: minPrice })}
                 </span>
-                <span className="text-commonBlue">
-                  {t("priceLink")} →
+                <span
+                  aria-hidden="true"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-commonBlue text-white text-[15px] transition-transform duration-200 group-hover:translate-x-1"
+                >
+                  →
                 </span>
               </LocaleLink>
             </div>
@@ -87,8 +91,6 @@ export default async function Hero() {
             </LocaleLink>
           </div>
           <MessengerButtons
-            label={t("writeUs")}
-            tone="light"
             className="relative z-10 mb-[52px]"
           />
         </div>

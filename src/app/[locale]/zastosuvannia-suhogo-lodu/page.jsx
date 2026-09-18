@@ -7,6 +7,7 @@ import Image from "next/image";
 import { CATEGORIES } from "@/lib/categories";
 import { NICHE_GROUPS, NICHE_LABELS, liveNiches } from "@/lib/niches";
 import { nichePath } from "@/lib/nicheEngine";
+import NicheArt from "@/app/components/common/NicheArt";
 
 const PATH = "/zastosuvannia-suhogo-lodu";
 
@@ -88,15 +89,16 @@ export default async function ApplicationsPage({ params }) {
                         <li key={n.slug}>
                           <Link
                             href={nichePath(n.slug)}
-                            className="group flex h-full flex-col rounded-[16px] border border-commonBlue/15 p-6 transition-colors hover:border-commonBlue/40 hover:bg-commonBlue/[0.03]"
+                            className="group relative overflow-hidden flex h-full flex-col rounded-[16px] border border-commonBlue/15 p-6 transition-colors hover:border-commonBlue/40 hover:bg-commonBlue/[0.03]"
                           >
-                            <span className="not-italic font-e-ukraine font-medium text-[18px] text-black group-hover:text-commonBlue">
+                            <NicheArt slug={n.slug} />
+                            <span className="relative not-italic font-e-ukraine font-medium text-[18px] text-black group-hover:text-commonBlue">
                               {c.h1}
                             </span>
-                            <span className="mt-2 flex-1 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-black/65">
+                            <span className="relative mt-2 flex-1 pr-6 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-black/65">
                               {c.cardText}
                             </span>
-                            <span className="mt-4 not-italic font-e-ukraine text-[14px] font-medium text-commonBlue">
+                            <span className="relative mt-4 not-italic font-e-ukraine text-[14px] font-medium text-commonBlue">
                               {L.hubMore} →
                             </span>
                           </Link>

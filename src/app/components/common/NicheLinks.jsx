@@ -1,6 +1,8 @@
 import { Link } from "@/i18n/navigation";
 import { NICHE_LABELS, liveNiches } from "@/lib/niches";
 import { NICHE_HUB_PATH, nichePath } from "@/lib/nicheEngine";
+import NicheArt from "@/app/components/common/NicheArt";
+import MobileShowMore from "@/app/components/common/MobileShowMore";
 
 // Контекстні посилання на нішеві посадкові «сухий лід для задачі».
 //
@@ -12,7 +14,9 @@ import { NICHE_HUB_PATH, nichePath } from "@/lib/nicheEngine";
 // props:
 //  • niches  — список ніш (за замовчуванням усі живі);
 //  • variant — "cards" (сітка карток з описом) або "pills" (компактні анкори);
-//  • title / text — заголовок і підзаголовок; withHub — посилання на хаб.
+//  • title / text — заголовок і підзаголовок; withHub — посилання на хаб;
+//  • mobileLimit — скільки карток показати на мобільному (решта за кнопкою
+//    «Дивитись усі», але в HTML є всі).
 export default function NicheLinks({
   locale,
   niches,
@@ -20,6 +24,7 @@ export default function NicheLinks({
   text,
   variant = "cards",
   withHub = true,
+  mobileLimit,
 }) {
   const L = NICHE_LABELS[locale] || NICHE_LABELS.uk;
   const list = niches || liveNiches();
@@ -67,30 +72,47 @@ export default function NicheLinks({
           {withHub && <div className="mt-5">{hubLink}</div>}
         </>
       ) : (
-        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <CardsList
+          mobileLimit={mobileLimit}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
           {list.map((n) => {
             const c = n[locale] || n.uk;
             return (
               <li key={n.slug}>
                 <Link
                   href={nichePath(n.slug)}
-                  className="group flex h-full flex-col rounded-[16px] border border-commonBlue/15 bg-white p-6 transition-colors hover:border-commonBlue/40 hover:bg-commonBlue/[0.03]"
+                  className="group relative overflow-hidden flex h-full flex-col rounded-[16px] border border-commonBlue/15 bg-white p-6 transition-colors hover:border-commonBlue/40 hover:bg-commonBlue/[0.03]"
                 >
-                  <span className="not-italic font-e-ukraine font-medium text-[18px] leading-snug text-black group-hover:text-commonBlue">
+                  <NicheArt slug={n.slug} />
+                  <span className="relative not-italic font-e-ukraine font-medium text-[18px] leading-snug text-black group-hover:text-commonBlue">
                     {c.h1}
                   </span>
-                  <span className="mt-2 flex-1 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-black/65">
+                  <span className="relative mt-2 flex-1 pr-6 not-italic font-e-ukraine font-thin text-[15px] leading-relaxed text-black/65">
                     {c.cardText}
                   </span>
-                  <span className="mt-4 not-italic font-e-ukraine text-[14px] font-medium text-commonBlue">
+                  <span className="relative mt-4 not-italic font-e-ukraine text-[14px] font-medium text-commonBlue">
                     {L.hubMore} →
                   </span>
                 </Link>
               </li>
             );
           })}
-        </ul>
+        </CardsList>
       )}
     </section>
+  );
+}
+
+function CardsList({ mobileLimit, className, children }) {
+  if (!mobileLimit) return <ul className={className}>{children}</ul>;
+  return (
+    <MobileShowMore
+      limit={mobileLimit}
+      className={className}
+      buttonClass="border border-commonBlue/30 bg-white text-commonBlue hover:bg-commonBlue/10"
+    >
+      {children}
+    </MobileShowMore>
   );
 }

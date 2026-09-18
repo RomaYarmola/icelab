@@ -491,8 +491,7 @@
     "quickOrder": "Швидке замовлення",
     "catalog": "В каталог",
     "priceFrom": "від {price} грн/кг",
-    "priceLink": "усі ціни",
-    "writeUs": "Або напишіть нам:"
+    "priceLink": "Ціни на сухий лід"
   },
   "Products": {
     "sectionTitle": "Обери свій формат льоду",

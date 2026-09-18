@@ -196,7 +196,7 @@ export default async function ProductPage({ params }) {
               label={t("getPrice")}
               productTitle={product.title}
             />
-            <MessengerButtons tone="light" align="start" />
+            <MessengerButtons align="start" />
           </div>
 
           {/* Комерційні блоки: доставка/оплата, способи оплати, УТП (P1-7) */}

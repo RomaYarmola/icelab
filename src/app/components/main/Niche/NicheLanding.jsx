@@ -23,6 +23,7 @@ import {
   GLOW_SECONDARY,
 } from "@/app/components/common/glass";
 import MessengerButtons from "@/app/components/common/MessengerButtons";
+import NicheArt from "@/app/components/common/NicheArt";
 
 // Шаблон нішевої посадкової «сухий лід для <задачі>». Дані — lib/niches.js,
 // товари підбираються правилами з lib/nicheEngine.js.
@@ -312,12 +313,13 @@ export default async function NicheLanding({ slug, locale }) {
                   <li key={n.slug}>
                     <Link
                       href={nichePath(n.slug)}
-                      className="group flex h-full flex-col rounded-[14px] border border-commonBlue/15 p-5 transition-colors hover:border-commonBlue/40 hover:bg-commonBlue/[0.03]"
+                      className="group relative overflow-hidden flex h-full flex-col rounded-[14px] border border-commonBlue/15 p-5 transition-colors hover:border-commonBlue/40 hover:bg-commonBlue/[0.03]"
                     >
-                      <span className="not-italic font-e-ukraine font-medium text-[17px] text-black group-hover:text-commonBlue">
+                      <NicheArt slug={n.slug} />
+                      <span className="relative not-italic font-e-ukraine font-medium text-[17px] text-black group-hover:text-commonBlue">
                         {rc.h1}
                       </span>
-                      <span className="mt-1.5 not-italic font-e-ukraine font-thin text-[14px] leading-relaxed text-black/65">
+                      <span className="relative mt-1.5 pr-6 not-italic font-e-ukraine font-thin text-[14px] leading-relaxed text-black/65">
                         {rc.cardText}
                       </span>
                     </Link>

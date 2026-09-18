@@ -2,6 +2,14 @@ import Container from "@/utils/Container";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { CATEGORIES } from "@/lib/categories";
+import MobileShowMore from "@/app/components/common/MobileShowMore";
+
+// Порядок плиток — за популярністю категорій (перегляди в Clarity).
+const POPULAR = ["suhyi-lid", "korobka-z-suhym-lodom", "harchovyi-lid"];
+const byPopularity = (list) => [
+  ...POPULAR.map((slug) => list.find((c) => c.slug === slug)).filter(Boolean),
+  ...list.filter((c) => !POPULAR.includes(c.slug)),
+];
 
 // SEO-блок «Каталог за категоріями» — окрема секція з власним темним фоном,
 // щоб заголовок і картки завжди читалися (раніше залежав від градієнта Products
@@ -55,8 +63,16 @@ export default async function CatalogCategories({ locale }) {
             </p>
           </div>
 
-          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-            {CATEGORIES.map((c) => (
+          {/* На мобільному — три найпопулярніші категорії (Clarity, вересень
+              2026: сухий лід, коробки, харчовий лід), решта за кнопкою. У HTML
+              є всі плитки — див. MobileShowMore. */}
+          <MobileShowMore
+            limit={3}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+            hiddenClass="hidden md:block"
+            buttonClass="border border-white/30 text-white hover:bg-white/10"
+          >
+            {byPopularity(CATEGORIES).map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/catalog/c/${c.slug}`}
@@ -98,7 +114,7 @@ export default async function CatalogCategories({ locale }) {
                 </span>
               </Link>
             </li>
-          </ul>
+          </MobileShowMore>
         </div>
       </Container>
     </section>
