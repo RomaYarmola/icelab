@@ -42,11 +42,27 @@ export default async function Home({ params }) {
       <Products />
       <CatalogCategories locale={locale} />
       <TopProducts locale={locale} />
-      <HomeNiches locale={locale} />
-      <CityPickup locale={locale} />
+      {/* Нижні секції головної браузер не малює, поки до них не дійшли
+          (content-visibility: auto): менше роботи зі стилями й розкладкою на
+          кожен тап угорі сторінки — це напряму зменшує INP на слабких
+          телефонах. У HTML усе лишається, пошуковики бачать повний текст. */}
+      <div className="cv-auto">
+        <HomeNiches locale={locale} />
+      </div>
+      <div className="cv-auto">
+        <CityPickup locale={locale} />
+      </div>
+      {/* About — без cv-auto: його декор звисає на 73 px у наступну секцію,
+          а content-visibility обрізає все за межами блока. */}
       <About />
-      <Reviews locale={locale} />
-      <Faq />
+      <div className="cv-auto">
+        <Reviews locale={locale} />
+      </div>
+      <div className="cv-auto">
+        <Faq />
+      </div>
+      {/* NoCompromises — теж без cv-auto: його фон і хмари виходять угору
+          за межі секції (top: −165…−667 px). */}
       <NoCompromises />
     </>
   );

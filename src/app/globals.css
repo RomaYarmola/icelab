@@ -866,3 +866,11 @@ textarea::placeholder {
     z-index: 10;
   }
 }
+
+/* Секції нижче першого екрана: браузер пропускає їх рендеринг, поки вони
+   поза в'юпортом. auto у contain-intrinsic-size запам'ятовує справжню висоту
+   після першого показу, тож скролбар не «стрибає». */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}

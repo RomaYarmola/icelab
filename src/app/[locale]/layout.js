@@ -185,12 +185,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        {/* Google tag (gtag.js) */}
+        {/* Google tag (gtag.js) — базовий тег Google Ads (ремаркетинг).
+            lazyOnload (19.09.2026): конверсії Ads рахує GTM вище, а цей тег
+            лише дублює page_view, тож він не мусить змагатися з гідратацією
+            й першими тапами за головний потік (INP на мобільному 200–250 мс). */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=AW-17838270814"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
