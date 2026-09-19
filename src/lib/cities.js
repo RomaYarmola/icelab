@@ -8,6 +8,7 @@
 // Новий місто = один об'єкт тут + один тонкий page.jsx (див. suhyi-lid-*).
 
 import { WEST_CITIES } from "./citiesWest";
+import { CENTER_CITIES } from "./citiesCenter";
 
 export const GEO_LABELS = {
   uk: {
@@ -153,6 +154,8 @@ export const CITIES = [
   {
     slug: "suhyi-lid-kyiv",
     key: "kyiv",
+    // Житомир обслуговує той самий склад — у блоці «інші міста» вони поруч.
+    region: "center",
     pickupAddress: {
       uk: "вул. Ягідна, 22а, Вишгород, Київська обл., 07301",
       ru: "ул. Ягодная, 22а, Вышгород, Киевская обл., 07301",
@@ -1200,6 +1203,7 @@ export const CITIES = [
 
 // Західна Україна — окремий файл (citiesWest.js), щоб cities.js не розростався.
 CITIES.push(...WEST_CITIES);
+CITIES.push(...CENTER_CITIES);
 
 export const CITY_SLUGS = CITIES.map((c) => c.slug);
 
