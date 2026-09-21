@@ -56,6 +56,18 @@ const eUkraine = localFont({
   ],
   variable: "--font-e-ukraine",
   display: "swap",
+  // Без preload — свідомо.
+  //
+  // next/font за замовчуванням ставить <link rel="preload"> на кожне
+  // накреслення, і всі вісім опинялись у <head> ПЕРЕД прелоадом
+  // LCP-картинки. На Slow 4G це 160 КБ шрифтів попереду 12 КБ хмари:
+  // PSI показував «resource load delay 700 ms» при TTFB 20 ms.
+  //
+  // Для першого кадру шрифти не потрібні — стоїть display: swap, а
+  // next/font генерує фолбек із підігнаними метриками (ascent-override,
+  // size-adjust), тож підміна не рухає розкладку: CLS на проді 0.
+  // Ціна — коротка мить системного шрифту на повільному з'єднанні.
+  preload: false,
 });
 
 const michelin = localFont({
@@ -77,6 +89,9 @@ const michelin = localFont({
     },
   ],
   display: "swap",
+  // Див. коментар до e-Ukraine вище: прелоад шрифтів відбирав канал у
+  // LCP-картинки першого екрана.
+  preload: false,
 });
 
 // Генеруємо статичні сторінки для кожної локалі (uk, ru).
