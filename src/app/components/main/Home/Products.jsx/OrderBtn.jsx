@@ -1,4 +1,4 @@
-import MultiStepModal from "@/app/components/modals/MultiStepModal/MultiStepModal";
+import MultiStepModal from "@/app/components/modals/MultiStepModal/LazyMultiStepModal";
 import { Button, useDisclosure } from "@nextui-org/react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";

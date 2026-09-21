@@ -1,7 +1,7 @@
 "use client";
 import Container from "@/utils/Container";
 import GradientButton from "../GradientButton";
-import RequestModal from "../RequestModal";
+import RequestModal from "../LazyRequestModal";
 import { useTranslations } from "next-intl";
 import { useDisclosure } from "@nextui-org/react";
 

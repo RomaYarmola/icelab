@@ -874,3 +874,27 @@ textarea::placeholder {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;
 }
+
+/* Виїзд декоративних хмар (компонент CloudReveal) — заміна framer-motion.
+   Тривалість і крива ті самі, що були у variants: 2 s / easeOut. */
+.cloud-reveal {
+  opacity: 0;
+  transition: transform 2s ease-out, opacity 2s ease-out;
+}
+.cloud-reveal-left {
+  transform: translateX(-100%);
+}
+.cloud-reveal-right {
+  transform: translateX(100%);
+}
+.cloud-reveal.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cloud-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

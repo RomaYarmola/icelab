@@ -1,6 +1,6 @@
 "use client";
 import { useDisclosure } from "@nextui-org/react";
-import RequestModal from "@/app/components/common/RequestModal";
+import RequestModal from "@/app/components/common/LazyRequestModal";
 
 // Кнопка B2B «Отримати оптовий прайс»: відкриває модалку заявки прямо на
 // сторінці товару (без переходу). Назва товару йде у повідомлення менеджеру.

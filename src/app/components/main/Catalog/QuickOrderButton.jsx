@@ -1,7 +1,7 @@
 "use client";
 import { useDisclosure } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
-import RequestModal from "@/app/components/common/RequestModal";
+import RequestModal from "@/app/components/common/LazyRequestModal";
 import { formatPrice } from "@/utils/pricing";
 
 // «Швидке замовлення» — друга кнопка в картці товару поруч із «У кошик».

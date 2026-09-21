@@ -4,7 +4,7 @@ import GradientButton from "../../../common/GradientButton";
 import MessengerButtons from "../../../common/MessengerButtons";
 import HeroClouds from "./HeroClouds";
 import Link from "next/link";
-import { Link as LocaleLink } from "@/i18n/navigation";
+import LocaleLink from "../../../common/DeferredPrefetchLink";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getPriceSettings } from "@/lib/priceSettings";
 import { mergeTiers } from "@/lib/featured";
@@ -35,7 +35,11 @@ export default async function Hero() {
     : "";
   return (
     <div className="overflow-x-clip relative h-[864px] ">
-      {/* LCP-фон: пріоритетне оптимізоване зображення (preload), а не CSS-фон */}
+      {/* Фон першого екрана: пріоритетне оптимізоване зображення (preload),
+          а не CSS-фон. LCP-елементом Chrome його не вважає взагалі (перевірено
+          трейсом — у кандидати потрапляють хмари й текст), тож роздувати йому
+          роздільність немає сенсу: 100vw дає ~8 КБ і не відбирає канал у
+          хмари, яка LCP і є. */}
       <Image
         src="/images/hero/main-bg.webp"
         alt=""

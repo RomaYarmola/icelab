@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -14,11 +14,15 @@ import useProductStore from "@/zustand/store/productStore";
 import useUiStore from "@/zustand/store/uiStore";
 import BasketModal from "./BasketModal";
 import { Link, useRouter } from "@/i18n/navigation";
+import { onFirstInteraction } from "@/app/components/common/onFirstInteraction";
 import { useTranslations } from "next-intl";
 
 export default function Header() {
   const t = useTranslations("Header");
   const [isBasketModalOpen, setIsBasketModalOpen] = useState(false);
+  const [prefetchReady, setPrefetchReady] = useState(false);
+
+  useEffect(() => onFirstInteraction(() => setPrefetchReady(true)), []);
   const isMenuOpen = useUiStore((state) => state.isMenuOpen);
   const setIsMenuOpen = useUiStore((state) => state.setMenuOpen);
   const modalRef = useRef(null);
@@ -61,6 +65,10 @@ export default function Header() {
               setIsBasketModalOpen(false);
             }}
             href="/basket"
+            // Префетч кошика (33 КБ RSC) не потрібен, поки користувач нічого
+            // не робив; вмикається з першим доторком — див.
+            // components/common/onFirstInteraction.
+            prefetch={prefetchReady ? undefined : false}
             className="relative"
             data-cart-target="true"
           >

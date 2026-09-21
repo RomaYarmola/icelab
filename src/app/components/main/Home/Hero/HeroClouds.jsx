@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
+import Cloud from "../../../common/Cloud";
 
 export default function HeroClouds() {
   const [isSafari, setIsSafari] = useState(false);
@@ -47,26 +47,31 @@ export default function HeroClouds() {
     });
   }, []);
 
-  // ⚠️ Хмарам НЕ можна ставити priority — перевірено на PageSpeed.
-  // LCP-елементом Chrome обирає одну з хмар першого екрана, і спроба
-  // «допомогти» їй через priority дала зворотний результат: LCP 5,4 → 9,4 с.
-  // Причина у вазі: фон Hero після оптимізації важить 9 КБ, а одна хмара —
-  // 52–96 КБ. Три preload-и хмар (185 КБ) на Slow 4G забивають канал раніше,
-  // ніж встигає намалюватись хоч щось. Хмари лишаються lazy.
-  // Реальний важіль тут — полегшити самі ассети cloud-left/right.png
-  // (зараз 97 КБ кожен), а не міняти пріоритети завантаження.
-  // quality 60 — м'які білі форми, різниці на око немає.
+  // Хмари першого екрана — і декор, і LCP-елемент водночас: найбільший
+  // контентний кандидат тут саме хмара №1 (фон Hero Chrome у кандидати не
+  // бере зовсім — перевірено трейсом). Тому вона одна має priority, решта
+  // лишається lazy.
+  //
+  // Історія питання (21.09.2026). Раніше priority на хмарах робив тільки
+  // гірше (LCP 5,4 → 9,4 с), і причина була не в самому priority, а у вазі
+  // ассетів: cloud-*.png лежали як palette-PNG, а next/image писав з них
+  // WebP з альфою БЕЗ втрат. Зменшена копія виходила важчою за оригінал
+  // (640 px → 38 КБ проти 34 КБ у 1012 px), причому quality не впливав ні
+  // на що. Три таких preload-и справді забивали канал на Slow 4G.
+  // Тепер хмари — готова статика з alpha_quality=60 (12 КБ на мобільному,
+  // 29 КБ на десктопі) через компонент Cloud, і один eager-запит на 12 КБ
+  // уже нічого не блокує: LCP збігається з появою першого екрана.
+
   return (
     <>
       {/* Cloud 1 */}
       <div className="absolute h-[289px] top-[115px] right-[-20.7%] animated-cloud">
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={1012}
           height={289}
           className="h-full w-full object-cover"
+          priority
         />
       </div>
       {/* Cloud 2 */}
@@ -75,10 +80,8 @@ export default function HeroClouds() {
           isSafari ? "right-0" : "right-[-123px] md:right-[51%]"
         } animated-cloud`}
       >
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -86,10 +89,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 3 */}
       <div className="absolute h-[289px] z-[2] top-[348px] right-[9.2%] animated-cloud">
-        <Image
-          src="/images/hero/cloud-left.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="left"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -97,10 +98,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 4 */}
       <div className="absolute h-[289px] z-[3] top-[427px] right-[7.5%] animated-cloud">
-        <Image
-          src="/images/hero/cloud-left.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="left"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -112,10 +111,8 @@ export default function HeroClouds() {
           isSafari ? "right-0" : "right-[-8%]"
         }   animated-cloud`}
       >
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -123,10 +120,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 6 */}
       <div className="hidden md:block absolute h-[289px] z-[2] top-[667px] right-[29.4%] animated-cloud">
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -134,10 +129,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 7 */}
       <div className="absolute h-[289px] z-[3] top-[729px] right-[59.5%] animated-cloud">
-        <Image
-          src="/images/hero/cloud-left.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="left"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -149,10 +142,8 @@ export default function HeroClouds() {
           isSafari ? "right-0" : "right-[-8%]"
         }  l:hidden animated-cloud`}
       >
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -164,10 +155,8 @@ export default function HeroClouds() {
           isSafari ? "right-0" : "right-[-8%]"
         }  animated-cloud`}
       >
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -175,10 +164,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 10 */}
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[759px] left-[8%] ">
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -186,10 +173,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 11 */}
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[790px] left-[-19%] ">
-        <Image
-          src="/images/hero/cloud-left.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="left"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -201,10 +186,8 @@ export default function HeroClouds() {
           isSafari ? "right-0" : "right-[-8%]"
         } `}
       >
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -212,10 +195,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 13 */}
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[759px] left-[8%] ">
-        <Image
-          src="/images/hero/cloud-right.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="right"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"
@@ -223,10 +204,8 @@ export default function HeroClouds() {
       </div>
       {/* Cloud 14 */}
       <div className="hidden lg:block absolute h-[289px] z-[2] top-[790px] left-[-19%] animated-cloud">
-        <Image
-          src="/images/hero/cloud-left.png"
-          alt=""
-          quality={60}
+        <Cloud
+          side="left"
           width={812}
           height={289}
           className="h-full w-full object-cover object-right"

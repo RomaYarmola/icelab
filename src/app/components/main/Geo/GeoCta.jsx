@@ -1,6 +1,6 @@
 "use client";
 import { useDisclosure } from "@nextui-org/react";
-import RequestModal from "@/app/components/common/RequestModal";
+import RequestModal from "@/app/components/common/LazyRequestModal";
 import GradientButton from "@/app/components/common/GradientButton";
 
 // Кнопка-заявка на гео-лендингу: відкриває модалку зворотного зв'язку

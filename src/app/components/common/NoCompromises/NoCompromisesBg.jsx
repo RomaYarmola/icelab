@@ -1,25 +1,11 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import Cloud from "../Cloud";
+import CloudReveal from "../CloudReveal";
 import { useIsSafari } from "@/hooks/useIsSafari";
 
 export default function NoCompromisesBg() {
   const isSafari = useIsSafari();
-
-  const cloudVariants = {
-    hidden: (direction) => ({
-      x: direction === "left" ? "-100%" : "100%",
-      opacity: 0,
-    }),
-    visible: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 2,
-        ease: "easeOut",
-      },
-    },
-  };
 
   return (
     <>
@@ -35,49 +21,35 @@ export default function NoCompromisesBg() {
       )}
 
       <>
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom="right"
-          variants={cloudVariants}
+        <CloudReveal
+          from="right"
           className="absolute h-[259px] md:h-[396px] z-[6] top-[-206px] md:top-[-282px] left-0 md:left-[52.3%] pointer-events-none"
         >
-          <Image
-            src="/images/hero/cloud-right.png"
-            alt=""
+          <Cloud
+            side="right"
             width={812}
             height={289}
             className="h-full w-full object-cover object-left"
           />
-        </motion.div>
+        </CloudReveal>
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          custom="left"
-          variants={cloudVariants}
+        <CloudReveal
+          from="left"
           className="hidden md:block absolute h-[396px] z-[6] top-[-302px] right-[56.6%] pointer-events-none"
         >
-          <Image
-            src="/images/hero/cloud-left.png"
-            alt=""
+          <Cloud
+            side="left"
             width={812}
             height={289}
             className="h-full w-full object-cover object-right"
           />
-        </motion.div>
+        </CloudReveal>
 
         {!isSafari && (
           <>
             {" "}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom="left"
-              variants={cloudVariants}
+            <CloudReveal
+              from="left"
               className="hidden md:block absolute h-[568px] w-[20.6%] top-[-126px] left-0 z-[1]"
             >
               <Image
@@ -88,13 +60,9 @@ export default function NoCompromisesBg() {
                 className="h-full w-full object-cover object-left"
                 quality={100}
               />
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              custom="right"
-              variants={cloudVariants}
+            </CloudReveal>
+            <CloudReveal
+              from="right"
               className="hidden md:block absolute h-[568px] w-[20.6%] top-[-126px] right-0 z-[1]"
             >
               <Image
@@ -105,7 +73,7 @@ export default function NoCompromisesBg() {
                 className="h-full w-full object-cover object-left"
                 quality={100}
               />
-            </motion.div>
+            </CloudReveal>
           </>
         )}
       </>

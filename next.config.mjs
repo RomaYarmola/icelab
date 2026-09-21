@@ -3,6 +3,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  experimental: {
+    // Barrel-імпорти @nextui-org/react і react-icons розгортаються у прямі:
+    // у бандл потрапляє тільки те, що справді використано.
+    optimizePackageImports: ["@nextui-org/react", "react-icons"],
+  },
   images: {
     // Дозволяємо зображення з Sanity CDN.
     remotePatterns: [

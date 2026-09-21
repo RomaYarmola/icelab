@@ -11,6 +11,7 @@ import { routing } from "@/i18n/routing";
 import { getPriceSettings } from "@/lib/priceSettings";
 import { siteGraph } from "@/lib/schema";
 import { ROBOTS_INDEXABLE } from "@/lib/seo";
+import AnalyticsTags from "../components/common/AnalyticsTags";
 import JsonLd from "../components/common/JsonLd";
 import TrackingProvider from "../components/common/TrackingProvider";
 import { PriceSettingsProvider } from "../components/providers/PriceSettingsProvider";
@@ -22,32 +23,32 @@ import "../globals.css";
 const eUkraine = localFont({
   src: [
     {
-      path: "../../../public/fonts/e-ukraine/e-Ukraine-Thin.otf",
+      path: "../../../public/fonts/e-ukraine/e-Ukraine-Thin.woff2",
       weight: "100",
       style: "normal",
     },
     {
-      path: "../../../public/fonts/e-ukraine/e-Ukraine-UltraLight.otf",
+      path: "../../../public/fonts/e-ukraine/e-Ukraine-UltraLight.woff2",
       weight: "200",
       style: "normal",
     },
     {
-      path: "../../../public/fonts/e-ukraine/e-Ukraine-Regular.otf",
+      path: "../../../public/fonts/e-ukraine/e-Ukraine-Regular.woff2",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../../../public/fonts/e-ukraine/e-Ukraine-Medium.otf",
+      path: "../../../public/fonts/e-ukraine/e-Ukraine-Medium.woff2",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../../../public/fonts/e-ukraine/e-Ukraine-Medium.otf",
+      path: "../../../public/fonts/e-ukraine/e-Ukraine-Medium.woff2",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../../../public/fonts/e-ukraine/e-Ukraine-Bold.otf",
+      path: "../../../public/fonts/e-ukraine/e-Ukraine-Bold.woff2",
       weight: "700",
       style: "normal",
     },
@@ -59,21 +60,22 @@ const eUkraine = localFont({
 const michelin = localFont({
   src: [
     {
-      path: "../../../public/fonts/Michelin-Bold.ttf",
+      path: "../../../public/fonts/Michelin-Bold.woff2",
       weight: "700",
       style: "italic",
     },
     {
-      path: "../../../public/fonts/Michelin-SemiBold.ttf",
+      path: "../../../public/fonts/Michelin-SemiBold.woff2",
       weight: "500",
       style: "italic",
     },
     {
-      path: "../../../public/fonts/Michelin-Regular.ttf",
+      path: "../../../public/fonts/Michelin-Regular.woff2",
       weight: "400",
       style: "italic",
     },
   ],
+  display: "swap",
 });
 
 // Генеруємо статичні сторінки для кожної локалі (uk, ru).
@@ -166,15 +168,6 @@ export default async function RootLayout({ children, params }) {
       <body className="leading-[1.2] italic bg-white">
         {/* Глобальний граф: WebSite + Organization, зв'язані @id (один раз) */}
         <JsonLd data={siteGraph()} />
-        {/* Google Tag Manager */}
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-N8KCJMXP');`}
-        </Script>
-        {/* End Google Tag Manager */}
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -185,31 +178,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        {/* Google tag (gtag.js) — базовий тег Google Ads (ремаркетинг).
-            lazyOnload (19.09.2026): конверсії Ads рахує GTM вище, а цей тег
-            лише дублює page_view, тож він не мусить змагатися з гідратацією
-            й першими тапами за головний потік (INP на мобільному 200–250 мс). */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17838270814"
-          strategy="lazyOnload"
-        />
-        <Script id="google-analytics" strategy="lazyOnload">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'AW-17838270814');
-          `}
-        </Script>
-        {/* Microsoft Clarity */}
-        <Script id="microsoft-clarity" strategy="afterInteractive">
-          {`(function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", "xnw4p46kh9");`}
-        </Script>
-        {/* End Microsoft Clarity */}
+        <AnalyticsTags />
         <NextIntlClientProvider messages={messages}>
           <TrackingProvider />
           <PriceSettingsProvider value={priceSettings}>

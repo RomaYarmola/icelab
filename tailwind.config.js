@@ -7,7 +7,15 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    // Тільки ті компоненти NextUI, які реально використовуються. Глоб на
+    // весь dist/** змушував Tailwind згенерувати класи для всієї бібліотеки
+    // (таблиці, календар, автокомпліт…): спільний CSS важив 250 КБ, з них
+    // Lighthouse бачив ~25 КБ невикористаних навіть після стиснення, і весь
+    // файл блокує рендер. Додаючи новий компонент NextUI — додай його сюди.
+    "./node_modules/@nextui-org/theme/dist/components/{button,input,modal,navbar,slider,toggle,spinner,drip,ripple}.js",
+    "./node_modules/@nextui-org/theme/dist/{colors,default-layout}.js",
+    "./node_modules/@nextui-org/theme/dist/utilities/*.js",
+    "./node_modules/@nextui-org/theme/dist/utils/*.js",
   ],
   theme: {
     extend: {

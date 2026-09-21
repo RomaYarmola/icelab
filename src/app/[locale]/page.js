@@ -40,8 +40,17 @@ export default async function Home({ params }) {
     <>
       <Hero />
       <Products />
-      <CatalogCategories locale={locale} />
-      <TopProducts locale={locale} />
+      {/* 21.09.2026: cv-auto розширено вгору — на телефоні перший екран
+          закінчується на 823 px, а Hero має висоту 864 px, тож і категорії,
+          і топ-товари гарантовано за межами видимого. Style & Layout до
+          першого кадру — 650 мс, і саме розкладка цих двох секцій (сітки
+          карток із зображеннями) у ньому найважча. */}
+      <div className="cv-auto">
+        <CatalogCategories locale={locale} />
+      </div>
+      <div className="cv-auto">
+        <TopProducts locale={locale} />
+      </div>
       {/* Нижні секції головної браузер не малює, поки до них не дійшли
           (content-visibility: auto): менше роботи зі стилями й розкладкою на
           кожен тап угорі сторінки — це напряму зменшує INP на слабких
