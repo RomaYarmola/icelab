@@ -8,6 +8,7 @@ import {
   setRequestLocale,
 } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { pickClientMessages } from "@/i18n/clientNamespaces";
 import { getPriceSettings } from "@/lib/priceSettings";
 import { siteGraph } from "@/lib/schema";
 import { ROBOTS_INDEXABLE } from "@/lib/seo";
@@ -157,8 +158,11 @@ export default async function RootLayout({ children, params }) {
   // Вмикаємо статичний рендеринг для поточної локалі.
   setRequestLocale(locale);
 
-  // Повідомлення для клієнтських компонентів.
-  const messages = await getMessages();
+  // Повідомлення для клієнтських компонентів — лише потрібні їм неймспейси.
+  // Весь словник тут означав би ~52 КБ JSON у кожному документі, які браузер
+  // ще й парсить під час гідратації; серверні компоненти беруть переклади
+  // напряму й у цьому провайдері не мають потреби.
+  const messages = pickClientMessages(await getMessages());
 
   // Налаштування цін із Sanity (fallback — константи) для калькулятора головної.
   const priceSettings = await getPriceSettings();
