@@ -11,7 +11,7 @@ const CONTAIN_CATEGORIES = ["ice-box", "krioblasting"];
 // Картка товару. Уся картка клікабельна (розтягнуте посилання), а покупка
 // можлива прямо з картки через AddToCartControl (він над посиланням і не
 // викликає перехід). data-product-card використовує анімація «фото в кошик».
-export default function CatalogCard({ product }) {
+export default function CatalogCard({ product, priority = false }) {
   const t = useTranslations("ProductPage");
   const href = `/catalog/${product.slug}`;
   const isAvailable = product.availability === "in-stock";
@@ -41,6 +41,10 @@ export default function CatalogCard({ product }) {
             fill
             className={`${imgFit} transition-transform duration-300 group-hover:scale-105`}
             sizes="(max-width: 768px) 100vw, 33vw"
+            // Перша картка сітки — LCP-елемент каталогу. Без priority вона
+            // lazy, і браузер знаходить її аж після розмітки: у PageSpeed це
+            // давало resource load delay ~700 мс.
+            priority={priority}
           />
         )}
         <span

@@ -9,6 +9,9 @@ export default function Loader() {
           alt="logo"
           width={100}
           height={100}
+          // Поки лоадер на екрані, лого — єдиний контент, тож саме його
+          // Chrome рахує LCP-елементом (видно на /basket).
+          priority
           className=" w-full h-auto"
         />
       </div>

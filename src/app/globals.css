@@ -71,19 +71,15 @@ nav {
 }
 
 .bannerPaymentBg {
-  background: url(/images/payment-and-delivery/banner.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  /* Фон переїхав у next/image (див. компонент Banner): CSS-фон не бачить
+     preload-сканер, і LCP цієї сторінки впирався у мегабайтний PNG. */
   width: auto;
   height: 558px;
 }
 
 .bannerContactsBg {
-  background: url(/images/contacts/banner.png);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  /* Фон переїхав у next/image (див. компонент Banner): CSS-фон не бачить
+     preload-сканер, і LCP цієї сторінки впирався у мегабайтний PNG. */
   width: auto;
   height: 578px;
 }
