@@ -24,11 +24,12 @@ const SITE_DESCRIPTION =
 // LocalBusiness). Відображувані копії з форматуванням — у ContactsBlock.jsx.
 export const CONTACT_PHONES = ["+380951606881", "+380502795031"];
 
-// Офсайт-лінки сутності: соцмережі, суміжний бренд і картка Google Maps (GBP) —
-// зв'язують Organization із зовнішніми профілями (сигнал довіри для пошуку/AI).
+// Офсайт-лінки сутності: соцмережі й картка Google Maps (GBP) — зв'язують
+// Organization із зовнішніми профілями (сигнал довіри для пошуку/AI).
+// co2lab.pro сюди не входить: sameAs означає «та сама сутність», а CO₂ Lab —
+// окремий бренд тих самих власників; звʼязок між ними несуть посилання.
 const ORG_SAME_AS = [
   "https://instagram.com/icelabua",
-  "https://www.co2lab.pro/",
   "https://maps.google.com/?cid=10392293426580711670",
 ];
 

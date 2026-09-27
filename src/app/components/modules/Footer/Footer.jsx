@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import SocLinks from "../../common/SocLinks";
 import Messengers from "../../common/Messengers";
 import FooterNav from "./FooterNav";
@@ -56,6 +56,10 @@ function CreatedBy({ align = "left" }) {
 
 export default function Footer() {
   const t = useTranslations("Footer");
+  const locale = useLocale();
+  // Логотип CO₂ Lab веде на мовну версію, що відповідає сторінці, а не на
+  // англійську головну: це 143 сторінки з посиланням, хай вага йде в /uk
+  const co2Href = `https://www.co2lab.pro/${locale === "ru" ? "ru" : "uk"}`;
   return (
     <footer className="bg-dark-gradient dark:bg-gray-900 relative z-10 overflow-hidden">
       {/* Декоративні картинки (позиціонування додається окремо) */}
@@ -96,14 +100,14 @@ export default function Footer() {
           </Link>
 
           <a
-            href="https://www.co2lab.pro/"
+            href={co2Href}
             target="_blank"
             rel="noopener noreferrer"
             className="mb-5"
           >
             <Image
               src="/icons/co2-logo.svg"
-              alt="CO2LAB"
+              alt={t("co2LogoAlt")}
               width={81}
               height={36}
               className="mb-5"
@@ -149,14 +153,14 @@ export default function Footer() {
 
             <div className="text-right">
               <a
-                href="https://www.co2lab.pro/"
+                href={co2Href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mb-5 flex justify-end"
               >
                 <Image
                   src="/icons/co2-logo.svg"
-                  alt="CO2LAB"
+                  alt={t("co2LogoAlt")}
                   width={81}
                   height={36}
                 />

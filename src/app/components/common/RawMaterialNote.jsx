@@ -15,6 +15,13 @@ import { getTranslations } from "next-intl/server";
 //  • locale  — поточна локаль (uk / ru);
 //  • variant — "production" | "about" | "foodIce": визначає текст і ціль.
 
+// Друге посилання всередині тексту (тег <tank> у повідомленні): наш склад
+// сировини — кріогенна ємність для CO₂, і такі ж ємності продає CO₂ Lab
+const TANK_HREF = {
+  uk: "https://www.co2lab.pro/uk/catalog/category/kriogenni-yemnosti-dlya-ridkogo-co2",
+  ru: "https://www.co2lab.pro/ru/catalog/category/kriogennye-emkosti-dlya-zhidkogo-co2",
+};
+
 const HREF = {
   production: {
     uk: "https://www.co2lab.pro/uk/supply",
@@ -34,6 +41,7 @@ export default async function RawMaterialNote({ locale, variant }) {
   const t = await getTranslations({ locale, namespace: `RawMaterial.${variant}` });
   const href = HREF[variant]?.[locale] ?? HREF[variant]?.uk;
   if (!href) return null;
+  const tankHref = TANK_HREF[locale] ?? TANK_HREF.uk;
 
   return (
     <aside className="mt-10 rounded-2xl border border-commonBlue/20 bg-commonBlue/[0.04] p-5 md:p-6">
@@ -41,7 +49,18 @@ export default async function RawMaterialNote({ locale, variant }) {
         {t("title")}
       </p>
       <p className="not-italic font-e-ukraine font-thin text-[15px] md:text-[16px] leading-relaxed text-black/75">
-        {t("text")}{" "}
+        {t.rich("text", {
+          tank: (chunks) => (
+            <a
+              href={tankHref}
+              target="_blank"
+              rel="noopener"
+              className="text-commonBlue underline underline-offset-4 hover:opacity-80"
+            >
+              {chunks}
+            </a>
+          ),
+        })}{" "}
         <a
           href={href}
           target="_blank"
