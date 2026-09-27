@@ -52,7 +52,7 @@ export default function ProductCard({ img, sizes, variant }) {
           href={CATEGORY[variant]}
           className="w-full md:w-[243px] h-10 flex justify-center items-center gap-2 border-white-gradient-rounded hover:bg-white/10 transition-colors"
         >
-          <span className="main-title-gradient text-xs-responsive font-medium font-michelin">
+          <span className="main-title-gradient text-xs-responsive font-medium font-michelin whitespace-nowrap">
             {price}
           </span>
           <span aria-hidden="true" className="text-commonBlue text-sm">→</span>

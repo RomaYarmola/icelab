@@ -66,21 +66,24 @@ export default async function Reviews({ locale, className = "" }) {
               className="snap-start shrink-0 w-[80%] sm:w-[320px] md:w-auto rounded-2xl border border-commonBlue/15 bg-white p-6 flex flex-col gap-3 shadow-card"
             >
               <div className="flex items-center gap-3">
-                {r.photo ? (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    src={r.photo}
-                    alt={r.author}
-                    width={40}
-                    height={40}
-                    loading="lazy"
-                    className="w-10 h-10 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="w-10 h-10 rounded-full bg-commonBlue/10 flex items-center justify-center font-e-ukraine not-italic text-commonBlue font-medium">
-                    {r.author.charAt(0)}
-                  </div>
-                )}
+                {/* Ініціал лежить під фото завжди: якщо аватар Google не
+                    завантажився (посилання з Places API застаріло), видно
+                    кружок з літерою, а не обрізаний alt-текст поверх картки. */}
+                <div className="relative shrink-0 w-10 h-10 rounded-full overflow-hidden bg-commonBlue/10 flex items-center justify-center font-e-ukraine not-italic text-commonBlue font-medium">
+                  <span aria-hidden="true">{r.author.charAt(0)}</span>
+                  {r.photo && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={r.photo}
+                      alt={r.author}
+                      width={40}
+                      height={40}
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      className="absolute inset-0 w-full h-full object-cover text-[0px]"
+                    />
+                  )}
+                </div>
                 <div>
                   <p className="font-e-ukraine not-italic font-medium text-commonBlue leading-tight">
                     {r.author}
