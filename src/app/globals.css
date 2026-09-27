@@ -883,7 +883,7 @@ textarea::placeholder {
 .cloud-reveal-right {
   transform: translateX(100%);
 }
-.cloud-reveal.is-visible {
+.is-visible > .cloud-reveal {
   opacity: 1;
   transform: translateX(0);
 }

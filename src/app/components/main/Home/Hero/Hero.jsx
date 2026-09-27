@@ -55,9 +55,7 @@ export default async function Hero() {
       />
       {/* Градієнтне перекриття над фото */}
       <div className="absolute inset-0 heroBg" />
-      <div className="absolute inset-0">
-        <HeroClouds />
-      </div>
+      <HeroClouds />
       <Container>
         <div className="pt-[150px] md:pt-[200px] z-[9999] [container-type:inline-size]">
           <h1

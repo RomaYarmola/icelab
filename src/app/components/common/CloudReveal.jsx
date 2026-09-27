@@ -9,6 +9,14 @@ import { useEffect, useRef } from "react";
 // і це при тому, що вся анімація — один translateX + opacity. Тут те саме
 // на IntersectionObserver і CSS-переході: рух іде в композиторі, головний
 // потік не задіяний.
+//
+// Два шари, і це важливо (27.09.2026). IntersectionObserver рахує перетин
+// за рамкою ПІСЛЯ transform. Поки хмара чекає, вона зсунута на всю свою
+// ширину за край (translateX(±100%)), тобто повністю поза екраном — і на
+// телефоні спостерігач або не спрацьовував ніколи, або спрацьовував лише
+// через «дотик краями» (0 px перетину), залежно від ширини екрана й браузера.
+// Тепер спостерігаємо зовнішній блок — він стоїть на кінцевому місці й
+// не рухається, — а зсувається внутрішній.
 export default function CloudReveal({ from = "left", className = "", children }) {
   const ref = useRef(null);
 
@@ -30,8 +38,10 @@ export default function CloudReveal({ from = "left", className = "", children })
   }, []);
 
   return (
-    <div ref={ref} className={`cloud-reveal cloud-reveal-${from} ${className}`}>
-      {children}
+    <div ref={ref} className={className}>
+      <div className={`cloud-reveal cloud-reveal-${from} h-full`}>
+        {children}
+      </div>
     </div>
   );
 }
