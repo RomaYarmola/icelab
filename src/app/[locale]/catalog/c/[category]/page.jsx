@@ -73,12 +73,15 @@ export default async function CategoryPage({ params }) {
     .flatMap((list) => list.slice(0, 2))
     .slice(0, 4);
   const categoryNiches = nichesForProducts(products, NICHES);
+  // over і box — шаблони з {max} / {size}, їх заповнює PriceTiersTable.
+  // Тому raw: tc() без аргументів падав з FORMATTING_ERROR і віддавав
+  // у верстку ключ «Catalog.pricesOver» замість «понад 100 кг».
   const priceLabels = {
     headVolume: tc("pricesHeadVolume"),
     headPrice: tc("pricesHeadPrice"),
-    over: tc("pricesOver"),
+    over: tc.raw("pricesOver"),
     negotiable: tc("pricesNegotiable"),
-    box: tc("pricesBox"),
+    box: tc.raw("pricesBox"),
     boxUnit: tc("pricesBoxUnit"),
     kgUnit: tc("pricesKgUnit"),
   };
@@ -109,7 +112,7 @@ export default async function CategoryPage({ params }) {
           labels={{
             kg: "кг",
             kgUnit: tc("pricesKgUnit"),
-            over: tc("pricesOver"),
+            over: tc.raw("pricesOver"),
             negotiable: tc("pricesNegotiable"),
           }}
         />
