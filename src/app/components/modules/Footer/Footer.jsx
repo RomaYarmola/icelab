@@ -90,33 +90,37 @@ export default function Footer() {
           />
         </div>
         <div className="md:hidden">
-          <Link href="/" className="mb-12 flex">
-            <Image
-              src="/icons/white-logo.svg"
-              alt="IceLab логотип"
-              width={100}
-              height={88}
-            />
-          </Link>
+          {/* Лого ICELAB і блок CO₂ Lab — в один ряд, у ту ж сітку 2×, що й
+              стовпчики посилань нижче: CO₂ Lab стоїть над правим стовпчиком. */}
+          <div className="grid grid-cols-2 gap-x-4 min-[360px]:gap-x-6 items-start mb-12">
+            <Link href="/" className="flex">
+              <Image
+                src="/icons/white-logo.svg"
+                alt="IceLab логотип"
+                width={100}
+                height={88}
+              />
+            </Link>
 
-          <a
-            href={co2Href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mb-5"
-          >
-            <Image
-              src="/icons/co2-logo.svg"
-              alt={t("co2LogoAlt")}
-              width={81}
-              height={36}
-              className="mb-5"
-            />
-          </a>
-
-          <p className="max-w-[227px] mb-12 font-e-ukraine not-italic text-[14px] font-[200] leading-[1.2] text-white">
-            {t("co2Slogan")}
-          </p>
+            <div>
+              <a
+                href={co2Href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mb-3 flex"
+              >
+                <Image
+                  src="/icons/co2-logo.svg"
+                  alt={t("co2LogoAlt")}
+                  width={81}
+                  height={36}
+                />
+              </a>
+              <p className="font-e-ukraine not-italic text-[14px] font-[200] leading-[1.2] text-white">
+                {t("co2Slogan")}
+              </p>
+            </div>
+          </div>
 
           <div className="mb-12">
             <FooterNav variant="column" />

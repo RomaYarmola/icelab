@@ -7,9 +7,9 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations, useLocale } from "next-intl";
 
 // Група посилань футера (один стовпчик).
-function FooterGroup({ title, items }) {
+function FooterGroup({ title, items, className = "" }) {
   return (
-    <div>
+    <div className={className}>
       <p className="text-[12px] font-e-ukraine not-italic font-[200] text-white/60 leading-[180%] mb-4 uppercase tracking-wide">
         {title}
       </p>
@@ -18,7 +18,7 @@ function FooterGroup({ title, items }) {
           <li key={item.href}>
             <Link
               href={item.href}
-              className="text-[15px] font-e-ukraine not-italic font-[200] hover:text-gray-300 transition-colors"
+              className="text-[14px] min-[360px]:text-[15px] font-e-ukraine not-italic font-[200] hover:text-gray-300 transition-colors"
             >
               {item.label}
             </Link>
@@ -48,6 +48,11 @@ export default function FooterNav({ variant = "column" }) {
     },
     {
       title: (NICHE_LABELS[locale] || NICHE_LABELS.uk).footerTitle,
+      // На мобільному (2 колонки) довгий список застосувань займає два ряди
+      // ліворуч, а «Інформація» і «Документи» стають одна під одною праворуч.
+      // Інакше «Документи» йшли окремим рядом зліва під порожнім місцем
+      // справа, і футер був довшим на цілий блок. З md — звичайна сітка.
+      className: "row-span-2 md:row-span-1",
       items: liveNiches().map((n) => ({
         href: nichePath(n.slug),
         label: (n[locale] || n.uk).title,
@@ -89,11 +94,18 @@ export default function FooterNav({ variant = "column" }) {
 
   // column-варіант: сітка стовпчиків (2 колонки на мобільних, 4 — на десктопі)
   // + окремий ряд гео-перелінковки «сухий лід по містах».
+  // До 360 px — вужчий проміжок і 14 px: інакше «конфіденційності» у правому
+  // стовпчику впирається в край екрана.
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 lg:gap-x-10 gap-y-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-4 min-[360px]:gap-x-6 lg:gap-x-10 gap-y-10">
         {groups.map((g) => (
-          <FooterGroup key={g.title} title={g.title} items={g.items} />
+          <FooterGroup
+            key={g.title}
+            title={g.title}
+            items={g.items}
+            className={g.className}
+          />
         ))}
       </div>
       <div className="mt-10 pt-8 border-t border-white/10">
