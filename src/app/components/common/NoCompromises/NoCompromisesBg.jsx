@@ -21,9 +21,13 @@ export default function NoCompromisesBg() {
       )}
 
       <>
+        {/* На мобільному — ціла хмара в пропорціях картинки (1012×360) у
+            порожній смузі між FAQ і заголовком. Раніше рамка стискалась до
+            ширини екрана: лишалась ліва половина хмари, щільна частина
+            різалась краєм екрана, а низ заходив на заголовок. */}
         <CloudReveal
           from="right"
-          className="absolute h-[259px] md:h-[396px] z-[6] top-[-206px] md:top-[-282px] left-0 md:left-[52.3%] pointer-events-none"
+          className="absolute w-[340px] h-[121px] top-[-212px] right-3 md:w-auto md:right-auto md:h-[396px] z-[6] md:top-[-282px] md:left-[52.3%] pointer-events-none"
         >
           <Cloud
             side="right"
