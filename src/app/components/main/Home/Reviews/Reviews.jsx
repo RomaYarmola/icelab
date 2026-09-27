@@ -25,7 +25,7 @@ function Stars({ n, size = 16 }) {
 }
 
 // Секція відгуків Google на головній. Дані тягне сервер (ключ прихований).
-export default async function Reviews({ locale }) {
+export default async function Reviews({ locale, className = "" }) {
   const t = await getTranslations({ locale, namespace: "Reviews" });
   const data = await getGoogleReviews(locale);
   if (!data || !data.reviews?.length) return null;
@@ -41,7 +41,9 @@ export default async function Reviews({ locale }) {
       });
 
   return (
-    <section className="relative z-20 bg-white pt-8 md:pt-12 pb-20 md:pb-28">
+    <section
+      className={`relative z-20 bg-white pt-8 md:pt-12 pb-20 md:pb-28 ${className}`}
+    >
       {ratingSchema && <JsonLd data={ratingSchema} />}
       <Container>
         <div className="text-center mb-8 md:mb-12">

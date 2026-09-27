@@ -22,7 +22,7 @@ const byPopularity = (list) => [
 // складається у рівні 3×2, а сторінка опту отримує контекстне посилання з
 // головної. Гео-лендинги сюди НЕ дублюємо — вони вже є у футері на кожній
 // сторінці, тож другий набір тих самих посилань не додає ваги, лише шум.
-export default async function CatalogCategories({ locale }) {
+export default async function CatalogCategories({ locale, className = "" }) {
   const t = await getTranslations({ locale, namespace: "Products" });
   const tcat = await getTranslations({ locale, namespace: "Categories" });
   const tb = await getTranslations({ locale, namespace: "Breadcrumbs" });
@@ -51,7 +51,7 @@ export default async function CatalogCategories({ locale }) {
     "group flex flex-col h-full rounded-2xl border p-6 md:p-7 transition-colors duration-300";
 
   return (
-    <section className="relative z-10 bg-dark-gradient">
+    <section className={`relative z-10 bg-dark-gradient ${className}`}>
       <Container>
         <div className="py-16 md:py-24">
           <div className="text-center mb-10 md:mb-14">

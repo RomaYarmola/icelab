@@ -14,7 +14,7 @@ const POPULAR = [
 // Головна — найсильніша сторінка сайту; без цього блоку нішеві посадкові
 // не отримували з неї жодного посилання. Нова ніша зі status "live"
 // з'являється тут сама.
-export default function HomeNiches({ locale }) {
+export default function HomeNiches({ locale, className = "" }) {
   const L = NICHE_LABELS[locale] || NICHE_LABELS.uk;
   const all = liveNiches();
   const niches = [
@@ -22,7 +22,7 @@ export default function HomeNiches({ locale }) {
     ...all.filter((n) => !POPULAR.includes(n.slug)),
   ];
   return (
-    <section className="bg-[#F5F8FC] relative z-10">
+    <section className={`bg-[#F5F8FC] relative z-10 ${className}`}>
       <Container>
         <div className="py-16 md:py-20">
           <NicheLinks

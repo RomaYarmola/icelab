@@ -10,7 +10,7 @@ import CatalogList from "@/app/components/main/Catalog/CatalogList";
 // картку товару: 0 внутрішніх посилань на 24 товарні сторінки з
 // найавторитетнішої сторінки сайту. Тепер — шість позицій із каталогу:
 // три ходові фасування льоду 16 мм + термобокс + готовий набір + апарат.
-export default async function TopProducts({ locale }) {
+export default async function TopProducts({ locale, className = "" }) {
   const t = await getTranslations({ locale, namespace: "Home" });
   const all = await getProducts(locale);
   if (!all.length) return null;
@@ -24,7 +24,7 @@ export default async function TopProducts({ locale }) {
   if (!products.length) return null;
 
   return (
-    <section className="bg-white relative z-10">
+    <section className={`bg-white relative z-10 ${className}`}>
       <Container>
         <div className="py-16 md:py-24">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8 md:mb-10">

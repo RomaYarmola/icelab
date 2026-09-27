@@ -7,13 +7,19 @@ import { Link } from "@/i18n/navigation";
 import JsonLd from "@/app/components/common/JsonLd";
 import { faqSchema } from "@/lib/schema";
 
-export default function Faq() {
+export default function Faq({ className = "" }) {
   const isSafari = useIsSafari();
   const t = useTranslations("Faq");
   const homeCount = t.raw("homeCount") || 5;
   const shown = t.raw("items").slice(0, homeCount);
+  // relative z-[5] на корені, а не лише на вмісті: з className="cv-auto"
+  // корінь стає власним stacking context, і z-index вмісту діє тільки
+  // всередині нього. Шар FAQ як цілого мусить бути над градієнтами
+  // NoCompromises (z-3/4, заходять сюди згори) і під його хмарами (z-6).
   return (
-    <div className={`${isSafari && "faq-safari"}`}>
+    <div
+      className={`relative z-[5] ${isSafari ? "faq-safari" : ""} ${className}`}
+    >
       <Container>
         <div className="pt-[120px] pb-[293px] md:pb-[232px] md:pt-[125px] relative z-[5]">
           <h2

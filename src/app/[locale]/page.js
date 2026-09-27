@@ -40,36 +40,28 @@ export default async function Home({ params }) {
     <>
       <Hero />
       <Products />
-      {/* 21.09.2026: cv-auto розширено вгору — на телефоні перший екран
-          закінчується на 823 px, а Hero має висоту 864 px, тож і категорії,
-          і топ-товари гарантовано за межами видимого. Style & Layout до
-          першого кадру — 650 мс, і саме розкладка цих двох секцій (сітки
-          карток із зображеннями) у ньому найважча. */}
-      <div className="cv-auto">
-        <CatalogCategories locale={locale} />
-      </div>
-      <div className="cv-auto">
-        <TopProducts locale={locale} />
-      </div>
-      {/* Нижні секції головної браузер не малює, поки до них не дійшли
-          (content-visibility: auto): менше роботи зі стилями й розкладкою на
-          кожен тап угорі сторінки — це напряму зменшує INP на слабких
-          телефонах. У HTML усе лишається, пошуковики бачать повний текст. */}
-      <div className="cv-auto">
-        <HomeNiches locale={locale} />
-      </div>
-      <div className="cv-auto">
-        <CityPickup locale={locale} />
-      </div>
-      {/* About — без cv-auto: його декор звисає на 73 px у наступну секцію,
-          а content-visibility обрізає все за межами блока. */}
+      {/* Секції нижче першого екрана браузер не малює, поки до них не дійшли
+          (content-visibility: auto, клас cv-auto): менше роботи зі стилями й
+          розкладкою до першого кадру і на кожен тап угорі сторінки (INP на
+          слабких телефонах). У HTML усе лишається, пошуковики бачать повний
+          текст.
+
+          cv-auto — саме на корені секції, НЕ на обгортці. content-visibility
+          робить елемент окремим stacking context; обгортка без z-index
+          «з'їдала» z-10/z-20 секцій, і декор сусідів малювався поверх них:
+          темний градієнт Products (z-3) лягав на заголовок «Каталог за
+          категоріями», декор і градієнти About — на відгуки, градієнти
+          NoCompromises — на FAQ (27.09.2026). На корені z-index секції
+          і контейнер власного шару збігаються. */}
+      <CatalogCategories locale={locale} className="cv-auto" />
+      <TopProducts locale={locale} className="cv-auto" />
+      <HomeNiches locale={locale} className="cv-auto" />
+      <CityPickup locale={locale} className="cv-auto" />
+      {/* About — без cv-auto: content-visibility обрізає все за межами блока,
+          а його хмари, декор і градієнти виходять за межі секції. */}
       <About />
-      <div className="cv-auto">
-        <Reviews locale={locale} />
-      </div>
-      <div className="cv-auto">
-        <Faq />
-      </div>
+      <Reviews locale={locale} className="cv-auto" />
+      <Faq className="cv-auto" />
       {/* NoCompromises — теж без cv-auto: його фон і хмари виходять угору
           за межі секції (top: −165…−667 px). */}
       <NoCompromises />
