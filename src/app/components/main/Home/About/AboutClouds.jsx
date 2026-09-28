@@ -3,16 +3,13 @@ import Cloud from "@/app/components/common/Cloud";
 import CloudReveal from "@/app/components/common/CloudReveal";
 import { useIsSafari } from "@/hooks/useIsSafari";
 
-// Мобільні хмари (до md) — з явними розмірами в пропорціях картинки
-// (1012×360), без гілок під Safari (27.09.2026). Раніше розмір рамки
-// виводився з внутрішньої ширини <img>, і для Safari була окрема верстка:
-// нижня хмара на iPhone стискалась до 114 px заввишки й висіла обривком під
-// останньою карткою, а під нею лишалось ~230 px порожнього темного поля, яке
-// вона мала заповнювати. Явна ширина дає однакову картинку в усіх рушіях;
-// що виходить за край, обрізає overflow-x-clip секції.
-//
-// Нижня прив'язана до низу секції: під нею й зарезервовано pb-[342px]
-// (About.jsx), і місце не зсувається, якщо текст карток стане довшим.
+// Мобільні хмари (до md) — цілі, у пропорціях картинки (1012×360), без
+// гілок під Safari і без заходу за край екрана (28.09.2026). Раніше обидві
+// були великими шматками, які різав край екрана: нижня лежала обрізаною
+// брилою під останньою карткою, а під нею лишалось порожнє темне поле.
+// Тепер верхня стоїть у відступі над першою карткою (pt-[142px] в About.jsx),
+// нижня — посередині зарезервованого під неї поля pb-[342px]; обидві не
+// заходять на картки. До 360 px — трохи менші, щоб влазили з полями.
 export default function AboutClouds() {
   const isSafari = useIsSafari();
 
@@ -23,7 +20,7 @@ export default function AboutClouds() {
       {/* Мобільний набір */}
       <CloudReveal
         from="left"
-        className="md:hidden absolute w-[742px] h-[264px] z-[3] top-[41px] right-0"
+        className="md:hidden absolute w-[260px] h-[92px] min-[360px]:w-[280px] min-[360px]:h-[100px] z-[3] top-[22px] right-4"
       >
         <Cloud
           side="left"
@@ -34,7 +31,7 @@ export default function AboutClouds() {
       </CloudReveal>
       <CloudReveal
         from="left"
-        className="md:hidden absolute w-[972px] h-[346px] z-[4] bottom-[94px] xs:bottom-auto xs:top-[1337px] sm:top-[1137px] right-[64px]"
+        className="md:hidden absolute w-[300px] h-[107px] min-[360px]:w-[340px] min-[360px]:h-[121px] z-[4] bottom-[112px] left-4"
       >
         <Cloud
           side="right"
