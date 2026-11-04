@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, ModalContent, ModalBody, Input } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import GradientButton from "@/app/components/common/GradientButton";
@@ -34,6 +34,11 @@ export default function RequestModal({
   const [phoneError, setPhoneError] = useState("");
   const [telegramError, setTelegramError] = useState("");
   const [sent, setSent] = useState(false);
+  // Поки заявка відправляється (Telegram + Таблиця, буває кілька секунд),
+  // повторне натискання ігнорується — інакше менеджер отримує дві однакові
+  // заявки. Ref, а не лише стан: другий клік може прийти до перерендеру.
+  const sendingRef = useRef(false);
+  const [sending, setSending] = useState(false);
 
   // Відкриття форми — окремий крок воронки: видно, скільки людей відкрили
   // заявку й не відправили її.
@@ -42,6 +47,7 @@ export default function RequestModal({
   }, [isOpen, title]);
 
   const submit = async () => {
+    if (sendingRef.current) return;
     const err = validateField("phone", form.phone, tv);
     const tgErr = validateTelegram(form.telegram, tv);
     setPhoneError(err);
@@ -57,14 +63,24 @@ export default function RequestModal({
 `;
     // Структуровані поля для Google Таблиці (див. lib/leadRow.js).
     // Текст для Telegram лишається тим самим — таблиця його не замінює.
-    const res = await sendMessage(message, {
-      type: "consult",
-      context,
-      name: form.name,
-      phone: phoneLink(form.phone),
-      telegram: tgLink,
-      comment: form.comment,
-    });
+    sendingRef.current = true;
+    setSending(true);
+    let res;
+    try {
+      res = await sendMessage(message, {
+        type: "consult",
+        context,
+        name: form.name,
+        phone: phoneLink(form.phone),
+        telegram: tgLink,
+        comment: form.comment,
+      });
+    } finally {
+      // Знімаємо блок за будь-якого результату: після помилки клієнт має
+      // змогу надіслати ще раз.
+      sendingRef.current = false;
+      setSending(false);
+    }
     if (res?.success) {
       trackLead("request", { form: title });
       setSent(true);
@@ -185,7 +201,7 @@ export default function RequestModal({
                   className="contactTextarea block w-full bg-transparent border border-commonBlue rounded-md px-4 py-3 resize-none h-[110px] outline-none font-e-ukraine font-thin not-italic placeholder:font-e-ukraine placeholder:not-italic placeholder:font-thin placeholder:text-commonBlue/50"
                 />
 
-                <GradientButton type="submit" text={t("submit")} />
+                <GradientButton type="submit" text={t("submit")} isLoading={sending} />
               </form>
             )}
           </ModalBody>

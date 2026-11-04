@@ -6,6 +6,7 @@ export default function GradientButton({
   variant = "normal",
   onPress,
   isDisabled,
+  isLoading,
   type,
 }) {
   // Розмір і стиль — незалежні осі: "smallOutline" = невисока кнопка з обведенням
@@ -17,7 +18,8 @@ export default function GradientButton({
     <Button
       type={type}
       onPress={onPress}
-      isDisabled={isDisabled}
+      isDisabled={isDisabled || isLoading}
+      isLoading={isLoading}
       className={`w-full rounded-md flex justify-center items-center ${
         isSmall ? "h-[40px]" : "h-[54px]"
       } ${

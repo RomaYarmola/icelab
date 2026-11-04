@@ -10,7 +10,7 @@ import {
 import { trackLead } from "@/utils/analytics";
 import { sendMessage } from "@/utils/sendMessage";
 import { Input } from "@nextui-org/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function Form() {
@@ -34,8 +34,12 @@ export default function Form() {
   });
 
   const [buttonText, setButtonText] = useState(t("submit"));
+  // Блок повторного натискання на час відправки — див. RequestModal.
+  const sendingRef = useRef(false);
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = async () => {
+    if (sendingRef.current) return;
     const errors = {
       phone: validateField("phone", formData.phone, tv),
       telegram: validateTelegram(formData.telegram, tv),
@@ -54,13 +58,21 @@ export default function Form() {
         - Телефон: ${phoneLink(formData.phone)}${tgLink ? `\n        - Telegram: ${tgLink}` : ""}
         - Повідомлення: ${formData.comment}
       `;
-      const result = await sendMessage(message, {
-        type: "request",
-        name: formData.name,
-        phone: phoneLink(formData.phone),
-        telegram: tgLink,
-        comment: formData.comment,
-      });
+      sendingRef.current = true;
+      setSending(true);
+      let result;
+      try {
+        result = await sendMessage(message, {
+          type: "request",
+          name: formData.name,
+          phone: phoneLink(formData.phone),
+          telegram: tgLink,
+          comment: formData.comment,
+        });
+      } finally {
+        sendingRef.current = false;
+        setSending(false);
+      }
 
       if (result.success) {
         trackLead("contacts", { form: "contacts" });
@@ -187,7 +199,7 @@ export default function Form() {
           value={comment}
           onChange={(e) => handleFormDataChange("comment", e.target.value)}
         />
-        <GradientButton type="submit" text={buttonText} />
+        <GradientButton type="submit" text={buttonText} isLoading={sending} />
       </form>
     </div>
   );
