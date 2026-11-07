@@ -12,7 +12,7 @@ import HomeNiches from "../components/main/Home/HomeNiches/HomeNiches";
 import Reviews from "../components/main/Home/Reviews/Reviews";
 
 // ISR: товари на головній оновлюються з CMS без ребілду (як у каталозі).
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 // Метадані головної — з неймспейсу Meta (для кожної мови окремо).
 export async function generateMetadata({ params }) {

@@ -11,7 +11,7 @@ import { Link } from "@/i18n/navigation";
 import { pageMeta } from "@/lib/seo";
 
 // ISR: новий товар у Sanity з'являється без ребілду (в межах revalidate). (P2-1)
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 // Метадані каталогу (локалізовані) + canonical/hreflang.
 export async function generateMetadata({ params }) {

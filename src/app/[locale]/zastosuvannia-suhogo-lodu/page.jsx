@@ -11,7 +11,7 @@ import NicheArt from "@/app/components/common/NicheArt";
 
 const PATH = "/zastosuvannia-suhogo-lodu";
 
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

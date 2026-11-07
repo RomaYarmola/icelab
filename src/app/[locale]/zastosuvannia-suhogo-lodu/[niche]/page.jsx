@@ -6,7 +6,7 @@ import { nichePath } from "@/lib/nicheEngine";
 import NicheLanding from "@/app/components/main/Niche/NicheLanding";
 
 // ISR: прикріплені товари й ціни оновлюються з CMS без ребілду.
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 // Збираються і live-, і draft-ніші: чернетку можна вичитати за прямим URL.
 // Невідомий slug — 404 (dynamicParams=false), тож сегмент не ловить сміття.

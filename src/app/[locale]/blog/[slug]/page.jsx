@@ -13,7 +13,7 @@ import { articleSchema } from "@/lib/schema";
 import { estimateReadingTime } from "@/lib/readingTime";
 
 // ISR: оновлення статті в CMS підхоплюється без ребілду. (P2-1)
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 // Пререндер сторінок статей. Slug — єдиний для обох мов.
 export async function generateStaticParams() {

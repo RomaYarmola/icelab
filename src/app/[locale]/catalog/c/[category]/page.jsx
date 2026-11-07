@@ -26,7 +26,7 @@ import Image from "next/image";
 const PRICE_TABLE_CATEGORIES = ["dry-ice", "food-ice"];
 
 // ISR: список товарів категорії оновлюється без ребілду. (P2-1)
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 // Пререндер трьох категорій (обидві локалі — через сегмент [locale]).
 export function generateStaticParams() {

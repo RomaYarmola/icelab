@@ -7,7 +7,7 @@ import { getBlogPosts } from "@/lib/blog";
 import Breadcrumbs from "@/app/components/common/Breadcrumbs";
 
 // ISR: нова стаття у Sanity з'являється без ребілду. (P2-1)
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 // Метадані блогу (локалізовані) + canonical/hreflang.
 export async function generateMetadata({ params }) {

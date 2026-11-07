@@ -4,7 +4,7 @@ import { cityBySlug } from "@/lib/cities";
 import GeoLanding from "../../components/main/Geo/GeoLanding";
 
 // ISR: товари з цінами на лендингу оновлюються з CMS без ребілду.
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 const SLUG = "suhyi-lid-kyiv";
 
