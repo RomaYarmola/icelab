@@ -4,7 +4,7 @@
 import { buildSitemapEntries, renderSitemapXml } from "@/lib/sitemap";
 
 // ISR: новий товар/стаття потрапляє в sitemap без ребілду.
-export const revalidate = 3600;
+export const revalidate = 21600; // 6 год: ліміт ISR Writes на Hobby; зміни з Sanity приходять вебхуком
 
 export async function GET() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
